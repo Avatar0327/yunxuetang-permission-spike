@@ -1,0 +1,966 @@
+{
+  "source": "04 §9.4 frozen mandatory matrix",
+  "purpose": "coverage checklist; no item may be passed by prose or design alone",
+  "groups": [
+    {
+      "id": "AUTH-T01",
+      "required_subcases": [
+        {
+          "id": "AUTH-T01-01",
+          "requirement": "node independence",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T01-02",
+          "requirement": "direct ID",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T01-03",
+          "requirement": "list",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T01-04",
+          "requirement": "count",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T02",
+      "required_subcases": [
+        {
+          "id": "AUTH-T02-01",
+          "requirement": "all",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T02-02",
+          "requirement": "own subtree",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T02-03",
+          "requirement": "own department",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T02-04",
+          "requirement": "specified default false",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T02-05",
+          "requirement": "specified descendants true",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T02-06",
+          "requirement": "jurisdiction",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T02-07",
+          "requirement": "self",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T02-08",
+          "requirement": "empty department",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T02-09",
+          "requirement": "empty jurisdiction",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T02-10",
+          "requirement": "unsupported scope",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T03",
+      "required_subcases": [
+        {
+          "id": "AUTH-T03-01",
+          "requirement": "union same action",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T03-02",
+          "requirement": "edit restricted/view broad",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T03-03",
+          "requirement": "source field binding",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T04",
+      "required_subcases": [
+        {
+          "id": "AUTH-T04-01",
+          "requirement": "membership jurisdiction",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T04-02",
+          "requirement": "override only A",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T04-03",
+          "requirement": "other role retained",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T04-04",
+          "requirement": "empty override denies source",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T04-05",
+          "requirement": "delete override restores",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T04-06",
+          "requirement": "regrant does not revive",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T05",
+      "required_subcases": [
+        {
+          "id": "AUTH-T05-01",
+          "requirement": "cross-department direct report included",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T05-02",
+          "requirement": "same-department non-report excluded",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T05-03",
+          "requirement": "indirect report excluded",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T05-04",
+          "requirement": "department report uses node scope",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T06",
+      "required_subcases": [
+        {
+          "id": "AUTH-T06-01",
+          "requirement": "learner backend denied",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T06-02",
+          "requirement": "P backend shell allowed",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T06-03",
+          "requirement": "training capability whitelist",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T06-04",
+          "requirement": "list and count",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T06-05",
+          "requirement": "detail",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T06-06",
+          "requirement": "save",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T06-07",
+          "requirement": "export",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T06-08",
+          "requirement": "other module denied",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T06-09",
+          "requirement": "other project denied",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T06-10",
+          "requirement": "P revoked Q retained",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T06-11",
+          "requirement": "last revoked shell removed",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T06-12",
+          "requirement": "independent role retained",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T06-13",
+          "requirement": "browser evidence",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T07",
+      "required_subcases": [
+        {
+          "id": "AUTH-T07-01",
+          "requirement": "level1 creation denied",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T07-02",
+          "requirement": "level1 ordinary edit denied",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T07-03",
+          "requirement": "level2/3 same-level denied",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T07-04",
+          "requirement": "higher-level denied",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T07-05",
+          "requirement": "node/action ceiling",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T07-06",
+          "requirement": "resolved-set ceiling",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T07-07",
+          "requirement": "field ceiling",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T07-08",
+          "requirement": "explicit delegability",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T08",
+      "required_subcases": [
+        {
+          "id": "AUTH-T08-01",
+          "requirement": "browse",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T08-02",
+          "requirement": "maintain",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T08-03",
+          "requirement": "distribute",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T08-04",
+          "requirement": "download",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T08-05",
+          "requirement": "no direct storage URL",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T08-06",
+          "requirement": "current publication state",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T09",
+      "required_subcases": [
+        {
+          "id": "AUTH-T09-01",
+          "requirement": "inheritance lock",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T09-02",
+          "requirement": "creator lock",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T09-03",
+          "requirement": "direct API",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T09-04",
+          "requirement": "batch import",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T09-05",
+          "requirement": "course custom browse only",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T09-06",
+          "requirement": "custom locked deny",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T09-07",
+          "requirement": "parent append retains grants",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T09-08",
+          "requirement": "classroom SubjectResolver extension",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T09-09",
+          "requirement": "category depth10/11",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T10",
+      "required_subcases": [
+        {
+          "id": "AUTH-T10-01",
+          "requirement": "out-of-scope detail",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T10-02",
+          "requirement": "random nonexistent ID",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T10-03",
+          "requirement": "other-tenant same-name",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T10-04",
+          "requirement": "equal denial payload",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T10-05",
+          "requirement": "safe browser copy",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T11",
+      "required_subcases": [
+        {
+          "id": "AUTH-T11-01",
+          "requirement": "team switch off",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T11-02",
+          "requirement": "team switch on direct only",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T11-03",
+          "requirement": "appointment source unaffected",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T12",
+      "required_subcases": [
+        {
+          "id": "AUTH-T12-01",
+          "requirement": "phone/email/id card source binding",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T12-02",
+          "requirement": "list",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T12-03",
+          "requirement": "detail",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T12-04",
+          "requirement": "export",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T12-05",
+          "requirement": "log scan",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T12-06",
+          "requirement": "cache scan",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T12-07",
+          "requirement": "denial payload scan",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T13",
+      "required_subcases": [
+        {
+          "id": "AUTH-T13-01",
+          "requirement": "shrink scope then pagination",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T13-02",
+          "requirement": "same count predicate",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T13-03",
+          "requirement": "aggregate authorized set",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T13-04",
+          "requirement": "export authorized set",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T13-05",
+          "requirement": "search no leaks",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T14",
+      "required_subcases": [
+        {
+          "id": "AUTH-T14-01",
+          "requirement": "department move",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T14-02",
+          "requirement": "manager change",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T14-03",
+          "requirement": "disable",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T14-04",
+          "requirement": "soft delete",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T14-05",
+          "requirement": "restore",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T14-06",
+          "requirement": "history immutable",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T14-07",
+          "requirement": "current-state filtering",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T15",
+      "required_subcases": [
+        {
+          "id": "AUTH-T15-01",
+          "requirement": "two independent processes",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T15-02",
+          "requirement": "B warm L1/L2",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T15-03",
+          "requirement": "PubSub deliberately lost",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T15-04",
+          "requirement": "A revoke committed",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T15-05",
+          "requirement": "B next request denied",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T15-06",
+          "requirement": "media next fragment denied",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T15-07",
+          "requirement": "version timeline",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T16",
+      "required_subcases": [
+        {
+          "id": "AUTH-T16-01",
+          "requirement": "Redis disconnect warm",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T16-02",
+          "requirement": "Redis timeout warm",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T16-03",
+          "requirement": "Redis cold fault",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T16-04",
+          "requirement": "Redis reconnect current version",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T16-05",
+          "requirement": "DB authority read failure",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T16-06",
+          "requirement": "no business payload",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T16-07",
+          "requirement": "no fallback",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T17",
+      "required_subcases": [
+        {
+          "id": "AUTH-T17-01",
+          "requirement": "direct domain call bypassing Guard",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T17-02",
+          "requirement": "export create",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T17-03",
+          "requirement": "export execution recheck",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T17-04",
+          "requirement": "export claim recheck",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T17-05",
+          "requirement": "limited service identity",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T18",
+      "required_subcases": [
+        {
+          "id": "AUTH-T18-01",
+          "requirement": "50000 main people",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-02",
+          "requirement": "500 second tenant people",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-03",
+          "requirement": "2000 departments",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-04",
+          "requirement": "20depth",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-05",
+          "requirement": "21depth rejection",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-06",
+          "requirement": "department cycle rejection",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-07",
+          "requirement": "20roles and 2to5 memberships",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-08",
+          "requirement": "1000000 learning facts",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-09",
+          "requirement": "hot authorized overhead",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-10",
+          "requirement": "cold authorized overhead",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-11",
+          "requirement": "hot list/count",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-12",
+          "requirement": "cold list/count",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-13",
+          "requirement": "history aggregate",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-14",
+          "requirement": "separate denials",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-15",
+          "requirement": "separate Redis failures",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-16",
+          "requirement": "page20/50/200 query counts",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-17",
+          "requirement": "parameterized SQL",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-18",
+          "requirement": "EXPLAIN ANALYZE BUFFERS",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-19",
+          "requirement": "50clients 600seconds",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T18-20",
+          "requirement": "resource caps",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T19",
+      "required_subcases": [
+        {
+          "id": "AUTH-T19-01",
+          "requirement": "save wins before revoke ordered",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T19-02",
+          "requirement": "revoke wins before save denied",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T19-03",
+          "requirement": "batch delegation race",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T19-04",
+          "requirement": "download race",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T19-05",
+          "requirement": "old signed ticket rejected",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T19-06",
+          "requirement": "snapshot build race",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T20",
+      "required_subcases": [
+        {
+          "id": "AUTH-T20-01",
+          "requirement": "delegated department move",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T20-02",
+          "requirement": "source scope shrink",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T20-03",
+          "requirement": "dependent frozen",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T20-04",
+          "requirement": "explicit recheck",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T20-05",
+          "requirement": "invalid remains suspended",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T20-06",
+          "requirement": "provenance audit",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T21",
+      "required_subcases": [
+        {
+          "id": "AUTH-T21-01",
+          "requirement": "customer A appointed manager",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T21-02",
+          "requirement": "customer B appointed manager",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T21-03",
+          "requirement": "ordinary customer learner",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T21-04",
+          "requirement": "internal non-super manager",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T21-05",
+          "requirement": "shared content still accessible",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T21-06",
+          "requirement": "roster/company count",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T21-07",
+          "requirement": "search",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T21-08",
+          "requirement": "personal progress",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T21-09",
+          "requirement": "attachment",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T21-10",
+          "requirement": "export",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T21-11",
+          "requirement": "whole-project affected-company check",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T22",
+      "required_subcases": [
+        {
+          "id": "AUTH-T22-01",
+          "requirement": "internal grant customer A",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T22-02",
+          "requirement": "revoke customer A next request",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T22-03",
+          "requirement": "other company grants retained",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T22-04",
+          "requirement": "person transfer",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T22-05",
+          "requirement": "historical company unchanged",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T22-06",
+          "requirement": "new company cannot read old history",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T23",
+      "required_subcases": [
+        {
+          "id": "AUTH-T23-01",
+          "requirement": "own wallet separate A/B",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T23-02",
+          "requirement": "B reward cannot offset A debt",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T23-03",
+          "requirement": "SELF history still company-bound",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T23-04",
+          "requirement": "cross-company source references denied",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T23-05",
+          "requirement": "management export constrained",
+          "status": "unexecuted"
+        }
+      ]
+    },
+    {
+      "id": "AUTH-T24",
+      "required_subcases": [
+        {
+          "id": "AUTH-T24-01",
+          "requirement": "selected management membership A",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T24-02",
+          "requirement": "cannot borrow B",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T24-03",
+          "requirement": "source revoke freezes",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T24-04",
+          "requirement": "source regrant recheck",
+          "status": "unexecuted"
+        },
+        {
+          "id": "AUTH-T24-05",
+          "requirement": "new membership old override remains dead",
+          "status": "unexecuted"
+        }
+      ]
+    }
+  ]
+}
