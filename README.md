@@ -1,6 +1,6 @@
-# 云学堂 v8.3 权限预研：核心通路里程碑
+# 云学堂 v8.3 权限预研：隔离合成原型
 
-This repository is an isolated synthetic permission spike. This milestone implements central policy consumption, real PostgreSQL queries, NestJS/Fastify HTTP, Redis fail-closed snapshots, two independent candidate paths, and focused revocation/race evidence. It does **not** complete Task 2 or authorize formal B1. Missing acceptance paths are tracked in `docs/task2-follow-up.md`; the immutable 24-group manifest is unchanged.
+This repository is an isolated synthetic permission spike. This milestone implements central policy consumption, real PostgreSQL queries, NestJS/Fastify HTTP, Redis fail-closed snapshots, two independent candidate paths, and focused revocation/race evidence. It includes the reviewed core/Task3/Task4 and Task5 protected-output/measurement implementation. Full168 semantic acceptance, real browser and capped reference performance remain incomplete; formal B1 is not authorized. Current contracts are in `docs/task5-ports.md`; the immutable24-group manifest is unchanged.
 
 ## Run
 
@@ -18,20 +18,20 @@ PORT=4312 INSTANCE_ID=B CANDIDATE=native npm run start
 
 Environment: `PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`, `PGPOOL` (default20), `REDIS_HOST`, `REDIS_PORT`, `REDIS_TIMEOUT_MS` (default300), `PORT`, `INSTANCE_ID`, `CANDIDATE=native|casbin`, `CACHE_MODE=hot|cold`. Within the Docker network use `PGHOST=yxt-pg PGPORT=5432 REDIS_HOST=yxt-redis REDIS_PORT=6379`. Bootstrap is `dist/src/bootstrap.js`; build includes source/tests/scripts. No Docker changes were made by this task.
 
-The API binds 0.0.0.0. The synthetic UI is `/` and bundled Vue3/ElementPlus assets are local. Synthetic bearer tokens are `spike-M`, `spike-X`, `spike-Y`, `spike-L`, `spike-Z`, `spike-disabled`, `spike-deleted`. These are fixture credentials, not a production login system. Actor and tenant come from hashed server session records; request query/body tenant IDs, person IDs, grant objects and raw-field claims do not set the acting identity.
+The API binds 0.0.0.0. The synthetic UI is `/` and bundled Vue3/ElementPlus assets are local. Synthetic bearer tokens are `spike-M`, `spike-X`, `spike-Y`, `spike-L`, `spike-Z`, `spike-disabled`, `spike-deleted`, and complex actor `spike-person-00003`. These are fixture credentials, not a production login system. Actor and tenant come from hashed server session records; request query/body tenant IDs, person IDs, grant objects and raw-field claims do not set the acting identity.
 
 ## API
 
 - `GET /auth/me`: normalized central management capabilities.
 - `GET /report`: authorized person list and matching count; `node=department-report` selects constrained report. Supported narrowing: `fixture=true`, `id`, `search`, `limit=20|50|200`, `offset`.
 - `GET /report?history=true`: learning facts, immutable data company and historical department. `state=enabled|disabled|deleted|all` applies current person projection; acting disabled/deleted accounts always deny.
-- `GET /history`: history grouped by historical department from the same authorized relation.
+- `GET /history`: history grouped by historical department from the same authorized relation; `groupBy=department,job,status` adds immutable job/status grouping used in reference scenarios.
 - `GET /projects`, `/projects/:id`, `/projects/:id/roster`, `/projects/:id/media/:segment`.
 - `POST /projects/:id` with `{title?,teamEnabled?}`: whole-project authority with all roster companies required. Team enrollment commands are implemented in Task4 below.
 - `POST /appointments` with `{personId,projectId,active}`: exact registered appointment command capability, company cap and transactional revision bump.
 - `POST /memberships/:id/revoke`: revoke source and freeze existing dependency descendants. Role creation/edit/recheck are implemented below.
 - `POST /people/:id` with `{departmentId?,managerId?,companyId?,enabled?,deleted?}`: central authority and synchronous ReportProjection public-port delivery; historical facts stay immutable. Manager/job can be explicitly cleared; a normal command cannot clear the required main department. NULL-department fixtures are synthetic abnormal data only.
-- `POST /exports` with report query options; `POST /exports/:id/execute`; `GET /exports/:id/claim`. Exports are report exports, not project exports. Every phase reauthorizes; any tenant revision change invalidates an old job conservatively. Payload remains in the protected database. The runner is a synthetic inline execution route, not a durable queue.
+- `POST /exports` with report query options; `POST /exports/:id/execute`; `GET /exports/:id/claim`. Claims accept `?chunk=0` and return at most200 rows plus a protected nextChunk. Project/account job paths and separate limited-worker execution are documented in task5-ports.md. Every chunk and claim reauthorizes; creation revision/source epoch changes invalidate old jobs conservatively. Payload remains in protected domain-owned DB chunks. Requester execution can loop bounded transactions; the service worker performs one chunk per real request. A durable queue/production storage is not claimed.
 
 Responses include synthetic evidence metadata: instance, candidate, request/response time, query count; report data adds revision, sources, actual cache state, permission and data milliseconds. Error responses contain only safe copy and timing/instance metadata. Production observability design is not claimed here.
 
@@ -44,22 +44,25 @@ node --import tsx --test test/races.test.ts
 npm run typecheck
 npm run build
 EVIDENCE_DIR=evidence/raw/run-name npm run functional
-EVIDENCE_DIR=evidence/raw/run-name npm run faults
+# Exclusive self-managed two-process fault/domain campaign:
+npm run functional:task5
 npm run explain
 ```
 
 Functional runner assumes freshly seeded fixtures and two hot-mode processes with the same candidate. Run it once for each candidate and reset fixtures between complete campaigns. `test:http` revokes M's broad membership: reseed afterwards. Integration/race tests restore their own edited memberships/project title; do not run them during performance windows. Faults stop/start only yxt-redis and yxt-pg in `colima-yxt-permission`, and issue real Redis CLIENT PAUSE; they require exclusive use of these synthetic services. `finally` blocks restart stopped services. Pub/Sub is deliberately never subscribed/published and every response reports `pubsub:false`.
 
 ```
-CANDIDATE=native CACHE_MODE=hot SCENARIO=list-broad \
+CANDIDATE=native CACHE_MODE=hot SCENARIO=mixed \
   CONCURRENCY=50 DURATION_SECONDS=600 OUTPUT=evidence/raw/reference-name npm run benchmark
 ```
 
-Set matching candidate/cache environment on **both API processes** before the run; runner variables do not reconfigure a running server. `API_A`/`API_B` default to ports4311/4312. Run each `SCENARIO=list-broad|list-constrained|history-broad|history-constrained` separately. Broad actorM expects49998 current valid people or1000002 valid facts; constrained person reportM expects3 people; constrained customer historyX expects1 fact. These literal independent aggregate expectations are checked for every200 response. Field checks also reject raw values outside the literal A/C/M fixture set. This is not a replacement for the full correctness matrix.
+Set matching candidate/cache environment on **both API processes** before the run; runner variables do not reconfigure a running server. `API_A`/`API_B` default to ports4311/4312. `SCENARIO=mixed` rotates list-broad/list-constrained/history-broad/history-constrained equally across50 total clients and both instances. Single-scenario mode remains available. Broad actorM expects49998 current people/1000002 facts; complex actorperson-00003 has3 memberships, managed/local overrides, overlapping sources, partialI/A cap and large person/company caps, producing22875 people/457673 facts. Every HTTP200 checks complete first-page IDs, fields and historical department/job/status groups/counts/sums against independent seed arithmetic. Every200 response stores actualCandidate/count/rowCount/resultDigest; this is not one-in200 sampling. See task5-benchmark-fixture.md and each window's scenario-truth.json.
 
-`PHASE=success|denial|redisfault` separates distributions. Denial usesL. `redisfault` does **not** inject a fault; the controller must maintain a real fault for the chosen window and recover afterwards. Each output directory contains every sample in `samples.jsonl.gz` (sampling ratio1), exact category counts, p50/p95/p99, permission/data timing, start/end, actual cache states, instance counts, query-count distribution and configuration. A short duration is a smoke test, never reference evidence. Hot successful runs prewarm each instance before the clock; cold report/history requests always skip cache reads after deleting the versioned key, while still reading authority, checking live Redis, reconstructing and revalidating. `CACHE_MODE` affects measured report/history paths; other UI/project paths continue normal caching. Cold does not mean PostgreSQL page cache or process cache is cold.
+`PHASE=success|denial|fault` separates distributions. Denial usesL. `fault` does **not** inject a fault; the controller must maintain a real fault for the chosen window and recover afterwards. Each output directory contains every sample in `samples.jsonl.gz` (sampling ratio1), exact category counts, p50/p95/p99, permission/data timing, start/end, actual cache states, instance counts, query-count distribution and configuration. A short duration is a smoke test, never reference evidence. Hot successful runs prewarm each instance before the clock; cold report/history requests always skip cache reads after deleting the versioned key, while still reading authority, checking live Redis, reconstructing and revalidating. `CACHE_MODE` affects measured report/history paths; other UI/project paths continue normal caching. Cold does not mean PostgreSQL page cache or process cache is cold.
 
 The API permission metric includes token lookup plus authoritative account/revision reads, live Redis operation, policy cache load/build, candidate source selection, bulk scope resolution and plan validation/compilation up to the repository boundary. SQL compile time is included separately by the service. List data time includes count and list SQL; transport and JSON serialization appear in end-to-end latency. The seed fixture and common semantics are shared. Casbin independently selects genuine static tenant/actor/node/action/revision/source policy rows, then common SQL handles each source's row scope and fields. No Native allow result is supplied to Casbin, and no engine is called per returned row.
+
+`npm run test:task3`, `npm run test:task4`, and `npm run test:task5` must run serially with fresh seeds between domain campaigns. Exact command/evidence history lives in the task report.
 
 Raw evidence is intentionally gitignored and stays under `evidence/raw`; task report links exact runs. Browser QA, capped long windows, full matrix completion and final Go/No-Go remain controller work after follow-up implementation.
 
@@ -99,7 +102,7 @@ This is still a synthetic permission spike. See [seed formulas](docs/task4-seed-
 - `POST /projects/:id/enrollments` accepts `{operation:"add"|"remove",personIds:[...]}`;1..200 unique targets, atomic batch. Direct team is strict manager equality. Project role/appointment add/remove permissions are independent of the team switch.
 - `/projects/:id/roster?search=...` applies company/current-person constraints before list/count/search. `GET /projects/:id/people/:personId/progress|attachment` protects personal data; shared course browse stays under content grants.
 - `POST /company-grants` accepts `{personId,companyId,active,managementRoleMembershipId}` with exact selected-source delegability and target/company caps. Only internal people receive cross-company grants.
-- `GET /account/own` returns the actor's balances/debts by company/currency. `GET /account/entries`, `/account/entries/:id`, `/account/entries/:id/source`, `/account/export` are separate management actions, still company-bound. Account export is presently synchronous protected JSON; Task5 must include it in protected chunking, revocation and leakage work.
+- `GET /account/own` returns the actor's balances/debts by company/currency. `GET /account/entries`, `/account/entries/:id`, `/account/entries/:id/source`, `/account/export` are separate management actions, still company-bound. Legacy account export is now a reauthorized live page of at most200 rows with nextOffset; protected complete export jobs live under `/account/exports`, including source epoch/revocation/limited-worker checks.
 - `POST /account/offset` takes `{debtId,rewardId}` and performs a real atomic same-person/company/currency offset under its registered action. It is not a formal reward/credit engine.
 - `POST /departments/:id/move` now uses the department node and `organization.department.move`; all affected descendants and the destination parent must be covered. `organization.person.update` alone cannot move departments.
 - Normal `POST /people/:id` consumes actual same-action person caps and both companies on transfer. `managerId:null` and `jobId:null` clear those nullable fields; `departmentId:null` denies per approved02. Tests inject missing departments through an explicit abnormal-fixture helper and synchronize projections; nullable storage remains a documented prototype exception.
@@ -113,3 +116,5 @@ npm run functional:task4
 ```
 
 The observer environment name is retained for compatibility. Always choose fresh evidence filenames; RED evidence is immutable. Task4's delivery suite starts and stops bothAPI processes, uses real revision lock waits, and injects Redis CLIENT PAUSE. Data-mutating suites run serially, with a fresh seed before scale assertions. Task3 role/dept test fixtures can persist past their suite, so reseed before Task4 or benchmarking.
+
+Task5 adds protected200-row report/project/account export jobs and limited worker execution, enrollment name snapshots, signed synthetic media tickets, real business hash routes, and mixed benchmarks with an independent full-result oracle. See [Task5 ports](docs/task5-ports.md) and [complex fixture](docs/task5-benchmark-fixture.md). Run `npm run test:task5`; `npm run benchmark:smoke` is a short correctness smoke. Reference: start both APIs with matching `CANDIDATE`/`CACHE_MODE`, then `SCENARIO=mixed CONCURRENCY=50 DURATION_SECONDS=600 npm run benchmark`. `PHASE=denial|fault` must run separately. Actual browser/capped reference windows and independent168 acceptance remain incomplete; formalB1 remains prohibited.

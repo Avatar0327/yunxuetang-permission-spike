@@ -1,0 +1,34 @@
+# Task5 protected output / measurement continuation
+
+This is the authorized synthetic spike only. No formal B1, production storage, separate service deployment, RLS, or full168 acceptance is claimed.
+
+## Protected exports
+
+Each owning module retains `export_job`, `export_chunk`, and `export_epoch`. Report, account and training readers bind current requester, exact action/node, source fields, person state and company predicates before SQL pagination. The infrastructure protocol only coordinates those readers and domain-owned storage. `authz.ExportWorker` obtains the persisted requester via registered owning-module lookup ports; no external caller supplies requester or filter options.
+
+- Report: `POST /exports`, `POST /exports/:id/execute`, `GET /exports/:id/claim?chunk=0`.
+- Enrollment: `POST /projects/:id/exports`, `POST /project-exports/:id/execute`, `GET /project-exports/:id/claim?chunk=0`.
+- Management account: `POST /account/exports`, `POST /account/exports/:id/execute`, `GET /account/exports/:id/claim?chunk=0`.
+- `POST /worker/{report|training|account}/exports/:id/execute` accepts an empty body and a separate domain-specific hashed service credential. It executes exactly one chunk and returns status/count only. Synthetic credentials are `spike-worker-report`, `spike-worker-training`, `spike-worker-account`; they are not user sessions, cannot create jobs/choose requester/options/read business data/claim bytes, and do not model production secret distribution.
+
+Every chunk contains at most200 projected rows. A claim returns `{rows,count,nextChunk?}` where count is the complete exported row/group count. `nextChunk` must be followed through the same authenticated endpoint; invalid/cross-owner cursors deny. Empty exports have one empty chunk. Aggregate count is exported groups, not repeated underlying-fact count. Existing requester execute routes loop bounded transactions until ready for compatibility; worker execution is independently request-driven and bounded. No all-row application accumulator or public file URL remains.
+
+Lock order is current authority revision, source epoch SHARE, then job. Create, each execute chunk, and each claim re-run current requester authorization and compare creation revision/source epoch/count. Relevant source mutations bump a module-owned generation; any mismatch hides pending and completed chunks and requires regeneration. The protocol intentionally invalidates on unrelated tenant permission changes and domain-wide data changes. This favors demonstrable safety over availability and can make large exports restart frequently. It is not precise per-object dependency invalidation. Source epoch fencing prevents an offset export from silently combining different committed datasets. Persisted unclaimable chunks are synthetic protected DB storage, with no retention/cleanup policy beyond seed reset/job deletion.
+
+`GET /account/export?offset=0` remains a compatibility live page, now at most200 rows with count/nextOffset and current authorization on every request. Use the protected job path for a frozen complete export. The old core206-row export assertion now consumes protected chunks and still compares all206 exact IDs/order/company and consistent total; small one-chunk claim shape is preserved.
+
+## Enrollment snapshots and signed media
+
+Project roster/list/count/search/progress/attachment/export are enrollment-fact views under approved02§250/266 and03§193. `training.roster.company_id` and captured `snapshot_display_name` are immutable. A module-local insert trigger captures the name from the training projection. Current person enabled/deleted still applies. Transferring the current person/name toB does not relabel or expose the oldA enrollment toB; oldA-authorized viewers receive the capturedA name, never currentB name. This minimal captured column stands in for full `person_snapshot_id`; it is not the formal round/snapshot engine.
+
+`GET /projects/:id/media/:segment/ticket` issues a synthetic HMAC ticket bound to tenant, requester, exact project and segment, current revision, version1 and60-second expiry. Supplying it to the existing protected media endpoint still requires a current authenticated session, download action, object state and DB/Redis authority. The ticket never supplies a storage URL or replaces authorization. The fallback signing key is deliberately a public synthetic fixture; real key distribution/rotation, OSS/CDN integration and bandwidth testing are unproved. Every new fragment continues to reauthorize. Existing in-flight reads remain subject to the approved next-new-request boundary.
+
+## Clock / UI / measurement
+
+Synthetic request metadata adds observedRevision and authorityObservedAt (PG clock); media exposes only revision/cache labels for warm-cache evidence. Policy contents and raw-person field values are not added to metadata. Host request/response wallclock and Colima PG commit/read wallclock are distinct. Exact commit evidence uses revision xmin + pg_xact_commit_timestamp; compare it with same-clock authority reads, and separately prove host request-after-ack causality. Retain measured clock-offset brackets rather than inventing corrected exact request times.
+
+The Vue shell provides hash routes `#/projects/P`, `#/projects/Q`, `#/module/personal-learning`, `#/module/course`, `#/module/account`, and `#/learn`; labels distinguish all registered nodes. Project direct links call the actual backend even when navigation is absent. Errors show safe business copy and preserve lawful other-role navigation. Controller must still perform the real browser campaign in controller-acceptance-audit-notes.md.
+
+Benchmark scenarios use report endpoint execution, not a separate simplified query. `scripts/explain.ts` intercepts the actual service SQL and records complete list/count/aggregate query text, bound arrays and EXPLAIN(ANALYZE,BUFFERS). `SCENARIO=mixed` keeps50 total clients by default and deterministic equal scenario rotation across both APIs;600 seconds remains the reference default. Single-scenario mode is retained. `PHASE=denial|fault` is separate and never contributes to normal performance. A window's `truthFile` is relative `scenario-truth.json`. Every200 records actualCandidate/count/rowCount/resultDigest; missing/nonfinite timing, wrong candidate/cache or complete-result mismatch fails the measurement.
+
+The independent oracle imports no production policy/compiler/repository. Actual PG collation is en_US.utf8, so broad firstpage is A/B/C/D/E/L/M/N then person-00001..00042. Source-ID arrays are sorted without deduplication before digest; all other field/row order and extra fields remain meaningful. Historical broad/constrained reference URLs group historical department/job/status. Short smoke, separate phases and diagnostic heap/storage observations do not satisfy50×600 or capped deployment thresholds.
