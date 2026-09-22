@@ -17,12 +17,15 @@ def audit(folder):
     summary=json.loads((folder/'summary.json').read_text())
     groups=defaultdict(lambda:defaultdict(list))
     categories=Counter(); instances=Counter(); caches=Counter(); issues=[]
+    scenario_counts=Counter(); query_counts=defaultdict(Counter)
     with gzip.open(folder/'samples.jsonl.gz','rt') as f:
         for line_no,line in enumerate(f,1):
             sample=json.loads(line)
             scenario=sample.get('scenario','unknown')
             classification=sample.get('classification')
             categories[classification]+=1
+            scenario_counts[scenario]+=1
+            query_counts[scenario][str(sample.get('queryCount'))]+=1
             instances[sample.get('instance')]+=1
             caches[sample.get('cache')]+=1
             if sample.get('candidate')!=summary['candidate']:
@@ -51,11 +54,28 @@ def audit(folder):
             for metric,value in actual.items():
                 if published[metric]!=value:
                     issues.append(f'published {key}.{metric} does not match raw samples')
+    thresholds={}
+    for scenario,statistics in computed.items():
+        if scenario=='_all':
+            continue
+        permission=statistics.get('permission',{}).get('p95')
+        success=statistics.get('success',{}).get('p95')
+        limit=2000 if scenario.startswith('history-') else 500
+        thresholds[scenario]={
+            'permission_p95_ms':permission,'permission_limit_ms':50,
+            'permission_met':permission is not None and permission<=50,
+            'success_p95_ms':success,'success_limit_ms':limit,
+            'success_met':success is not None and success<=limit,
+        }
+    reference=summary.get('configuredSeconds')==600 and summary.get('concurrency')==50
     return {'directory':str(folder),'candidate':summary['candidate'],'cache':summary['cache'],
         'configured_seconds':summary.get('configuredSeconds'),'concurrency':summary.get('concurrency'),
-        'reference_window':summary.get('configuredSeconds')==600 and summary.get('concurrency')==50,
+        'reference_window':reference,
         'phase':summary.get('phase'),'sample_count':sum(categories.values()),'categories':dict(categories),
-        'instances':dict(instances),'cache_states':dict(caches),'statistics':computed,'audit_errors':issues}
+        'instances':dict(instances),'cache_states':dict(caches),'scenario_counts':dict(scenario_counts),
+        'query_counts_by_scenario':{k:dict(v) for k,v in query_counts.items()},
+        'statistics':computed,'threshold_observations':thresholds,'audit_errors':issues,
+        'limitation':'Threshold observations alone do not establish full acceptance, result truth, no N+1, resource limits or sufficient workload.'}
 
 
 if __name__=='__main__':
