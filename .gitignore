@@ -4,3 +4,5 @@ dist/
 evidence/raw/
 .env
 *.log
+output/
+.playwright-cli/
