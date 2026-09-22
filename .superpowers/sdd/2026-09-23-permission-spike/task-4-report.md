@@ -69,3 +69,35 @@ The first “final” typecheck/build caught only a new test's inferred optional
 ## Owned commit scope
 
 Application/schema/seed/bootstrap/authz/organization/training/report/account changes; Task4 tests/helper, module ownership gate and the company-qualified Task3 fixture adjustment; package scripts; README/kernel/continuation/Task4 docs; this report. Raw evidence remains gitignored locally. Controller tools, audits, plan inputs and Docker files are excluded. The application commit SHA is supplied in the handoff message.
+
+## Review fix round1/5 — target-bound revoke and attachment download
+
+Status: **DONE_WITH_CONCERNS**, ready for controller re-review. Reviewed application baseline `9252b46af14039207b894b8bd5ac021ec64f057e`; controller-only `a14098d` is outside this repair. Both Important findings in `task-4-review.md` were independently reproduced in real HTTP on Native and Casbin before production changes. The report's earlier full-suite results remain historical; this fix runs the requested affected subset rather than claiming all unchanged suites were rerun. Full168 and downstream export/browser/performance obligations are unchanged.
+
+### R1 — membership revoke cap
+
+The RED showed a source capped to target person B could revoke C's membership (actual200, expected403), change C's active flag tofalse and freeze C-child. The positive B control already passed. `Authority.revokeMembership` now uses central `scopeMatches` to match the target person's ID against the actual same-action plan sources before either target or dependent UPDATE. It keeps the existing company check, marked READ COMMITTED transaction and revision-first lock/fresh facts protocol. It does not borrow M's broader report-view role. A fresh GREEN compares complete target/dependent data+source rows to their before-state and separately asserts their literal active/provenance values; permitted B is actually revoked and its dependent becomes recheck_required.
+
+### R2 — attachment action
+
+The RED returned attachment-A bytes with view-only permission, with download scoped only to Q while viewing P, and on B's next new request after A revoked only P's download membership. Each was actual200 with bytes versus expected403 without bytes. The matching P-download positive already passed. `TrainingService.personal` now checks `training.project.download` through the existing exact-project compiler before reading attachment bytes. It preserves the existing roster access (view), company and current-person conditions. Progress retains its view path, including after only download is revoked. Separate view and download sources remain bound to their own project sets; no coarse action union is used. No new business requirement was introduced: authoritative03§1.5 / attachment passage and04§6.1 already require independent download.
+
+### Commands and full raw outputs
+
+Commands run in the spike directory with `PATH=/opt/homebrew/opt/node@24/bin:$PATH`. Every filename below is under `evidence/raw/`; no prior raw output was overwritten. The new tests clean up memberships and stop both owned APIs. PostgreSQL track_commit_timestamp remains on as configured by the controller; this repair does not alter settings and its HTTP acknowledgment timing is not claimed to be an exact commit-timestamp campaign.
+
+| Command | Exit / result | Full output and observations |
+|---|---|---|
+| `npm run seed` |0 | `task4-fix1-red-seed.txt` |
+| `TASK3_OBSERVATIONS=evidence/raw/task4-fix1-red-observations.jsonl node --import tsx --test test/task4-review-regressions.test.ts` before production edits |1;18 nodes,4 pass/14 fail including4 parents. R1 and R2 negative reproductions fail in each engine; existing B revoke/P download positive controls pass. | `task4-fix1-red.txt`, `task4-fix1-red-observations.jsonl` |
+| Same command after fixes, with fresh `task4-fix1-green-observations.jsonl` output |0;18/18 | `task4-fix1-green.txt`, `task4-fix1-green-observations.jsonl` |
+| `RACE_EVIDENCE=evidence/raw/task4-fix1-core-races.jsonl node --import tsx --test --test-concurrency=1 --test-name-pattern='snapshot build\|write before revoke\|waiting .* reads committed\|locking authority' test/races.test.ts test/review-regressions.test.ts` |0;17/17. Snapshot/revoke, both write/revoke orderings, waiting fresh department/company/disabled/deleted facts and bare-client rejection. Shell pattern uses ordinary regex alternation characters, not literal backslashes. | `task4-fix1-core.txt`, `task4-fix1-core-races.jsonl` |
+| `TASK3_OBSERVATIONS=evidence/raw/task4-fix1-final-observations.jsonl node --import tsx --test --test-concurrency=1 test/task4-review-regressions.test.ts test/task4-person-cap.test.ts test/task4-source-boundary.test.ts test/task4-company.test.ts test/task4-delivery.test.ts test/task3-delivery.test.ts` |0;40/40. Requested adjacent same-source/company paths plus both-instance download/revoke and real Redis pause checks. | `task4-fix1-domains.txt`, `task4-fix1-final-observations.jsonl` |
+| `npm run typecheck`; `npm run build`; `npm audit --json` |0/0/0;zero vulnerabilities | `task4-fix1-typecheck.txt`, `task4-fix1-build.txt`, `task4-fix1-audit.json` |
+| `lsof -nP -iTCP:4311 -iTCP:4312 -sTCP:LISTEN` |1, expected empty/no API listeners | `task4-fix1-api-processes.txt` |
+
+The final JSONL contains108 literal observations (Native54/Casbin54), zero expected/actual differences; SHA256 `af88a28e40287be66d73089e0373b7f92c4096cdb1ab11cdb828bf9605df41eb`. `task4-fix1-observation-check.json` records this differential and hash. `docs/task4-coverage.json.reviewFixRound1` maps every new R1/R2 observation to exact final path/line/candidate/name while retaining the original266-observation map and all168 incomplete checklist entries. Counts include parent/subtest nodes and are not acceptance denominators. No test oracle, permission fixture ceiling or expected status was weakened.
+
+### Scope and limits
+
+Owned production repair is limited to `src/authz/revision.ts` and `src/training/service.ts`; new regression file, coverage/port documentation and this appended report are included. Existing lock ordering, company/source/cap dimensions, field projection, SQL ownership and candidate paths remain intact. The Minor dense-formatting observation is deferred to the final review as instructed, without a broad rewrite. No complete export/cache/log sweep, UI/browser, independent deployment or performance window was executed. Public file/media delivery remains synthetic; full168 and overallGo remain incomplete. Owned APIs are stopped. Raw evidence stays local/gitignored; the final repair SHA is supplied in the handoff.

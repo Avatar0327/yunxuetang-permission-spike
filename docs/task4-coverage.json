@@ -3200,5 +3200,164 @@
   ],
   "continuation": "docs/task4-ports.md",
   "seedOracle": "docs/task4-seed-contract.md",
-  "historicalRedNote": "task4-org-red documented original NULL-clear interpretation; controller clarified required main department and normal command now denies NULL, proven by task4-dept-required-red/green1. Original files unchanged."
+  "historicalRedNote": "task4-org-red documented original NULL-clear interpretation; controller clarified required main department and normal command now denies NULL, proven by task4-dept-required-red/green1. Original files unchanged.",
+  "reviewFixRound1": {
+    "boundary": "R1 revoke target-person cap and R2 independent project attachment download; no full acceptance claims.",
+    "final": {
+      "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+      "records": 108,
+      "candidates": {
+        "native": 54,
+        "casbin": 54
+      },
+      "mismatches": [],
+      "sha256": "af88a28e40287be66d73089e0373b7f92c4096cdb1ab11cdb828bf9605df41eb"
+    },
+    "focusedObservations": [
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 83,
+        "candidate": "native",
+        "name": "R1 B-only revoke cannot borrow broad report scope for C"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 84,
+        "candidate": "native",
+        "name": "R1 denied target and dependent byte-equivalent state"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 85,
+        "candidate": "native",
+        "name": "R1 denied target and dependent literal lifecycle"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 86,
+        "candidate": "native",
+        "name": "R1 B-only revoke permits B"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 87,
+        "candidate": "native",
+        "name": "R1 allowed target revoked and dependent frozen"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 88,
+        "candidate": "native",
+        "name": "R2 view-only progress preserved"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 89,
+        "candidate": "native",
+        "name": "R2 view-only attachment denies without bytes"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 90,
+        "candidate": "native",
+        "name": "R2 download Q cannot borrow view P"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 91,
+        "candidate": "native",
+        "name": "R2 matching P download returns protected bytes"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 92,
+        "candidate": "native",
+        "name": "R2 download membership revoke committed"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 93,
+        "candidate": "native",
+        "name": "R2 next B attachment denies revoked download"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 94,
+        "candidate": "native",
+        "name": "R2 download revoke retains independent view progress"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 95,
+        "candidate": "casbin",
+        "name": "R1 B-only revoke cannot borrow broad report scope for C"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 96,
+        "candidate": "casbin",
+        "name": "R1 denied target and dependent byte-equivalent state"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 97,
+        "candidate": "casbin",
+        "name": "R1 denied target and dependent literal lifecycle"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 98,
+        "candidate": "casbin",
+        "name": "R1 B-only revoke permits B"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 99,
+        "candidate": "casbin",
+        "name": "R1 allowed target revoked and dependent frozen"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 100,
+        "candidate": "casbin",
+        "name": "R2 view-only progress preserved"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 101,
+        "candidate": "casbin",
+        "name": "R2 view-only attachment denies without bytes"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 102,
+        "candidate": "casbin",
+        "name": "R2 download Q cannot borrow view P"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 103,
+        "candidate": "casbin",
+        "name": "R2 matching P download returns protected bytes"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 104,
+        "candidate": "casbin",
+        "name": "R2 download membership revoke committed"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 105,
+        "candidate": "casbin",
+        "name": "R2 next B attachment denies revoked download"
+      },
+      {
+        "path": "evidence/raw/task4-fix1-final-observations.jsonl",
+        "line": 106,
+        "candidate": "casbin",
+        "name": "R2 download revoke retains independent view progress"
+      }
+    ]
+  }
 }

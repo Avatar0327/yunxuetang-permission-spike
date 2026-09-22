@@ -27,6 +27,10 @@ export class TrainingService {
         return {rows,count:rows.length};
     }
     async personal(identity:Identity,candidate:CandidateName,id:string,personId:string,kind:'progress'|'attachment'){
+        // Attachment bytes need their own action bound to this exact project.
+        // Keep the existing roster access, company and current-person checks too.
+        if (kind === 'attachment')
+            await this.projects(identity, candidate, id, pool, 'training.project.download');
         await this.roster(identity,candidate,id,undefined,personId);
         const row=(await query(pool,'SELECT progress,attachment FROM training.roster WHERE tenant_id=$1 AND project_id=$2 AND person_id=$3',[identity.tenantId,id,personId])).rows[0];
         if(!row)throw new Denied();

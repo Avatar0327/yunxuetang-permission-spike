@@ -1,5 +1,5 @@
 import { KnowledgeFactsPort,effectiveCategory } from '../knowledge/public.js';
-import { companyCap } from './scope.js';
+import { companyCap, scopeMatches } from './scope.js';
 import { createHash } from 'node:crypto';
 import type { Context, Membership, Appointment } from './contracts.js';
 import { normalizePolicy, normalizeCatalog, activeMembership, buildQueryPolicy, backendCapabilities } from './policy.js';
@@ -33,6 +33,17 @@ export class Authority {
         const membership = (await query(db, 'SELECT person_id FROM authz.membership WHERE tenant_id=$1 AND id=$2', [identity.tenantId, id])).rows[0];
         const target = membership && await this.ports.organization(db).person({ tenantId: identity.tenantId, personId: membership.person_id });
         if (!target || !companyCap(a.context).includes(target.companyId)) throw new Denied();
+        const targetResource = {
+            id: target.id,
+            personId: target.id,
+            tenantId: identity.tenantId,
+            type: 'person',
+            exists: true,
+            enabled: target.enabled,
+            deleted: target.deleted,
+        };
+        if (!a.plan.sources.some(source => scopeMatches(source.resolved, targetResource)))
+            throw new Denied();
         await query(db, `UPDATE authz.membership SET data=jsonb_set(data,'{active}','false') WHERE tenant_id=$1 AND id=$2`, [identity.tenantId, id]);
         await query(db, `WITH RECURSIVE dependents AS (SELECT id FROM authz.membership WHERE tenant_id=$1 AND source_id=$2 UNION SELECT m.id FROM authz.membership m JOIN dependents d ON m.source_id=d.id WHERE m.tenant_id=$1) UPDATE authz.membership SET data=jsonb_set(data,'{provenance}','"recheck_required"') WHERE tenant_id=$1 AND id IN(SELECT id FROM dependents)`, [identity.tenantId, id]);
         return { revoked: true, revision: (await this.current(identity, db)).revision };
