@@ -1,0 +1,25 @@
+{
+  "name": "permission-v83-spike",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "test:semantic": "tsx --test test/semantic.test.ts",
+    "typecheck": "tsc --noEmit",
+    "bench:kernel": "tsx test/kernel-benchmark.ts"
+  },
+  "dependencies": {
+    "casbin": "5.38.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3"
+  },
+  "overrides": {
+    "csv-parse": "7.0.2"
+  }
+}
