@@ -1,5 +1,5 @@
 import type { Context, NodeDefinition, OrganizationSnapshot, Resource, ResolvedScope, Scope, ScopeSpec } from './contracts.js';
-export function companyCap(context: Context): string[] { return [...new Set(context.internal ? context.companyIds : [context.companyId])].sort(); }
+export function companyCap(context: Context): string[] { return [...new Set(context.internal ? [context.companyId, ...context.companyIds] : [context.companyId])].sort(); }
 export function makeScope(context: Context, node: NodeDefinition, action: string, scope: Scope, jurisdiction?: Scope): ScopeSpec | null {
     if (!node.actions.includes(action) || !node.scopes.includes(scope.kind))
         return null;

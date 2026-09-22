@@ -1,3 +1,8 @@
+import { OrganizationFactsPort } from './organization/public.js';
+import { TrainingFactsPort } from './training/public.js';
+import { KnowledgeFactsPort } from './knowledge/public.js';
+import { RoleService } from './authz/role-service.js';
+import { KnowledgeService } from './knowledge/service.js';
 import 'reflect-metadata';
 import { Module } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
@@ -14,7 +19,7 @@ import type { CandidateName } from './authz/bulk-candidate.js';
 class AppModule {
 }
 Module({})(AppModule);
-const cache = new SessionCache(), authority = new Authority(cache), report = new ReportService(authority), training = new TrainingService(authority), organization = new OrganizationService(authority), exportsService = new ExportService(report);
+const cache = new SessionCache(), authority = new Authority(cache,{organization:db=>new OrganizationFactsPort(db),training:db=>new TrainingFactsPort(db),knowledge:db=>new KnowledgeFactsPort(db)}), report = new ReportService(authority), training = new TrainingService(authority), organization = new OrganizationService(authority), exportsService = new ExportService(report);
 const app = await NestFactory.create(AppModule, new FastifyAdapter({ logger: false }), { logger: false });
 const fastify = app.getHttpAdapter().getInstance();
 const candidate = (process.env.CANDIDATE ?? 'native') as CandidateName;
@@ -33,11 +38,32 @@ function route(method: string, url: string, handler: (identity: any, req: any) =
                 return reply.send({ ...payload, meta: { candidate, instance: process.env.INSTANCE_ID ?? String(process.pid), pid: process.pid, pubsub: false, requestAt: at, responseAt: new Date().toISOString(), elapsedMs: performance.now() - start, queryCount: metrics.getStore()!.queries } });
             }
             catch (e) {
-                const error = e instanceof Denied ? e : new Unavailable();
-                return reply.code(error.status).send({ message: error.message, meta: { candidate, instance: process.env.INSTANCE_ID ?? String(process.pid), requestAt: at, responseAt: new Date().toISOString(), elapsedMs: performance.now() - start, queryCount: metrics.getStore()!.queries } });
+                const error = e instanceof Denied ? e : (['23503','23505','23514','P0001'].includes((e as any)?.code) ? new Denied() : new Unavailable());
+                return reply.code(error.status).send({ message: error.message, meta: { candidate, pubsub:false, instance: process.env.INSTANCE_ID ?? String(process.pid), requestAt: at, responseAt: new Date().toISOString(), elapsedMs: performance.now() - start, queryCount: metrics.getStore()!.queries } });
             }
         }) });
 }
+const roles=new RoleService(authority),knowledge=new KnowledgeService(authority);
+route('POST','/roles',async(i,r)=>roles.create(i,r.body??{}));
+route('POST','/roles/:id',async(i,r)=>roles.edit(i,r.params.id,r.body??{}));
+route('POST','/roles/:id/members',async(i,r)=>roles.addMember(i,r.params.id,r.body??{}));
+route('POST','/memberships/:id/recheck',async(i,r)=>roles.recheck(i,r.params.id,r.body?.managementRoleMembershipId));
+route('POST','/departments/:id/move',async(i,r)=>organization.moveDepartment(i,candidate,r.params.id,r.body?.parentId));
+route('POST','/categories',async(i,r)=>knowledge.createCategory(i,candidate,r.body??{}));
+route('POST','/categories/import',async(i,r)=>knowledge.importCategories(i,candidate,r.body?.updates));
+route('POST','/categories/:id/recheck',async(i,r)=>knowledge.recheckPolicy(i,candidate,r.params.id,'category'));
+route('POST','/courses/:id/recheck',async(i,r)=>knowledge.recheckPolicy(i,candidate,r.params.id,'custom'));
+route('POST','/categories/:id',async(i,r)=>knowledge.updateCategory(i,candidate,r.params.id,r.body??{}));
+route('POST','/categories/:id/append-preview',async(i,r)=>knowledge.append(i,candidate,r.params.id,r.body??{},true));
+route('POST','/categories/:id/append',async(i,r)=>knowledge.append(i,candidate,r.params.id,r.body??{},false));
+route('GET','/face-to-face',async(i)=>training.faceToFace(i,candidate));
+route('GET','/face-to-face/:id',async(i,r)=>training.faceToFace(i,candidate,r.params.id));
+route('GET','/courses',async(i,r)=>knowledge.courses(i,candidate,r.query));
+route('GET','/courses/:id',async(i,r)=>knowledge.courses(i,candidate,{id:r.params.id,action:r.query.action}));
+route('GET','/courses/:id/download',async(i,r)=>knowledge.download(i,candidate,r.params.id));
+route('POST','/courses/:id',async(i,r)=>knowledge.saveCourse(i,candidate,r.params.id,r.body??{}));
+route('POST','/courses/:id/distribute',async(i,r)=>knowledge.distribute(i,candidate,r.params.id));
+route('POST','/courses/:id/browse-policy',async(i,r)=>knowledge.customBrowse(i,candidate,r.params.id,r.body??{}));
 route('GET', '/auth/me', async (i) => { const r = await authority.load(i); return { capabilities: r.capabilities, revision: r.context.revision }; });
 route('GET', '/report', async (i, r) => report.list(i, candidate, options(r.query)));
 route('GET', '/history', async (i, r) => report.list(i, candidate, { ...options(r.query), history: true, aggregate: true }));

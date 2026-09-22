@@ -11,7 +11,7 @@ async function waiting(fragment: string) { for (let i = 0; i < 100; i++) {
         return;
     await new Promise(r => setTimeout(r, 20));
 } throw Error('expected real DB lock wait did not occur'); }
-async function record(name: string, details: any) { await appendFile('evidence/raw/task2-races.jsonl', JSON.stringify({ name, at: new Date().toISOString(), ...details }) + '\n'); }
+async function record(name: string, details: any) { await appendFile(process.env.RACE_EVIDENCE ?? 'evidence/raw/task2-races.jsonl', JSON.stringify({ name, at: new Date().toISOString(), ...details }) + '\n'); }
 for (const candidate of ['native', 'casbin'] as const) {
     test(`${candidate}: snapshot build crossing revoke rejects stale version`, async () => {
         const cache = new SessionCache(), authority = new Authority(cache), blocker = await pool.connect();
@@ -21,7 +21,7 @@ for (const candidate of ['native', 'casbin'] as const) {
             await blocker.query('LOCK TABLE authz.membership IN ACCESS EXCLUSIVE MODE');
             const started = new Date().toISOString();
             const result = authority.plan({ tenantId: 'T1', personId: 'M' }, candidate, 'personal-learning', 'report.personal-learning.view', pool, false, true).then(() => ({ allowed: true, error: null }), e => ({ allowed: false, error: e }));
-            await waiting('select data from authz.membership');
+            await waiting('FROM authz.membership m JOIN authz.role');
             await blocker.query("UPDATE authz.membership SET data=jsonb_set(data,'{active}','false') WHERE tenant_id='T1' AND id='m-broad'");
             await blocker.query('COMMIT');
             const committedAt = new Date().toISOString();

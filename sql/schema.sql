@@ -33,18 +33,71 @@ BEGIN
  RETURN COALESCE(NEW,OLD);
 END $$;
 CREATE OR REPLACE FUNCTION organization.validate_tree() RETURNS trigger LANGUAGE plpgsql AS $$
-DECLARE bad boolean; depth int; lim int;
+DECLARE bad boolean; depth int; lim int; height int;
 BEGIN
  lim=CASE WHEN TG_TABLE_SCHEMA='knowledge' THEN 10 ELSE 20 END;
  IF NEW.parent_id IS NULL THEN RETURN NEW; END IF;
  EXECUTE format('WITH RECURSIVE ancestors AS (SELECT id,parent_id,ARRAY[id] path,false cycle FROM %I.%I WHERE tenant_id=$1 AND id=$2 UNION ALL SELECT d.id,d.parent_id,a.path||d.id,d.id=ANY(a.path) FROM %I.%I d JOIN ancestors a ON d.id=a.parent_id WHERE d.tenant_id=$1 AND NOT a.cycle) SELECT bool_or(cycle OR id=$3),max(cardinality(path))+1 FROM ancestors',TG_TABLE_SCHEMA,TG_TABLE_NAME,TG_TABLE_SCHEMA,TG_TABLE_NAME) INTO bad,depth USING NEW.tenant_id,NEW.parent_id,NEW.id;
  IF bad OR depth>lim OR depth IS NULL THEN RAISE EXCEPTION 'invalid hierarchy'; END IF;
- -- Moving populated subtrees is conservatively denied; avoids descendants exceeding the depth cap.
- IF TG_OP='UPDATE' AND NEW.parent_id IS DISTINCT FROM OLD.parent_id THEN
- EXECUTE format('SELECT EXISTS(SELECT 1 FROM %I.%I WHERE tenant_id=$1 AND parent_id=$2)',TG_TABLE_SCHEMA,TG_TABLE_NAME) INTO bad USING NEW.tenant_id,NEW.id;
- IF bad THEN RAISE EXCEPTION 'populated subtree move requires validated command'; END IF;
- END IF;
+ -- Validate descendants too: moving a populated subtree may not exceed its own module depth limit.
+ EXECUTE format('WITH RECURSIVE descendants AS (SELECT id,1 h FROM %I.%I WHERE tenant_id=$1 AND id=$2 UNION ALL SELECT d.id,a.h+1 FROM %I.%I d JOIN descendants a ON d.parent_id=a.id WHERE d.tenant_id=$1) SELECT coalesce(max(h),1) FROM descendants',TG_TABLE_SCHEMA,TG_TABLE_NAME,TG_TABLE_SCHEMA,TG_TABLE_NAME) INTO height USING NEW.tenant_id,NEW.id;
+ IF depth+height-1>lim THEN RAISE EXCEPTION 'invalid hierarchy'; END IF;
  RETURN NEW;
 END $$;
 CREATE TRIGGER tree BEFORE INSERT OR UPDATE ON organization.department FOR EACH ROW EXECUTE FUNCTION organization.validate_tree();
 CREATE TRIGGER tree BEFORE INSERT OR UPDATE ON knowledge.category FOR EACH ROW EXECUTE FUNCTION organization.validate_tree();
+-- Task3 persistence: role policy is canonical when present; membership-local data retains overrides/provenance.
+ALTER TABLE authz.role ADD COLUMN level int CHECK(level IN(1,2,3)), ADD COLUMN policies jsonb;
+ALTER TABLE authz.audit ADD COLUMN details jsonb;
+ALTER TABLE knowledge.category ADD COLUMN creator_id text, ADD COLUMN inherit_parent boolean NOT NULL DEFAULT false, ADD COLUMN force_children boolean NOT NULL DEFAULT false, ADD COLUMN grants jsonb NOT NULL DEFAULT '[]', ADD COLUMN college_id text NOT NULL DEFAULT 'main', ADD FOREIGN KEY(tenant_id,creator_id) REFERENCES organization.person;
+CREATE TABLE knowledge.course(tenant_id text,id text,category_id text NOT NULL,uploader_id text NOT NULL,created_by text NOT NULL,title text NOT NULL,enabled boolean NOT NULL DEFAULT true,deleted boolean NOT NULL DEFAULT false,published boolean NOT NULL DEFAULT false,accessible boolean NOT NULL DEFAULT true,custom_browse jsonb,payload text NOT NULL DEFAULT 'synthetic-course-bytes',PRIMARY KEY(tenant_id,id),FOREIGN KEY(tenant_id,category_id) REFERENCES knowledge.category,FOREIGN KEY(tenant_id,uploader_id) REFERENCES organization.person,FOREIGN KEY(tenant_id,created_by) REFERENCES organization.person);
+CREATE TABLE knowledge.classroom_member(tenant_id text,classroom_id text,person_id text,PRIMARY KEY(tenant_id,classroom_id,person_id),FOREIGN KEY(tenant_id,person_id) REFERENCES organization.person);
+CREATE TABLE training.face_to_face(tenant_id text,id text,owner_id text NOT NULL,created_by text NOT NULL,enabled boolean NOT NULL DEFAULT true,deleted boolean NOT NULL DEFAULT false,PRIMARY KEY(tenant_id,id),FOREIGN KEY(tenant_id,owner_id) REFERENCES organization.person,FOREIGN KEY(tenant_id,created_by) REFERENCES organization.person);
+CREATE OR REPLACE FUNCTION authz.freeze_dependents() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ IF pg_trigger_depth()>1 THEN RETURN COALESCE(NEW,OLD); END IF;
+ IF TG_TABLE_SCHEMA='authz' AND TG_TABLE_NAME='membership' THEN
+  WITH RECURSIVE d AS (SELECT id FROM authz.membership WHERE tenant_id=NEW.tenant_id AND source_id=NEW.id UNION SELECT m.id FROM authz.membership m JOIN d ON m.source_id=d.id WHERE m.tenant_id=NEW.tenant_id)
+  UPDATE authz.membership SET data=jsonb_set(data,'{provenance}','"recheck_required"') WHERE tenant_id=NEW.tenant_id AND id IN(SELECT id FROM d) AND data->>'provenance'<>'recheck_required';
+ ELSE
+  UPDATE authz.membership SET data=jsonb_set(data,'{provenance}','"recheck_required"') WHERE tenant_id=COALESCE(NEW.tenant_id,OLD.tenant_id) AND source_id IS NOT NULL AND data->>'provenance'<>'recheck_required';
+ END IF;
+ PERFORM knowledge.freeze_source_configs(COALESCE(NEW.tenant_id,OLD.tenant_id));
+ RETURN COALESCE(NEW,OLD);
+END $$;
+CREATE TRIGGER freeze_dependencies AFTER UPDATE ON authz.membership FOR EACH ROW EXECUTE FUNCTION authz.freeze_dependents();
+CREATE TRIGGER freeze_dependencies AFTER UPDATE OR DELETE ON authz.role FOR EACH ROW EXECUTE FUNCTION authz.freeze_dependents();
+CREATE TRIGGER freeze_dependencies AFTER INSERT OR UPDATE OR DELETE ON organization.department FOR EACH ROW EXECUTE FUNCTION authz.freeze_dependents();
+CREATE TRIGGER freeze_dependencies AFTER INSERT OR UPDATE OR DELETE ON organization.person FOR EACH ROW EXECUTE FUNCTION authz.freeze_dependents();
+CREATE TRIGGER freeze_dependencies AFTER INSERT OR UPDATE OR DELETE ON authz.company_grant FOR EACH ROW EXECUTE FUNCTION authz.freeze_dependents();
+CREATE TRIGGER freeze_dependencies AFTER INSERT OR DELETE ON knowledge.course FOR EACH ROW EXECUTE FUNCTION authz.freeze_dependents();
+CREATE TRIGGER freeze_object_dependencies AFTER UPDATE OF enabled,deleted,published,accessible,uploader_id ON knowledge.course FOR EACH ROW EXECUTE FUNCTION authz.freeze_dependents();
+CREATE TRIGGER freeze_dependencies AFTER INSERT OR UPDATE OR DELETE ON training.project FOR EACH ROW EXECUTE FUNCTION authz.freeze_dependents();
+CREATE TRIGGER freeze_dependencies AFTER INSERT OR UPDATE OR DELETE ON training.face_to_face FOR EACH ROW EXECUTE FUNCTION authz.freeze_dependents();
+
+CREATE OR REPLACE FUNCTION authz.validate_dependency() RETURNS trigger LANGUAGE plpgsql AS $$
+DECLARE bad boolean;
+BEGIN
+ IF NEW.source_id IS NOT NULL THEN
+ WITH RECURSIVE a AS (SELECT id,source_id FROM authz.membership WHERE tenant_id=NEW.tenant_id AND id=NEW.source_id UNION SELECT m.id,m.source_id FROM authz.membership m JOIN a ON m.id=a.source_id WHERE m.tenant_id=NEW.tenant_id)
+ SELECT EXISTS(SELECT 1 FROM a WHERE id=NEW.id) INTO bad;
+ IF bad OR NEW.source_id=NEW.id THEN RAISE EXCEPTION 'dependency cycle'; END IF;
+ END IF;
+ RETURN NEW;
+END $$;
+CREATE TRIGGER dependency_cycle BEFORE INSERT OR UPDATE OF source_id ON authz.membership FOR EACH ROW EXECUTE FUNCTION authz.validate_dependency();
+
+ALTER TABLE knowledge.category ADD COLUMN source_id text, ADD COLUMN provenance text NOT NULL DEFAULT 'system_origin', ADD FOREIGN KEY(tenant_id,source_id) REFERENCES authz.membership;
+ALTER TABLE knowledge.course ADD COLUMN custom_source_id text, ADD COLUMN custom_provenance text NOT NULL DEFAULT 'system_origin', ADD FOREIGN KEY(tenant_id,custom_source_id) REFERENCES authz.membership;
+
+ALTER TABLE knowledge.category ADD COLUMN authority_snapshot jsonb;
+ALTER TABLE knowledge.course ADD COLUMN custom_snapshot jsonb;
+
+-- Owning-module transaction port; called by the central dependency trigger in the same transaction.
+CREATE OR REPLACE FUNCTION knowledge.freeze_source_configs(tenant text) RETURNS void LANGUAGE plpgsql AS $$
+BEGIN
+ UPDATE knowledge.category SET provenance='recheck_required' WHERE tenant_id=tenant AND source_id IS NOT NULL AND provenance<>'recheck_required';
+ UPDATE knowledge.course SET custom_provenance='recheck_required' WHERE tenant_id=tenant AND custom_source_id IS NOT NULL AND custom_provenance<>'recheck_required';
+END $$;
+
+CREATE TABLE knowledge.policy_audit(id bigserial PRIMARY KEY,tenant_id text REFERENCES authz.revision,target_id text,kind text NOT NULL CHECK(kind IN('category','custom')),state text NOT NULL CHECK(state IN('active','suspended')),source_id text NOT NULL,revision bigint NOT NULL,snapshot jsonb,at timestamptz NOT NULL DEFAULT clock_timestamp(),FOREIGN KEY(tenant_id,source_id) REFERENCES authz.membership);

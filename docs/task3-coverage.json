@@ -1,0 +1,1125 @@
+{
+  "sourceManifest": "docs/acceptance-manifest.json",
+  "manifestModified": false,
+  "scope": "Task3 focused observations only; no full AUTH group pass",
+  "rawSha256": "3780aadcd97babd6ea7738d767115e2eb3deee05b942bab56e49d94dbd651edf",
+  "observations": 188,
+  "literalMismatches": 0,
+  "subcases": [
+    {
+      "id": "AUTH-T07-01",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 34,
+          "candidate": "native",
+          "name": "AUTH-T07-01 level1"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 60,
+          "candidate": "casbin",
+          "name": "AUTH-T07-01 level1"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T07-02",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 41,
+          "candidate": "native",
+          "name": "AUTH-T07-02 level1 ordinary edit"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 67,
+          "candidate": "casbin",
+          "name": "AUTH-T07-02 level1 ordinary edit"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T07-03",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 42,
+          "candidate": "native",
+          "name": "AUTH-T07-03 samelevel"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 46,
+          "candidate": "native",
+          "name": "AUTH-T07-03 level3 samelevel edit"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 68,
+          "candidate": "casbin",
+          "name": "AUTH-T07-03 samelevel"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 72,
+          "candidate": "casbin",
+          "name": "AUTH-T07-03 level3 samelevel edit"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T07-04",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 43,
+          "candidate": "native",
+          "name": "AUTH-T07-04 higher"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 47,
+          "candidate": "native",
+          "name": "AUTH-T07-04 level3 higher edit"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 69,
+          "candidate": "casbin",
+          "name": "AUTH-T07-04 higher"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 73,
+          "candidate": "casbin",
+          "name": "AUTH-T07-04 level3 higher edit"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T07-05",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 37,
+          "candidate": "native",
+          "name": "AUTH-T07-05 node ceiling"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 38,
+          "candidate": "native",
+          "name": "AUTH-T07-05 action ceiling"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 63,
+          "candidate": "casbin",
+          "name": "AUTH-T07-05 node ceiling"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 64,
+          "candidate": "casbin",
+          "name": "AUTH-T07-05 action ceiling"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T07-06",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 39,
+          "candidate": "native",
+          "name": "AUTH-T07-06 literal D2 outside D1"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 65,
+          "candidate": "casbin",
+          "name": "AUTH-T07-06 literal D2 outside D1"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 161,
+          "candidate": "native",
+          "name": "AUTH-T20-01 initial literal cap"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 168,
+          "candidate": "casbin",
+          "name": "AUTH-T20-01 initial literal cap"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 175,
+          "candidate": "native",
+          "name": "AUTH-T07 recipient D2 exceeds source D1"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 180,
+          "candidate": "casbin",
+          "name": "AUTH-T07 recipient D2 exceeds source D1"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T07-07",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 40,
+          "candidate": "native",
+          "name": "AUTH-T07-07 cannot borrow B phone"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 66,
+          "candidate": "casbin",
+          "name": "AUTH-T07-07 cannot borrow B phone"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T07-08",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 44,
+          "candidate": "native",
+          "name": "AUTH-T07-08 owned but nondelegable"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 70,
+          "candidate": "casbin",
+          "name": "AUTH-T07-08 owned but nondelegable"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T08-01",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 101,
+          "candidate": "native",
+          "name": "AUTH-T08 knowledge.course.browse"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 116,
+          "candidate": "casbin",
+          "name": "AUTH-T08 knowledge.course.browse"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T08-02",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 1,
+          "candidate": "native",
+          "name": "SELF course uploader"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 6,
+          "candidate": "casbin",
+          "name": "SELF course uploader"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 102,
+          "candidate": "native",
+          "name": "AUTH-T08 knowledge.course.maintain"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 117,
+          "candidate": "casbin",
+          "name": "AUTH-T08 knowledge.course.maintain"
+        }
+      ],
+      "limitation": "Query authorization and draft SELF maintenance observed; full product maintenance workflow remains unaudited."
+    },
+    {
+      "id": "AUTH-T08-03",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 103,
+          "candidate": "native",
+          "name": "AUTH-T08 knowledge.course.distribute"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 118,
+          "candidate": "casbin",
+          "name": "AUTH-T08 knowledge.course.distribute"
+        }
+      ],
+      "limitation": "Independent distribution query permission observed; synthetic distribute command has no real delivery workflow."
+    },
+    {
+      "id": "AUTH-T08-04",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 104,
+          "candidate": "native",
+          "name": "AUTH-T08 knowledge.course.download"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 105,
+          "candidate": "native",
+          "name": "AUTH-T08 protected bytes"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 106,
+          "candidate": "native",
+          "name": "AUTH-T08 browse never downloads"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 119,
+          "candidate": "casbin",
+          "name": "AUTH-T08 knowledge.course.download"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 120,
+          "candidate": "casbin",
+          "name": "AUTH-T08 protected bytes"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 121,
+          "candidate": "casbin",
+          "name": "AUTH-T08 browse never downloads"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T08-05",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 105,
+          "candidate": "native",
+          "name": "AUTH-T08 protected bytes"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 120,
+          "candidate": "casbin",
+          "name": "AUTH-T08 protected bytes"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T08-06",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 107,
+          "candidate": "native",
+          "name": "AUTH-T08 current unpublish denies"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 122,
+          "candidate": "casbin",
+          "name": "AUTH-T08 current unpublish denies"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T09-01",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 108,
+          "candidate": "native",
+          "name": "AUTH-T09 locked direct"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 123,
+          "candidate": "casbin",
+          "name": "AUTH-T09 locked direct"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 173,
+          "candidate": "native",
+          "name": "AUTH-T09 forced child write"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 178,
+          "candidate": "casbin",
+          "name": "AUTH-T09 forced child write"
+        }
+      ],
+      "limitation": "Forced-ancestor lock branch observed. Separate inherit_parent-only and concurrent toggle scenarios remain unexecuted."
+    },
+    {
+      "id": "AUTH-T09-02",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 108,
+          "candidate": "native",
+          "name": "AUTH-T09 locked direct"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 109,
+          "candidate": "native",
+          "name": "AUTH-T09 locked import"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 110,
+          "candidate": "native",
+          "name": "AUTH-T09 locked custom"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 123,
+          "candidate": "casbin",
+          "name": "AUTH-T09 locked direct"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 124,
+          "candidate": "casbin",
+          "name": "AUTH-T09 locked import"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 125,
+          "candidate": "casbin",
+          "name": "AUTH-T09 locked custom"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T09-03",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 108,
+          "candidate": "native",
+          "name": "AUTH-T09 locked direct"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 123,
+          "candidate": "casbin",
+          "name": "AUTH-T09 locked direct"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T09-04",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 109,
+          "candidate": "native",
+          "name": "AUTH-T09 locked import"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 124,
+          "candidate": "casbin",
+          "name": "AUTH-T09 locked import"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T09-05",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 22,
+          "candidate": "native",
+          "name": "AUTH-T09 new custom subject works"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 23,
+          "candidate": "native",
+          "name": "AUTH-T09 old browse replaced"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 24,
+          "candidate": "native",
+          "name": "AUTH-T09 custom retains knowledge.course.maintain"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 25,
+          "candidate": "native",
+          "name": "AUTH-T09 custom retains knowledge.course.distribute"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 26,
+          "candidate": "native",
+          "name": "AUTH-T09 custom retains knowledge.course.download"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 28,
+          "candidate": "casbin",
+          "name": "AUTH-T09 new custom subject works"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 29,
+          "candidate": "casbin",
+          "name": "AUTH-T09 old browse replaced"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 30,
+          "candidate": "casbin",
+          "name": "AUTH-T09 custom retains knowledge.course.maintain"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 31,
+          "candidate": "casbin",
+          "name": "AUTH-T09 custom retains knowledge.course.distribute"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 32,
+          "candidate": "casbin",
+          "name": "AUTH-T09 custom retains knowledge.course.download"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T09-06",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 110,
+          "candidate": "native",
+          "name": "AUTH-T09 locked custom"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 125,
+          "candidate": "casbin",
+          "name": "AUTH-T09 locked custom"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T09-07",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 113,
+          "candidate": "native",
+          "name": "AUTH-T09 append preview"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 114,
+          "candidate": "native",
+          "name": "AUTH-T09 append command"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 115,
+          "candidate": "native",
+          "name": "AUTH-T09 parent retains original allow"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 128,
+          "candidate": "casbin",
+          "name": "AUTH-T09 append preview"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 129,
+          "candidate": "casbin",
+          "name": "AUTH-T09 append command"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 130,
+          "candidate": "casbin",
+          "name": "AUTH-T09 parent retains original allow"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T09-08",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 101,
+          "candidate": "native",
+          "name": "AUTH-T08 knowledge.course.browse"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 116,
+          "candidate": "casbin",
+          "name": "AUTH-T08 knowledge.course.browse"
+        }
+      ],
+      "limitation": "The browse row set contains the classroom course using the same KnowledgeService.courses SQL. Other future subjects/resources remain unexecuted."
+    },
+    {
+      "id": "AUTH-T09-09",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 4,
+          "candidate": "native",
+          "name": "AUTH-T09 depth10"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 5,
+          "candidate": "native",
+          "name": "AUTH-T09 depth11"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 9,
+          "candidate": "casbin",
+          "name": "AUTH-T09 depth10"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 10,
+          "candidate": "casbin",
+          "name": "AUTH-T09 depth11"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T20-01",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 161,
+          "candidate": "native",
+          "name": "AUTH-T20-01 initial literal cap"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 162,
+          "candidate": "native",
+          "name": "AUTH-T20-01 populated B branch move"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 163,
+          "candidate": "native",
+          "name": "AUTH-T20-01 no unchecked expansion"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 164,
+          "candidate": "native",
+          "name": "AUTH-T20-01 frozen parent cannot regrant"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 165,
+          "candidate": "native",
+          "name": "AUTH-T20-01 explicit parent and child recheck"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 168,
+          "candidate": "casbin",
+          "name": "AUTH-T20-01 initial literal cap"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 169,
+          "candidate": "casbin",
+          "name": "AUTH-T20-01 populated B branch move"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 170,
+          "candidate": "casbin",
+          "name": "AUTH-T20-01 no unchecked expansion"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 171,
+          "candidate": "casbin",
+          "name": "AUTH-T20-01 frozen parent cannot regrant"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 172,
+          "candidate": "casbin",
+          "name": "AUTH-T20-01 explicit parent and child recheck"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T20-02",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 51,
+          "candidate": "native",
+          "name": "AUTH-T20 source shrink edit"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 77,
+          "candidate": "casbin",
+          "name": "AUTH-T20 source shrink edit"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 177,
+          "candidate": "native",
+          "name": "AUTH-T20 freeze committed with source shrink"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 182,
+          "candidate": "casbin",
+          "name": "AUTH-T20 freeze committed with source shrink"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T20-03",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 13,
+          "candidate": "native",
+          "name": "category source change freezes atomically"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 16,
+          "candidate": "casbin",
+          "name": "category source change freezes atomically"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 135,
+          "candidate": "native",
+          "name": "AUTH-T20 frozen after org update"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 138,
+          "candidate": "native",
+          "name": "AUTH-T20 populated move freeze"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 143,
+          "candidate": "casbin",
+          "name": "AUTH-T20 frozen after org update"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 146,
+          "candidate": "casbin",
+          "name": "AUTH-T20 populated move freeze"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T20-04",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 53,
+          "candidate": "native",
+          "name": "AUTH-T20 restored explicit active"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 79,
+          "candidate": "casbin",
+          "name": "AUTH-T20 restored explicit active"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 136,
+          "candidate": "native",
+          "name": "AUTH-T20 explicit safe recheck"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 144,
+          "candidate": "casbin",
+          "name": "AUTH-T20 explicit safe recheck"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 151,
+          "candidate": "native",
+          "name": "categories explicit original-source restore"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 152,
+          "candidate": "native",
+          "name": "courses explicit original-source restore"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 156,
+          "candidate": "casbin",
+          "name": "categories explicit original-source restore"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 157,
+          "candidate": "casbin",
+          "name": "courses explicit original-source restore"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T20-05",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 52,
+          "candidate": "native",
+          "name": "AUTH-T20 exceeds source suspended"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 78,
+          "candidate": "casbin",
+          "name": "AUTH-T20 exceeds source suspended"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 149,
+          "candidate": "native",
+          "name": "categories original-source shrink suspends"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 150,
+          "candidate": "native",
+          "name": "courses original-source shrink suspends"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 154,
+          "candidate": "casbin",
+          "name": "categories original-source shrink suspends"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 155,
+          "candidate": "casbin",
+          "name": "courses original-source shrink suspends"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T20-06",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 12,
+          "candidate": "native",
+          "name": "category stores source cap version"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 15,
+          "candidate": "casbin",
+          "name": "category stores source cap version"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 54,
+          "candidate": "native",
+          "name": "AUTH-T20 audit states"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 80,
+          "candidate": "casbin",
+          "name": "AUTH-T20 audit states"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 153,
+          "candidate": "native",
+          "name": "knowledge policy recheck audit"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 158,
+          "candidate": "casbin",
+          "name": "knowledge policy recheck audit"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T24-01",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 39,
+          "candidate": "native",
+          "name": "AUTH-T07-06 literal D2 outside D1"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 65,
+          "candidate": "casbin",
+          "name": "AUTH-T07-06 literal D2 outside D1"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 174,
+          "candidate": "native",
+          "name": "AUTH-T09 category cannot borrow admin"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 179,
+          "candidate": "casbin",
+          "name": "AUTH-T09 category cannot borrow admin"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T24-02",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 38,
+          "candidate": "native",
+          "name": "AUTH-T07-05 action ceiling"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 40,
+          "candidate": "native",
+          "name": "AUTH-T07-07 cannot borrow B phone"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 49,
+          "candidate": "native",
+          "name": "AUTH-T24 appointment never serves selected membership"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 64,
+          "candidate": "casbin",
+          "name": "AUTH-T07-05 action ceiling"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 66,
+          "candidate": "casbin",
+          "name": "AUTH-T07-07 cannot borrow B phone"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 75,
+          "candidate": "casbin",
+          "name": "AUTH-T24 appointment never serves selected membership"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T24-03",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 89,
+          "candidate": "native",
+          "name": "A revoke committed"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 90,
+          "candidate": "native",
+          "name": "B next new download denies old L1/L2"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 95,
+          "candidate": "casbin",
+          "name": "A revoke committed"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 96,
+          "candidate": "casbin",
+          "name": "B next new download denies old L1/L2"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 177,
+          "candidate": "native",
+          "name": "AUTH-T20 freeze committed with source shrink"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 182,
+          "candidate": "casbin",
+          "name": "AUTH-T20 freeze committed with source shrink"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    },
+    {
+      "id": "AUTH-T24-04",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 56,
+          "candidate": "native",
+          "name": "AUTH-T24 recreated source"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 58,
+          "candidate": "native",
+          "name": "AUTH-T24 old dependency never revives"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 82,
+          "candidate": "casbin",
+          "name": "AUTH-T24 recreated source"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 84,
+          "candidate": "casbin",
+          "name": "AUTH-T24 old dependency never revives"
+        }
+      ],
+      "limitation": "New membership leaves old dependency suspended; full separate UI source-reselection flow is not implemented."
+    },
+    {
+      "id": "AUTH-T24-05",
+      "status": "focused-observation-pending-independent-audit",
+      "evidence": [
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 57,
+          "candidate": "native",
+          "name": "AUTH-T24 fresh membership has new ID and no old override"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 83,
+          "candidate": "casbin",
+          "name": "AUTH-T24 fresh membership has new ID and no old override"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 134,
+          "candidate": "native",
+          "name": "AUTH-T24 local empty override retained"
+        },
+        {
+          "path": "evidence/raw/task3-final-observations2.jsonl",
+          "line": 142,
+          "candidate": "casbin",
+          "name": "AUTH-T24 local empty override retained"
+        }
+      ],
+      "limitation": "Full AUTH group, browser and performance gate remain unpassed."
+    }
+  ],
+  "otherRequiredSubcases": "All other required subcases remain as recorded in the unchanged 168-point manifest and Task2 evidence; Task3 does not upgrade them."
+}

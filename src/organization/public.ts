@@ -20,3 +20,11 @@ export class OrganizationPort implements OrganizationPublic {
         return specs.map(spec => resolveScope(spec, org));
     }
 }
+
+/** Minimal facts only; deliberately never calls authorization. */
+export class OrganizationFactsPort extends OrganizationPort {
+    constructor(private factsDb: DB) { super(factsDb); }
+    async person(identity: import('../infrastructure/db.js').Identity): Promise<import('../contracts/ports.js').PersonFacts | undefined> {
+        return (await query(this.factsDb, 'SELECT id,tenant_id AS "tenantId",company_id AS "companyId",department_id AS "departmentId",internal,enabled,deleted FROM organization.person WHERE tenant_id=$1 AND id=$2', [identity.tenantId, identity.personId])).rows[0];
+    }
+}

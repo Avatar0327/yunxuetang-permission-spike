@@ -47,7 +47,9 @@ export interface NodePolicy {
     scope: Scope;
     delegableActions: string[];
 }
+export interface DelegationCap { nodeId:string; action:string; objectIds:string[]; rawFields:string[] }
 export interface Membership {
+    delegation?: { sourceMembershipId:string; sourceActorId:string; revision:number; caps:DelegationCap[] };
     id: string;
     tenantId: string;
     personId: string;

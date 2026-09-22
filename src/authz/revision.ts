@@ -1,9 +1,13 @@
+import { KnowledgeFactsPort,effectiveCategory } from '../knowledge/public.js';
+import { companyCap } from './scope.js';
 import { createHash } from 'node:crypto';
 import type { Context, Membership, Appointment } from './contracts.js';
-import { normalizePolicy, buildQueryPolicy, backendCapabilities } from './policy.js';
+import { normalizePolicy, normalizeCatalog, activeMembership, buildQueryPolicy, backendCapabilities } from './policy.js';
 import { nodes, appointmentCapabilities } from './registry.js';
 import { selectSources, type CandidateName } from './bulk-candidate.js';
-import { OrganizationPort } from '../organization/public.js';
+import { OrganizationFactsPort } from '../organization/public.js';
+import { TrainingFactsPort } from '../training/public.js';
+import type { AuthorityPorts } from '../contracts/ports.js';
 import { SessionCache } from './cache.js';
 import { pool, query, requireTransaction, Denied, Unavailable, type DB, type Identity } from '../infrastructure/db.js';
 interface Snapshot {
@@ -12,7 +16,27 @@ interface Snapshot {
     appointments: Appointment[];
 }
 export class Authority {
-    constructor(public cache: SessionCache) { }
+    constructor(public cache: SessionCache, public ports: AuthorityPorts = { organization: db => new OrganizationFactsPort(db), training: db => new TrainingFactsPort(db), knowledge: db => new KnowledgeFactsPort(db) }) { }
+    async sourceMembershipIdentity(tenantId:string,id:string,db:DB):Promise<Identity|undefined>{
+        return (await query(db,'SELECT tenant_id AS \"tenantId\",person_id AS \"personId\" FROM authz.membership WHERE tenant_id=$1 AND id=$2',[tenantId,id])).rows[0];
+    }
+    async roleExists(tenant:string,id:string,db:DB){return (await query(db,'SELECT 1 FROM authz.role WHERE tenant_id=$1 AND id=$2',[tenant,id])).rows.length>0;}
+    async memberships(identity: Identity, db: DB): Promise<Membership[]> {
+        return (await query(db, `SELECT m.data || CASE WHEN r.policies IS NULL THEN '{}'::jsonb ELSE jsonb_build_object('policies',r.policies,'level',r.level) END AS data FROM authz.membership m JOIN authz.role r ON r.tenant_id=m.tenant_id AND r.id=m.role_id WHERE m.tenant_id=$1 AND m.person_id=$2`, [identity.tenantId, identity.personId])).rows.map(r=>r.data);
+    }
+    async freezeDerived(tenantId: string, db: DB) {
+        requireTransaction(db);
+        await query(db, `UPDATE authz.membership SET data=jsonb_set(data,'{provenance}','"recheck_required"') WHERE tenant_id=$1 AND source_id IS NOT NULL`, [tenantId]);
+    }
+    async revokeMembership(identity: Identity, candidate: CandidateName, id: string, db: DB) {
+        const a = await this.plan(identity, candidate, 'administration', 'authz.membership.revoke', db, true);
+        const membership = (await query(db, 'SELECT person_id FROM authz.membership WHERE tenant_id=$1 AND id=$2', [identity.tenantId, id])).rows[0];
+        const target = membership && await this.ports.organization(db).person({ tenantId: identity.tenantId, personId: membership.person_id });
+        if (!target || !companyCap(a.context).includes(target.companyId)) throw new Denied();
+        await query(db, `UPDATE authz.membership SET data=jsonb_set(data,'{active}','false') WHERE tenant_id=$1 AND id=$2`, [identity.tenantId, id]);
+        await query(db, `WITH RECURSIVE dependents AS (SELECT id FROM authz.membership WHERE tenant_id=$1 AND source_id=$2 UNION SELECT m.id FROM authz.membership m JOIN dependents d ON m.source_id=d.id WHERE m.tenant_id=$1) UPDATE authz.membership SET data=jsonb_set(data,'{provenance}','"recheck_required"') WHERE tenant_id=$1 AND id IN(SELECT id FROM dependents)`, [identity.tenantId, id]);
+        return { revoked: true, revision: (await this.current(identity, db)).revision };
+    }
     async token(token: string): Promise<Identity> { try {
         const r = await query(pool, 'select tenant_id as "tenantId",person_id as "personId" from authz.session where token_hash=$1', [createHash('sha256').update(token).digest('hex')]);
         if (!r.rows[0])
@@ -33,13 +57,14 @@ export class Authority {
                 // actor and company facts in the next statement's fresh snapshot.
                 await query(db, 'SELECT r.revision FROM authz.revision r WHERE r.tenant_id=$1 FOR UPDATE OF r', [identity.tenantId]);
             }
-            const r = await query(db, `select r.revision,r.schema_version,p.*,coalesce((select array_agg(company_id order by company_id) from authz.company_grant g where g.tenant_id=p.tenant_id and g.person_id=p.id),'{}') companies from authz.revision r join organization.person p on p.tenant_id=r.tenant_id where r.tenant_id=$1 and p.id=$2`, [identity.tenantId, identity.personId]);
-            const p = r.rows[0];
-            if (!p || !p.enabled || p.deleted)
-                throw new Denied();
-            if (p.schema_version !== 1)
-                throw new Unavailable();
-            return { tenantId: p.tenant_id, personId: p.id, revision: Number(p.revision), enabled: p.enabled, deleted: p.deleted, authenticated: true, internal: p.internal, companyId: p.company_id, companyIds: p.companies, departmentId: p.department_id ?? undefined };
+            const r = (await query(db, `SELECT revision,schema_version,coalesce((SELECT array_agg(company_id ORDER BY company_id) FROM authz.company_grant WHERE tenant_id=$1 AND person_id=$2),'{}') companies FROM authz.revision WHERE tenant_id=$1`, [identity.tenantId, identity.personId])).rows[0];
+            const p = await this.ports.organization(db).person(identity);
+            if (!p || !p.enabled || p.deleted) throw new Denied();
+            if (!r || r.schema_version !== 1) throw new Unavailable();
+            // Both facts reads follow the revision-only lock; the revision fence also protects nonlocking reads.
+            const after = (await query(db, 'SELECT revision FROM authz.revision WHERE tenant_id=$1', [identity.tenantId])).rows[0];
+            if (!after || Number(after.revision) !== Number(r.revision)) throw new Unavailable();
+            return { tenantId: p.tenantId, personId: p.id, revision: Number(r.revision), enabled: p.enabled, deleted: p.deleted, authenticated: true, internal: p.internal, companyId: p.companyId, companyIds: r.companies, departmentId: p.departmentId ?? undefined };
         }
         catch (e) {
             if (e instanceof Denied || e instanceof Unavailable)
@@ -58,9 +83,9 @@ export class Authority {
             if (cached.value)
                 snapshot = JSON.parse(cached.value);
             else {
-                const m = await query(db, 'select data from authz.membership where tenant_id=$1 and person_id=$2', [context.tenantId, context.personId]);
-                const a = await query(db, 'select id,tenant_id as "tenantId",person_id as "personId",project_id as "projectId",active from training.appointment where tenant_id=$1 and person_id=$2', [context.tenantId, context.personId]);
-                snapshot = { schemaVersion: 1, memberships: m.rows.map(r => r.data), appointments: a.rows };
+                const memberships = await this.memberships(context, db);
+                const appointments = await this.ports.training(db).appointments(context);
+                snapshot = { schemaVersion: 1, memberships, appointments };
             }
             if (snapshot.schemaVersion !== 1 || !Array.isArray(snapshot.memberships) || !Array.isArray(snapshot.appointments))
                 throw new Unavailable();
@@ -86,10 +111,23 @@ export class Authority {
         const loaded = await this.load(identity, db, lock, cold);
         if (!nodes.some(n => n.id === nodeId && n.actions.includes(action)))
             throw new Denied();
-        const grants = await selectSources(candidate, loaded.context, loaded.grants, nodeId, action);
+        let allGrants=loaded.grants;
+        if(nodeId==='course'){
+            const facts=await (this.ports.knowledge?.(db)??new KnowledgeFactsPort(db)).catalogs(identity);
+            const memberships=await this.memberships(identity,db);
+            const subjectResolvers={classroom_member:(s:import('./contracts.js').Subject)=>facts.classroomIds.includes(s.id),role:(s:import('./contracts.js').Subject)=>memberships.some(m=>m.roleId===s.id&&activeMembership(m,loaded.context))};
+            const catalogGrants=facts.courses.flatMap(course=>{
+                const catalog=effectiveCategory(facts.categories,course.category_id);
+                // Forced ancestry always wins over stale custom policy saved before the lock.
+                const customBrowse=catalog.lockedBy?undefined:course.custom_browse??undefined;
+                return normalizeCatalog({context:loaded.context,nodes,nodeId:'course',courseId:course.id,catalog:{...catalog,tenantId:identity.tenantId,grants:catalog.grants.map(g=>({...g,id:course.id+':'+g.id}))},customBrowse:customBrowse?.map(g=>({...g,id:course.id+':custom:'+g.id})),subjectResolvers});
+            });
+            allGrants=[...allGrants,...catalogGrants];
+        }
+        const grants = await selectSources(candidate, loaded.context, allGrants, nodeId, action);
         if (!grants.length)
             throw new Denied();
-        const plan = await buildQueryPolicy({ context: loaded.context, nodes, grants, nodeId, action, organization: new OrganizationPort(db) });
+        const plan = await buildQueryPolicy({ context: loaded.context, nodes, grants, nodeId, action, organization: this.ports.organization(db) });
         if ((await this.current(identity, db)).revision !== plan.revision)
             throw new Unavailable();
         return { ...loaded, plan, permissionMs: performance.now() - start };

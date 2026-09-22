@@ -18,7 +18,9 @@
     "functional": "tsx scripts/run-functional.ts",
     "faults": "tsx scripts/run-faults.ts",
     "benchmark": "tsx scripts/benchmark.ts",
-    "explain": "tsx scripts/explain.ts"
+    "explain": "tsx scripts/explain.ts",
+    "test:task3": "tsx --test --test-concurrency=1 test/task3-*.test.ts test/module-boundaries.test.ts",
+    "functional:task3": "tsx --test test/task3-delivery.test.ts"
   },
   "dependencies": {
     "@nestjs/common": "11.2.5",

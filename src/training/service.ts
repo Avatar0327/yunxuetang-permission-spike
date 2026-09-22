@@ -35,8 +35,8 @@ export class TrainingService {
     async appoint(identity: Identity, candidate: CandidateName, personId: string, projectId: string, active: boolean) {
         return transaction(async (db) => {
             const { auth } = await this.projects(identity, candidate, projectId, db, 'training.project.appoint', true);
-            const p = (await query(db, 'SELECT company_id FROM organization.person WHERE tenant_id=$1 AND id=$2', [identity.tenantId, personId])).rows[0];
-            if (!p || !companyCap(auth.context).includes(p.company_id))
+            const p = await this.authority.ports.organization(db).person({tenantId: identity.tenantId, personId});
+            if (!p || !companyCap(auth.context).includes(p.companyId))
                 throw new Denied();
             const id = `${personId}-${projectId}`;
             await query(db, 'INSERT INTO training.appointment(tenant_id,id,person_id,project_id,active) VALUES($1,$2,$3,$4,$5) ON CONFLICT(tenant_id,id) DO UPDATE SET active=excluded.active', [identity.tenantId, id, personId, projectId, active]);
@@ -44,4 +44,12 @@ export class TrainingService {
         });
     }
     async media(identity: Identity, candidate: CandidateName, id: string) { await this.projects(identity, candidate, id, pool, 'training.project.download'); return { fragment: 'synthetic-media-segment', projectId: id }; }
+    async faceToFace(identity:Identity,candidate:CandidateName,id?:string){
+        const {plan}=await this.authority.plan(identity,candidate,'face-to-face','training.face-to-face.view');
+        const c=compile(plan,{id:'id',ownerId:'owner_id',enabled:'enabled',deleted:'deleted'});
+        const where=c.where+(id?` AND r.id=${c.bind(id)}`:'');
+        const rows=(await query(pool,`SELECT r.id FROM training.face_to_face r WHERE ${where} ORDER BY r.id`,c.values)).rows;
+        if(id&&!rows.length)throw new Denied();return {rows,count:rows.length};
+    }
+
 }

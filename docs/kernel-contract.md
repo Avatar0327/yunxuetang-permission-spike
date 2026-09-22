@@ -90,3 +90,10 @@ The trusted resolveObjects port returns ObjectSet with tenantId/actorId/revision
 ## Evidence and limitations
 
 `npm run test:semantic` tests independently literal expected IDs/fields on both engines. Set SEMANTIC_EVIDENCE to an output JSONL filename for detailed shared-helper comparisons. `npm run bench:kernel` prints actual candidate microtimings and versions, including model setup cost; these are not HTTP/SQL performance numbers or SLA evidence. Raw RED/GREEN/audit/microbench evidence lives in evidence/raw (ignored by Git), with commands in the task report. Exact runtime dependencies are locked; csv-parse 7.0.2 overrides Casbin's vulnerable dependency and the exercised model path passes tests. File-backed CSV adapters are not part of this candidate.
+
+
+## Task3 persistence extension (bounded milestone)
+
+The earlier Task1/Task2 future-work statements above are historical boundaries. Task3 now supplies source-owned facts/projection ports and SQL/HTTP services described in `task3-ports.md`. `Membership.delegation` retains original selected membership/actor, revision and `DelegationCap[]` (node/action/object IDs/raw fields); normalization intersects those saved object caps with current scope. Internal company caps are **own company union explicit grants**, per authoritative 02 §5; external actors remain own-company-only.
+
+RoleService create/edit/addMember/recheck enforce selected-source delegation and recipient-relative actual sets, canonical role policy fanout, local override preservation, cycles and source-ID reincarnation. KnowledgeService uses the same central course query for public/user/role/classroom subjects; persisted inheritance/custom policies, locked import/append commands and protected bytes use authority transactions. `POST /categories/:id/recheck` and `/courses/:id/recheck` follow the stored original membership and audit active/suspended, as does membership recheck. Full AUTH-group/UI/performance acceptance is still pending.

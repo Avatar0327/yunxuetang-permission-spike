@@ -20,7 +20,7 @@ try {
         for (const id of ['M', 'X', 'Y', 'L', 'Z', 'disabled', 'deleted'])
             await db.query('INSERT INTO authz.session VALUES($1,$2,$3)', [createHash('sha256').update('spike-' + id).digest('hex'), 'T1', id]);
         await db.query('UPDATE authz.revision SET revision=$1', [Date.now()]);
-        for (const table of ['organization.person', 'organization.department', 'authz.company_grant', 'authz.membership', 'training.appointment', 'training.project', 'training.roster', 'knowledge.category'])
+        for (const table of ['organization.person', 'organization.department', 'authz.company_grant', 'authz.membership', 'training.appointment', 'training.project', 'training.roster', 'knowledge.category', 'authz.role', 'knowledge.course', 'knowledge.classroom_member', 'training.face_to_face'])
             await db.query(`CREATE TRIGGER revision AFTER INSERT OR UPDATE OR DELETE ON ${table} FOR EACH ROW EXECUTE FUNCTION authz.bump()`);
     });
     await pool.query('ANALYZE');

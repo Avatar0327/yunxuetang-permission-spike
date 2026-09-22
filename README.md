@@ -29,8 +29,8 @@ The API binds 0.0.0.0. The synthetic UI is `/` and bundled Vue3/ElementPlus asse
 - `GET /projects`, `/projects/:id`, `/projects/:id/roster`, `/projects/:id/media/:segment`.
 - `POST /projects/:id` with `{title?,teamEnabled?}`: whole-project authority with all roster companies required. Team toggle persistence is present; actual team enrollment mutation is not.
 - `POST /appointments` with `{personId,projectId,active}`: exact registered appointment command capability, company cap and transactional revision bump.
-- `POST /memberships/:id/revoke`: revoke source and freeze existing dependency descendants. Creating/delegating/rechecking those dependencies is not implemented.
-- `POST /people/:id` with `{departmentId?,managerId?,companyId?,enabled?,deleted?}`: central authority and synchronous current report projection delivery; historical facts stay immutable. Clearing nullable relationships is not implemented.
+- `POST /memberships/:id/revoke`: revoke source and freeze existing dependency descendants. Role creation/edit/recheck are implemented below.
+- `POST /people/:id` with `{departmentId?,managerId?,companyId?,enabled?,deleted?}`: central authority and synchronous ReportProjection public-port delivery; historical facts stay immutable. Clearing nullable relationships is not implemented.
 - `POST /exports` with report query options; `POST /exports/:id/execute`; `GET /exports/:id/claim`. Exports are report exports, not project exports. Every phase reauthorizes; any tenant revision change invalidates an old job conservatively. Payload remains in the protected database. The runner is a synthetic inline execution route, not a durable queue.
 
 Responses include synthetic evidence metadata: instance, candidate, request/response time, query count; report data adds revision, sources, actual cache state, permission and data milliseconds. Error responses contain only safe copy and timing/instance metadata. Production observability design is not claimed here.
@@ -62,3 +62,31 @@ Set matching candidate/cache environment on **both API processes** before the ru
 The API permission metric includes token lookup plus authoritative account/revision reads, live Redis operation, policy cache load/build, candidate source selection, bulk scope resolution and plan validation/compilation up to the repository boundary. SQL compile time is included separately by the service. List data time includes count and list SQL; transport and JSON serialization appear in end-to-end latency. The seed fixture and common semantics are shared. Casbin independently selects genuine static tenant/actor/node/action/revision/source policy rows, then common SQL handles each source's row scope and fields. No Native allow result is supplied to Casbin, and no engine is called per returned row.
 
 Raw evidence is intentionally gitignored and stays under `evidence/raw`; task report links exact runs. Browser QA, capped long windows, full matrix completion and final Go/No-Go remain controller work after follow-up implementation.
+
+
+## Task 3: persisted knowledge and selected-source delegation
+
+This adds a bounded domain milestone, not formal B1 or an overall Go. `docs/task3-coverage.json` maps focused observations; the 168-point acceptance manifest remains unchanged; browser and full performance gates remain pending. `docs/task3-ports.md` describes public boundaries and remaining split/deployment work.
+
+New commands (synthetic authenticated session still required):
+
+- `POST /roles` accepts `{id?,level:2|3,managementRoleMembershipId,policies,memberPersonIds?}`. Every policy uses registered `nodeId,navigation,actions,rawFields,scope,delegableActions`; grants are resolved from the single selected source. Same/higher restriction applies to editing only.
+- `POST /roles/:id` updates canonical policy and all memberships, preserving local overrides and lifecycle status. `POST /roles/:id/members` grants a new membership ID; old overrides never attach. `POST /memberships/:id/recheck` takes the acting `managementRoleMembershipId`, rechecks the stored original source, then audits `active` or `suspended`.
+- `POST /departments/:id/move` takes `{parentId:string|null}` and validates the entire subtree's depth, then freezes dependent configurations in the same transaction. Company-qualified department constraints remain Task 4.
+- `POST /categories` accepts `{id,parentId?,inheritParent?,forceChildren?,grants,managementRoleMembershipId}`. Each grant has an exact course action and a subject `{type,id}`. Supported subjects are same-tenant authenticated `public` (browse only), user, role, and the synthetic `classroom_member` relation.
+- `POST /categories/:id` replaces local policy; `/categories/import` takes `{updates:[{id,...}]}` atomically. Locked descendants and creators cannot change local policies. `POST /categories/:id/append-preview` returns exact retained/additional grants and a revision; `/append` requires that revision plus the additions and selected source. It changes only that named parent.
+- `GET /courses` and `/courses/:id` accept registered `action`, default browse, with narrowing `prefix,limit,offset`. Four independent actions are `knowledge.course.browse|maintain|distribute|download`. These actions share one authorized SQL relation; no resource-row candidate calls.
+- `POST /courses/:id` maintains title/current publication/access/status, `/distribute` requires distribution, `/browse-policy` replaces browse only with selected-source ceiling and ancestry lock checks. `GET /courses/:id/download` returns protected synthetic bytes and reauthorizes every new request; no storage URL is exposed. Course and face-to-face object creation remain synthetic fixtures rather than product authoring flows.
+- `GET /face-to-face` and `/face-to-face/:id` demonstrate the registered owner SELF anchor. Course SELF is uploader; project SELF is original creator.
+
+New domain fixtures are created inside tests. `prepareAdmin` explicitly grants the system-origin administrator delegable actions for these fixture campaigns; level 1 alone never grants delegability. Every derived membership carries source, revision and exact object/field caps. Category/custom policies also persist source cap snapshots. Source/organization/object-set changes freeze dependent policies before commit; successful explicit configuration writes revalidate the chosen source. Conservative freezing can affect unrelated derived policies in the same tenant. Membership recheck is explicit. `POST /categories/:id/recheck` and `POST /courses/:id/recheck` revalidate the stored original source, persist active/suspended, and append knowledge-owned audit rows; ordinary authorized policy saves also revalidate the chosen source.
+
+Run serially against the synthetic database (these mutate shared fixtures):
+
+```
+npm run seed
+npm run test:task3
+npm run functional:task3
+```
+
+The functional extension starts both API processes itself, verifies warm B download → real Redis CLIENT PAUSE timeout with no bytes → recovery → A membership revoke → B next request denied, with Pub/Sub unused, then stops both processes. It does not stop Docker services. The download fixture is a protected database payload, not a production OSS/CDN deployment.

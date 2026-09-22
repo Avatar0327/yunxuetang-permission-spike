@@ -49,6 +49,11 @@ export function normalizePolicy(input: NormalizeInput): EffectiveGrant[] {
                 const spec = makeScope(context, node, action, scope, m.jurisdiction);
                 if (!spec)
                     continue;
+                if(m.delegation){
+                    const cap=m.delegation.caps.find(c=>c.nodeId===node.id&&c.action===action);
+                    if(!cap||!p.rawFields.every(f=>cap.rawFields.includes(f)))continue;
+                    spec.objectIds=cap.objectIds;
+                }
                 output.push({ sourceId: `role:${m.id}:${node.id}:${action}`, sourceKind: 'role', membershipId: m.id, tenantId: context.tenantId, actorId: context.personId, revision: context.revision, nodeId: node.id, action, rawFields: p.rawFields.filter(f => node.rawFields.includes(f)), delegable: p.delegableActions.includes(action), scope: spec });
             }
         }
