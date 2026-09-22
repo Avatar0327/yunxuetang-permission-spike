@@ -5,3 +5,7 @@ dist
 evidence
 .env
 *.log
+output
+.playwright-cli
+__pycache__
+*.pyc

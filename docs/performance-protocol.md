@@ -28,3 +28,11 @@ PostgreSQL4vCPU/8GiB、两个API容器各2vCPU/4GiB、独立Redis。固定镜像
 | 撤权/故障 | A提交撤权后B下一新请求与媒体分片失效；PubSub丢失仍生效；Redis断连/超时/重连、DB权威失败均不放行 |
 
 任何一项缺证或未达门槛，最终结论为No-Go。正式B1权限开发不得启动；需要整改时列具体失败项和复测范围，不移动门槛。
+
+## 原始正确性记录格式（测量落地说明，门槛不变）
+
+每个HTTP200响应均记录`actualCandidate`（服务端meta值）、`actualCount`、`rowCount`、`resultDigest`；不是每200次抽样一次。摘要保留实际开始/结束时间、实际durationMs及配置并发，原始样本保留clientId，便于独立核对50个客户端确实参与和600秒实际持续时间。
+
+每个窗口旁保存`scenario-truth.json`：`formatVersion:1`、独立夹具算法说明，以及以场景名为键的`scenarios`；每项包含`expectedCount`、`rowCount`、`resultDigest`和完整`expectedRows`。摘要的`truthFile`指向该文件。真值来自合成数据生成规则的独立算式/常量，不调用生产PolicyService、Compiler或待测查询输出。
+
+摘要比较对象为完整`{count,rows}`，不删除意外字段。对象键排序后序列化并SHA-256；列表/聚合行顺序保留，行内`source_ids`按字符串排序（来源集合的顺序无业务意义，重复值不去除），并在真值文件写明该规范。错误行/字段/数量/分组/合计或候选/缓存标签错误均单独计授权/测量错误，不混入成功时延。

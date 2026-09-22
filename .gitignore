@@ -6,3 +6,5 @@ evidence/raw/
 *.log
 output/
 .playwright-cli/
+__pycache__/
+*.pyc
