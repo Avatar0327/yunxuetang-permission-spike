@@ -36,6 +36,7 @@ subprocess.run(['git', '-C', str(LOCAL), 'archive', '--format=tar.gz', f'--outpu
 copied = []
 roots = [
     (LOCAL / 'evidence/raw', DEST / '实测原始记录'),
+    (LOCAL / 'docs', DEST / '复现文档'),
     (LOCAL / '.superpowers/sdd/2026-09-23-permission-spike', DEST / '实施审查过程'),
     (LOCAL / 'output/playwright', DEST / '浏览器验证'),
 ]
@@ -49,6 +50,15 @@ for source, target in roots:
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(p, dest)
         copied.append({'path': str(dest.relative_to(DEST)), 'bytes': dest.stat().st_size, 'sha256': sha(dest)})
+
+# Coverage is a first-class deliverable, not just a runner output below raw/.
+for p in sorted((LOCAL / 'evidence').glob('*')):
+    if not p.is_file() or p.name == '.DS_Store':
+        continue
+    dest = DEST / '矩阵与摘要' / p.name
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(p, dest)
+    copied.append({'path': str(dest.relative_to(DEST)), 'bytes': dest.stat().st_size, 'sha256': sha(dest)})
 
 manifest = {
     'packaged_at': datetime.now().astimezone().isoformat(timespec='seconds'),
