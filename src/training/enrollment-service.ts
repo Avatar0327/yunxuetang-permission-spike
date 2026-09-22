@@ -30,7 +30,14 @@ export class EnrollmentService {
     const rows=(await query(db,'SELECT person_id FROM training.roster WHERE tenant_id=$1 AND project_id=$2 AND person_id=ANY($3::text[]) AND company_id=ANY($4::text[]) ORDER BY person_id FOR UPDATE',[identity.tenantId,projectId,ids,companyCap(context)])).rows;
     if(JSON.stringify(rows.map(r=>r.person_id))!==JSON.stringify(ids))throw new Denied();
     await query(db,'DELETE FROM training.roster WHERE tenant_id=$1 AND project_id=$2 AND person_id=ANY($3::text[])',[identity.tenantId,projectId,ids]);
-   }else await query(db,'INSERT INTO training.roster(tenant_id,project_id,person_id,company_id) SELECT tenant_id,$2,id,company_id FROM training.person_projection WHERE tenant_id=$1 AND id=ANY($3::text[]) ORDER BY id ON CONFLICT DO NOTHING',[identity.tenantId,projectId,ids]);
+   }else{
+    // The authority lock serializes enrollment/person commands. Reject the whole
+    // batch before inserting: an old-company fact cannot satisfy a current add.
+    const conflicts=await query(db,'SELECT r.person_id FROM training.roster r JOIN training.person_projection p ON p.tenant_id=r.tenant_id AND p.id=r.person_id WHERE r.tenant_id=$1 AND r.project_id=$2 AND r.person_id=ANY($3::text[]) AND r.company_id IS DISTINCT FROM p.company_id FOR UPDATE OF r',[identity.tenantId,projectId,ids]);
+    if(conflicts.rows.length)throw new Denied();
+    // Same-company duplicate enrollment remains an idempotent no-op.
+    await query(db,'INSERT INTO training.roster(tenant_id,project_id,person_id,company_id) SELECT tenant_id,$2,id,company_id FROM training.person_projection WHERE tenant_id=$1 AND id=ANY($3::text[]) ORDER BY id ON CONFLICT DO NOTHING',[identity.tenantId,projectId,ids]);
+   }
    return {changed:true,count:ids.length};
   });
  }
