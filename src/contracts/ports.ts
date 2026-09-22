@@ -5,5 +5,5 @@ export interface PersonFacts { id: string; tenantId: string; companyId: string; 
 export interface OrganizationFacts extends OrganizationPublic { person(identity: Identity): Promise<PersonFacts | undefined> }
 export interface TrainingFacts { appointments(identity: Identity): Promise<Appointment[]> }
 export interface ReportProjection { person(db: DB, fact: PersonFacts): Promise<void> }
-export interface KnowledgeFacts { catalogs(identity:Identity):Promise<{courses:{id:string;category_id:string;custom_browse:import('../authz/contracts.js').CatalogGrant[]|null}[];categories:import('../knowledge/public.js').CategoryFact[];classroomIds:string[]}> }
+export interface KnowledgeFacts { catalogs(identity:Identity):Promise<{courses:import('../knowledge/public.js').CoursePolicyFact[];categories:import('../knowledge/public.js').CategoryFact[];classroomIds:string[]}> }
 export interface AuthorityPorts { knowledge?(db:DB):KnowledgeFacts; organization(db: DB): OrganizationFacts; training(db: DB): TrainingFacts }

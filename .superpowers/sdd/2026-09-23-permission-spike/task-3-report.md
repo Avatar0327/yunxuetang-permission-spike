@@ -151,3 +151,47 @@ One local edit wrapper initially invoked missing `python` (exit127 for that comm
 The prior whole-spike limitations remain: full168 acceptance, company-qualified schema/large fixtures, independent deployment, browser/UI, production media/export and performance gates are unverified. This round changes small-fixture correctness, not production performance. Category cap construction currently scans tenant category/course facts; large-set efficiency remains deferred. API children were stopped; reseed before an isolated follow-up campaign.
 
 Owned fix files: `src/authz/contracts.ts`, `delegation.ts`, `delegation-caps.ts`, `role-service.ts`; `src/knowledge/public.ts`, `service.ts`; `test/task3-review-regressions.test.ts`; `docs/task3-ports.md`, `docs/task3-coverage.json`; this appended report. Controller `docs/decision-evidence.md`, `docs/reuse-candidates.md`, performance protocol, benchmark auditor and other helper/planning files are excluded from this commit.
+
+## Review fix round 2/5 — N1 inheritance ownership and persisted caps
+
+Status: **DONE_WITH_CONCERNS**, ready for controller re-review. The four original R1–R4 remain covered; this round fixes only Important N1 in `task-3-rereview-round1.md` and adjacent regressions. Application baseline was `51a72aa` (round1 application fix `81055fa` plus controller helpers). Full acceptance remains deferred to Tasks4/5 and controller Task6.
+
+### Root cause and bounded correction
+
+The specified real API RED reproduced in **both** candidates: M saved parent P's browse grant to L from a SELF source, with persisted cap `[P-course]`; child C contained Z's existing course and did not inherit. Updating C with `inheritParent:true,grants:[]` returned200, and L immediately read C's course with200 (expected403), **without a second parent save**. The original-source snapshot was not enforced at normalization and the mutation did not freeze the ancestor's newly expanded effective scope.
+
+- `KnowledgeService.updateInTransaction` now compares old and prospective effective policy owners when inherit/force flags change. Existing source-bound category policies gaining a course, including category browse newly exposed by a forced lock over a custom policy, become `recheck_required`. Source-bound custom browse policies reappearing after unlock are also frozen. These writes and the hierarchy update use the original marked, revision-locked transaction. The edited local policy is excluded because its prospective full set was just centrally validated; other policies retain their original source IDs and snapshots for explicit recheck. No schema or new SQL trigger was introduced.
+- KnowledgeFacts carries category/custom persisted snapshots. `effectiveCategory` carries the actual policy owner's caps through ancestry. Central `normalizeCatalog` requires the node/action/course to be in the corresponding saved cap before creating an effective grant. A source-bound missing snapshot is an empty cap and denies. Trusted system-origin fixtures without a source keep their existing behavior. Custom browse still replaces category browse even when its own cap denies; maintenance/distribution/download remain independent.
+- Existing original-source recheck is unchanged: the expanded parent remains suspended under the original SELF source, then becomes active only after that same source is explicitly broadened and rechecked. No acting administrator capability substitutes for the original source.
+
+Adjacent HTTP/SQL checks cover failed-import rollback of both the child flag and ancestor freeze, forced-owner removal freezing category/custom policies until their explicit rechecks, node-action cap isolation, wrong-course custom caps, missing source-bound snapshots, retained maintenance and no fallback to replaced category browse. To independently test normalization after the freeze assertion, the synthetic test deliberately resets an ancestor's provenance to active **without expanding its saved cap**; the inherited other-uploader course still denies and the original course still succeeds. Separate active-state fixtures remove/narrow snapshot contents to exercise denial independently of freeze. No authorization fixture grants were added to mask a failure. These adjacent assertions were added after the minimal N1 RED and are not claimed as separate pre-fix RED evidence.
+
+### Fresh verification and retained raw evidence
+
+Working directory: `/Users/peng/Agent本地开发/云学堂权限预研`; commands use `PATH=/opt/homebrew/opt/node@24/bin:$PATH`. Each raw filename below is under `evidence/raw/`.
+
+| Command / observation | Exit / result | Evidence |
+|---|---|---|
+| `npm run seed`; `TASK3_OBSERVATIONS=evidence/raw/task3-fix2-red-observations.jsonl node --import tsx --test test/task3-inheritance-caps.test.ts` before production edits | seed0; test1, **2/2 actual200 vs expected403** | `task3-fix2-red-seed.txt`, `task3-fix2-red.txt`, `task3-fix2-red-observations.jsonl` |
+| Fresh seed; minimal N1 suite after correction | 0, **2/2** | `task3-fix2-green-seed1.txt`, `task3-fix2-green1.txt`, `task3-fix2-green-observations1.jsonl` |
+| Fresh seed; N1 plus cap/force/import adjacent suite | 0, **6/6** | `task3-fix2-green-seed2.txt`, `task3-fix2-green2.txt`, `task3-fix2-green-observations2.jsonl` |
+| Fresh seed; `RACE_EVIDENCE=evidence/raw/task3-fix2-races.jsonl node --import tsx --test --test-concurrency=1 test/semantic.test.ts test/integration.test.ts test/races.test.ts test/review-regressions.test.ts test/cache.test.ts` | 0, **53/53** | `task3-fix2-core-seed.txt`, `task3-fix2-core.txt`, `task3-fix2-races.jsonl` |
+| Fresh seed; `TASK3_OBSERVATIONS=evidence/raw/task3-fix2-final-observations.jsonl npm run test:task3` | 0, **118/118** | `task3-fix2-domain-seed.txt`, `task3-fix2-domains.txt` |
+| `npm run typecheck`; `npm run build`; `npm audit --json` | 0 / 0 / 0; zero vulnerabilities | `task3-fix2-final-typecheck.txt`, `task3-fix2-final-build.txt`, `task3-fix2-final-audit.json` |
+| Literal observation comparison | **322 records**, Native160/Casbin160/shared-resolver2, zero mismatches | `task3-fix2-observation-check.json` |
+| `lsof -nP -iTCP:4311 -iTCP:4312 -sTCP:LISTEN` | 1, expected empty/no API listeners | `task3-fix2-api-process-check.txt` |
+
+The full domain run retains all R1–R4 tests and required role-company/delegation/protection/knowledge/recheck/module-boundary checks, plus existing two-process Redis timeout/revoke tests. No failed raw files were overwritten; no test expectation was weakened. No performance campaign was run.
+
+`task3-fix2-final-observations.jsonl` SHA256: `2a8aff2ef84a38c2ab23897fdb93e4f06fa97448d4c62769a1ee6d626d5032f0`. `docs/task3-coverage.json.reviewFixRound2` contains all **70** focused N1 references by exact path/line/candidate/name and retains previous-round maps. Final references:
+
+- Immediate post-inherit denial: Native107, Casbin120. Ancestor frozen with unchanged cap:108/121. Deliberately active persisted ancestor still enforces cap:109–110/122–123.
+- Failed-import atomic rollback:104–105/117–118. Original SELF source suspends, explicit source broadening/recheck restores:111–113/124–126.
+- Runtime category/custom cap enforcement by action/object/missing snapshot and retained maintenance:127–137/138–148.
+- Forced-owner removal freezes category/custom, then their original-source rechecks restore permitted use:149–159/160–170.
+
+### Handoff and remaining limits
+
+The lock-first `READ COMMITTED` protocol, final authority fencing and module SQL ownership remain intact. Hierarchy-switch detection currently walks tenant course/category facts and may conservatively freeze a policy even when a newly effective course is blocked by another current hard-state predicate; exact production-scale cost remains unmeasured. Direct raw SQL fixture mutations are not product APIs; persisted cap enforcement still prevents silent expansion when an active row retains a narrow snapshot. Full168, independent deployment, UI/browser, production media/export, large valid fixtures and performance remain unverified. The shared synthetic DB contains the final fixtures; reseed for the next isolated run.
+
+Owned files: `src/authz/contracts.ts`, `policy.ts`, `revision.ts`; `src/contracts/ports.ts`; `src/knowledge/public.ts`, `service.ts`; `test/task3-inheritance-caps.test.ts`; `docs/task3-ports.md`, `docs/task3-coverage.json`; this report. No controller plan/audit/helper file is included. All test API children were stopped.

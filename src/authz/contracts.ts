@@ -174,7 +174,10 @@ export interface CatalogGrant {
     action: string;
     subject: Subject;
 }
+export interface PolicySnapshot { sourceMembershipId:string; revision:number; caps:DelegationCap[] }
 export interface Catalog {
+    /** Undefined only for trusted system-origin policy; [] denies every object. */
+    caps?: readonly DelegationCap[];
     id: string;
     tenantId: string;
     creatorId: string;

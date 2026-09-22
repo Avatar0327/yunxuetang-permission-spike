@@ -34,6 +34,24 @@ export class KnowledgeService {
   const affected=courses.map(course=>({course,catalog:effectiveCategory(categories,course.category_id)})).filter(({catalog})=>catalog.policyCategoryId===id);
   return this.ceiling(identity,db,source,grants,action=>affected.filter(({course,catalog})=>action!=='knowledge.course.browse'||catalog.lockedBy||course.custom_browse===null).map(({course})=>course.id));
  }
+ /** Freeze policies gaining courses through an ancestry switch, in the same locked transaction. */
+ private async freezeOwnershipExpansions(identity:Identity,db:DB,id:string,patch:{inheritParent?:boolean;forceChildren?:boolean}){
+  if(patch.inheritParent===undefined&&patch.forceChildren===undefined)return;
+  const before=await categoryFacts(db,identity.tenantId),target=before.find(c=>c.id===id)!;
+  const next={...target,inherit_parent:patch.inheritParent??target.inherit_parent,force_children:patch.forceChildren??target.force_children};
+  if(next.inherit_parent===target.inherit_parent&&next.force_children===target.force_children)return;
+  const after=before.map(c=>c.id===id?next:c),categories=new Set<string>(),custom=new Set<string>();
+  const courses=(await query(db,'SELECT id,category_id,custom_browse FROM knowledge.course WHERE tenant_id=$1',[identity.tenantId])).rows;
+  for(const course of courses){
+   const oldPolicy=effectiveCategory(before,course.category_id),newPolicy=effectiveCategory(after,course.category_id);
+   // A new owner gains the course; a newly locked custom policy exposes category browse too.
+   if(newPolicy.policyCategoryId&&(oldPolicy.policyCategoryId!==newPolicy.policyCategoryId||(!oldPolicy.lockedBy&&newPolicy.lockedBy&&course.custom_browse!==null)))categories.add(newPolicy.policyCategoryId);
+   if(oldPolicy.lockedBy&&!newPolicy.lockedBy&&course.custom_browse!==null)custom.add(course.id);
+  }
+  // The edited local policy has just been validated against its prospective affected set.
+  if(categories.size)await query(db,"UPDATE knowledge.category SET provenance='recheck_required' WHERE tenant_id=$1 AND id=ANY($2::text[]) AND id<>$3 AND source_id IS NOT NULL AND provenance<>'recheck_required'",[identity.tenantId,[...categories],id]);
+  if(custom.size)await query(db,"UPDATE knowledge.course SET custom_provenance='recheck_required' WHERE tenant_id=$1 AND id=ANY($2::text[]) AND custom_source_id IS NOT NULL AND custom_provenance<>'recheck_required'",[identity.tenantId,[...custom]]);
+ }
  private async configure(identity:Identity,candidate:CandidateName,db:DB,id:string,action='knowledge.category.configure'){
   const current=effectiveCategory(await categoryFacts(db,identity.tenantId),id);
   if(current.lockedBy)throw new Denied();
@@ -54,6 +72,7 @@ export class KnowledgeService {
   // Structural parent mutation is a separate explicit command, never a policy-update bypass.
   if('parentId'in body||('inheritParent'in body&&typeof body.inheritParent!=='boolean')||('forceChildren'in body&&typeof body.forceChildren!=='boolean'))throw new Denied();
   const grants=await this.grants(identity,db,body.grants);const snapshot=await this.categoryCeiling(identity,db,body.managementRoleMembershipId,grants,id,body);
+  await this.freezeOwnershipExpansions(identity,db,id,body);
   await query(db,'UPDATE knowledge.category SET grants=$3,inherit_parent=coalesce($4,inherit_parent),force_children=coalesce($5,force_children),source_id=$6,provenance=\'active\',authority_snapshot=$7 WHERE tenant_id=$1 AND id=$2',[identity.tenantId,id,JSON.stringify(grants),body.inheritParent??null,body.forceChildren??null,body.managementRoleMembershipId,snapshot]);
   return {id};
  }

@@ -120,7 +120,7 @@ export class Authority {
                 const catalog=effectiveCategory(facts.categories,course.category_id);
                 // Forced ancestry always wins over stale custom policy saved before the lock.
                 const customBrowse=catalog.lockedBy?undefined:course.custom_browse??undefined;
-                return normalizeCatalog({context:loaded.context,nodes,nodeId:'course',courseId:course.id,catalog:{...catalog,tenantId:identity.tenantId,grants:catalog.grants.map(g=>({...g,id:course.id+':'+g.id}))},customBrowse:customBrowse?.map(g=>({...g,id:course.id+':custom:'+g.id})),subjectResolvers});
+                return normalizeCatalog({context:loaded.context,nodes,nodeId:'course',courseId:course.id,catalog:{...catalog,tenantId:identity.tenantId,grants:catalog.grants.map(g=>({...g,id:course.id+':'+g.id}))},customBrowse:customBrowse?.map(g=>({...g,id:course.id+':custom:'+g.id})),customCaps:course.custom_source_id?(course.custom_snapshot?.caps??[]):undefined,subjectResolvers});
             });
             allGrants=[...allGrants,...catalogGrants];
         }

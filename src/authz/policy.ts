@@ -106,6 +106,7 @@ export interface NormalizeCatalogInput {
     catalog: Catalog;
     courseId: string;
     customBrowse?: readonly CatalogGrant[];
+    customCaps?: readonly import('./contracts.js').DelegationCap[];
     subjectResolvers: SubjectResolvers;
 }
 export function normalizeCatalog(input: NormalizeCatalogInput): EffectiveGrant[] {
@@ -123,6 +124,9 @@ export function normalizeCatalog(input: NormalizeCatalogInput): EffectiveGrant[]
     for (const g of grants) {
         const matches = g.subject.type === 'catalog_creator' ? g.subject.id === catalog.id && catalog.creatorId === context.personId : subjectMatches(g.subject, context, input.subjectResolvers);
         if (!matches)
+            continue;
+        const caps = input.customBrowse !== undefined && g.action === browse ? input.customCaps : catalog.caps;
+        if (caps !== undefined && !caps.some(cap => cap.nodeId === node.id && cap.action === g.action && cap.objectIds.includes(input.courseId)))
             continue;
         const scope = makeScope(context, node, g.action, { kind: 'all' });
         if (!scope)

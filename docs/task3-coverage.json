@@ -1543,5 +1543,445 @@
         ]
       }
     ]
+  },
+  "reviewFixRound2": {
+    "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+    "sha256": "2a8aff2ef84a38c2ab23897fdb93e4f06fa97448d4c62769a1ee6d626d5032f0",
+    "observations": 322,
+    "candidates": {
+      "native": 160,
+      "casbin": 160,
+      "shared-resolver": 2
+    },
+    "literalMismatches": 0,
+    "scope": "N1 inheritance/force ownership and persisted cap enforcement only; full acceptance/performance remain pending",
+    "subcases": [
+      {
+        "id": "TASK3-REVIEW-N1",
+        "status": "focused-observation-pending-independent-audit",
+        "evidence": [
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 101,
+            "candidate": "native",
+            "name": "N1 narrow parent save"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 102,
+            "candidate": "native",
+            "name": "N1 saved parent cap excludes other uploader"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 103,
+            "candidate": "native",
+            "name": "N1 original parent course browsable"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 104,
+            "candidate": "native",
+            "name": "N1 failed import rejects whole transaction"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 105,
+            "candidate": "native",
+            "name": "N1 failed import rolls back inheritance and ancestor freeze"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 106,
+            "candidate": "native",
+            "name": "N1 child inherit mutation"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 107,
+            "candidate": "native",
+            "name": "N1 immediate inherited other-uploader course denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 108,
+            "candidate": "native",
+            "name": "N1 ancestor atomically frozen with unchanged cap"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 109,
+            "candidate": "native",
+            "name": "N1 active ancestor still intersects inherited saved cap"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 110,
+            "candidate": "native",
+            "name": "N1 active ancestor saved cap retains original course"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 111,
+            "candidate": "native",
+            "name": "N1 original SELF source cannot recheck expanded ancestor"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 112,
+            "candidate": "native",
+            "name": "N1 original source broadened then explicit recheck active"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 113,
+            "candidate": "native",
+            "name": "N1 child allowed only after original source explicit recheck"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 114,
+            "candidate": "casbin",
+            "name": "N1 narrow parent save"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 115,
+            "candidate": "casbin",
+            "name": "N1 saved parent cap excludes other uploader"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 116,
+            "candidate": "casbin",
+            "name": "N1 original parent course browsable"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 117,
+            "candidate": "casbin",
+            "name": "N1 failed import rejects whole transaction"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 118,
+            "candidate": "casbin",
+            "name": "N1 failed import rolls back inheritance and ancestor freeze"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 119,
+            "candidate": "casbin",
+            "name": "N1 child inherit mutation"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 120,
+            "candidate": "casbin",
+            "name": "N1 immediate inherited other-uploader course denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 121,
+            "candidate": "casbin",
+            "name": "N1 ancestor atomically frozen with unchanged cap"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 122,
+            "candidate": "casbin",
+            "name": "N1 active ancestor still intersects inherited saved cap"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 123,
+            "candidate": "casbin",
+            "name": "N1 active ancestor saved cap retains original course"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 124,
+            "candidate": "casbin",
+            "name": "N1 original SELF source cannot recheck expanded ancestor"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 125,
+            "candidate": "casbin",
+            "name": "N1 original source broadened then explicit recheck active"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 126,
+            "candidate": "casbin",
+            "name": "N1 child allowed only after original source explicit recheck"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 127,
+            "candidate": "native",
+            "name": "N1 runtime category save"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 128,
+            "candidate": "native",
+            "name": "N1 runtime valid category browse"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 129,
+            "candidate": "native",
+            "name": "N1 runtime valid category maintain"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 130,
+            "candidate": "native",
+            "name": "N1 runtime cap action isolation browse"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 131,
+            "candidate": "native",
+            "name": "N1 runtime cap action isolation maintain"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 132,
+            "candidate": "native",
+            "name": "N1 source-bound missing category snapshot denies"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 133,
+            "candidate": "native",
+            "name": "N1 runtime custom save"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 134,
+            "candidate": "native",
+            "name": "N1 runtime custom cap excludes wrong course ID"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 135,
+            "candidate": "native",
+            "name": "N1 failed custom cap does not restore replaced category browse"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 136,
+            "candidate": "native",
+            "name": "N1 custom cap preserves independent category maintenance"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 137,
+            "candidate": "native",
+            "name": "N1 valid custom saved cap permits its course"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 138,
+            "candidate": "casbin",
+            "name": "N1 runtime category save"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 139,
+            "candidate": "casbin",
+            "name": "N1 runtime valid category browse"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 140,
+            "candidate": "casbin",
+            "name": "N1 runtime valid category maintain"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 141,
+            "candidate": "casbin",
+            "name": "N1 runtime cap action isolation browse"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 142,
+            "candidate": "casbin",
+            "name": "N1 runtime cap action isolation maintain"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 143,
+            "candidate": "casbin",
+            "name": "N1 source-bound missing category snapshot denies"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 144,
+            "candidate": "casbin",
+            "name": "N1 runtime custom save"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 145,
+            "candidate": "casbin",
+            "name": "N1 runtime custom cap excludes wrong course ID"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 146,
+            "candidate": "casbin",
+            "name": "N1 failed custom cap does not restore replaced category browse"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 147,
+            "candidate": "casbin",
+            "name": "N1 custom cap preserves independent category maintenance"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 148,
+            "candidate": "casbin",
+            "name": "N1 valid custom saved cap permits its course"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 149,
+            "candidate": "native",
+            "name": "N1 force fixture local policy save"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 150,
+            "candidate": "native",
+            "name": "N1 force fixture custom save"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 151,
+            "candidate": "native",
+            "name": "N1 force switch true"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 152,
+            "candidate": "native",
+            "name": "N1 force switch false"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 153,
+            "candidate": "native",
+            "name": "N1 force release atomically freezes restored owners"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 154,
+            "candidate": "native",
+            "name": "N1 force release awaits explicit recheck maintain"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 155,
+            "candidate": "native",
+            "name": "N1 force release awaits explicit recheck browse"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 156,
+            "candidate": "native",
+            "name": "N1 force release original-source recheck categories"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 157,
+            "candidate": "native",
+            "name": "N1 force release original-source recheck courses"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 158,
+            "candidate": "native",
+            "name": "N1 force release explicitly restored maintain"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 159,
+            "candidate": "native",
+            "name": "N1 force release explicitly restored browse"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 160,
+            "candidate": "casbin",
+            "name": "N1 force fixture local policy save"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 161,
+            "candidate": "casbin",
+            "name": "N1 force fixture custom save"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 162,
+            "candidate": "casbin",
+            "name": "N1 force switch true"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 163,
+            "candidate": "casbin",
+            "name": "N1 force switch false"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 164,
+            "candidate": "casbin",
+            "name": "N1 force release atomically freezes restored owners"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 165,
+            "candidate": "casbin",
+            "name": "N1 force release awaits explicit recheck maintain"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 166,
+            "candidate": "casbin",
+            "name": "N1 force release awaits explicit recheck browse"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 167,
+            "candidate": "casbin",
+            "name": "N1 force release original-source recheck categories"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 168,
+            "candidate": "casbin",
+            "name": "N1 force release original-source recheck courses"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 169,
+            "candidate": "casbin",
+            "name": "N1 force release explicitly restored maintain"
+          },
+          {
+            "path": "evidence/raw/task3-fix2-final-observations.jsonl",
+            "line": 170,
+            "candidate": "casbin",
+            "name": "N1 force release explicitly restored browse"
+          }
+        ]
+      }
+    ]
   }
 }
