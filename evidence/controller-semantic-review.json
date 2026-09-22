@@ -1,0 +1,881 @@
+{
+  "reviewed_at": "2026-09-23T07:37:05.095728+08:00",
+  "source_commit": "750ab92fe858705d98de00aa42eb5fc5a212f6cb",
+  "mapping_sha256": "4054c5af42e386980c17bfa5483715efd27a58541f1bc35290fd3643b4a11a49",
+  "scope": "Controller逐项语义审核：不是独立代码审查，也不是最终Go。通过状态需结合审查与后续实测。",
+  "group_review": {
+    "AUTH-T01": "已读新增task5-node-final：同一membership同时ALL/ownDept，两进程各自7/3行和count、同一B为200/403，替换不充分的旧引用。",
+    "AUTH-T02": "六范围真实HTTP逐一比对；空部门/空管辖/未知范围返回空集或拒绝，SELF另用本人真实ID验证。",
+    "AUTH-T03": "同动作来源并集、不同动作不借范围、原值能力绑定匹配来源；HTTP SELF编辑与全量查看分离，内核另有本部门编辑真值。",
+    "AUTH-T04": "角色内覆盖、另一角色保留、空覆盖撤销来源、删除恢复，角色成员重建不恢复旧override；原始返回值已核对。",
+    "AUTH-T05": "跨部门直属A/B允许；同部门C和间接E拒绝；报表部门树C/D可见。团队关系与部门关系分别验证。",
+    "AUTH-T06": "HTTP初始/任命P/P+Q/撤P/撤末次/保留其他角色、列表/count/详情/保存/导出及负向均有记录；真实浏览器未执行。",
+    "AUTH-T07": "等级1创建/普通修改、2/3同级及更高级、节点/动作/实际集合/字段/明确可转授上限均拒绝；引用原运行记录。",
+    "AUTH-T08": "浏览/维护/分发/下载各自列表与独立字节接口；存储URL需同时引用protected bytes的hasStorage=false，不能只引浏览时403。",
+    "AUTH-T09": "强制继承与创建者锁、直接API/批量、custom只替换浏览、父追加保留、企课堂主体和10/11层均有真实领域路径。",
+    "AUTH-T10": "范围外/不存在/跨租户统一403安全消息且无rows；前三项需补引indistinguishable整组，不能只靠原值扫描false。页面提示仍待浏览器。",
+    "AUTH-T11": "团队开关关闭拒绝、开启只限直属，任命来源独立；正负向写入已记录。",
+    "AUTH-T12": "字段值/各响应/三域导出/持久分块/Redis和stdout stderr扫描均需联合读取，不用扫描空数组单独证明正确授权。",
+    "AUTH-T13": "收窄后offset分页与count一致，历史受限汇总真值、分块导出完整顺序/集合及搜索负向；实际值与独立算式核对。",
+    "AUTH-T14": "当前状态/恢复决定历史记录访问，历史快照物理不可变。调岗补引Task5 core的锁等待后D2当前事实，保留记录的动态revision，不伪造完整相等。",
+    "AUTH-T15": "两进程、B实际L1及L2键、无PubSub、xmin精确提交、同DB时钟权威读取、主机ack后新请求；controller时间线9检查均通过。",
+    "AUTH-T16": "已读实际docker stop/start、CLIENT PAUSE、冷进程重启与恢复脚本；16类输出逐项503且无业务key，恢复200，禁止DB回退。",
+    "AUTH-T17": "直接领域调用、三域create/execute/claim、受限worker持久请求人和禁止普通查询/改参数/领取均有真实证据。",
+    "AUTH-T18": "50000/500人、2000部门/20层/20角色/3成员、100万事实和实际SQL/参数/EXPLAIN、页20/50/200恒14查询已核对；冷热拒绝/故障短窗独立重算。正常50×600及资源限配仍待执行。",
+    "AUTH-T19": "保存/撤权双方顺序、批量授权零写入、领取等待后拒绝、旧签名媒体票据拒绝、快照构建中版本变化503均有原始记录。",
+    "AUTH-T20": "动态部门迁移/来源收窄冻结，显式重验active或suspended及审计状态；旧上限不自动扩大。",
+    "AUTH-T21": "客户甲/乙任命、普通客户、内部非超管均执行；共享内容保留、个人名册/count/搜索/进度/附件/导出隔离，整体变更检查所有受影响公司。",
+    "AUTH-T22": "内部获授/撤甲后下一请求保留内部/乙；人员转公司不改历史公司，捕获的旧报名姓名不暴露新档案，乙不能取得旧甲报名。",
+    "AUTH-T23": "本人分公司分币种账户，乙奖励不抵甲欠项，SELF历史仍受公司限制，跨公司来源拒绝及管理导出受限。",
+    "AUTH-T24": "选定成员来源不可借另一角色；撤销来源冻结，重新授予与显式重验独立，旧成员覆盖不附着新ID。"
+  },
+  "items": [
+    {
+      "id": "AUTH-T01-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T01"
+    },
+    {
+      "id": "AUTH-T01-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T01"
+    },
+    {
+      "id": "AUTH-T01-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T01"
+    },
+    {
+      "id": "AUTH-T01-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T01"
+    },
+    {
+      "id": "AUTH-T02-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T02"
+    },
+    {
+      "id": "AUTH-T02-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T02"
+    },
+    {
+      "id": "AUTH-T02-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T02"
+    },
+    {
+      "id": "AUTH-T02-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T02"
+    },
+    {
+      "id": "AUTH-T02-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T02"
+    },
+    {
+      "id": "AUTH-T02-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T02"
+    },
+    {
+      "id": "AUTH-T02-07",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T02"
+    },
+    {
+      "id": "AUTH-T02-08",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T02"
+    },
+    {
+      "id": "AUTH-T02-09",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T02"
+    },
+    {
+      "id": "AUTH-T02-10",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T02"
+    },
+    {
+      "id": "AUTH-T03-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T03"
+    },
+    {
+      "id": "AUTH-T03-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T03"
+    },
+    {
+      "id": "AUTH-T03-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T03"
+    },
+    {
+      "id": "AUTH-T04-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T04"
+    },
+    {
+      "id": "AUTH-T04-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T04"
+    },
+    {
+      "id": "AUTH-T04-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T04"
+    },
+    {
+      "id": "AUTH-T04-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T04"
+    },
+    {
+      "id": "AUTH-T04-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T04"
+    },
+    {
+      "id": "AUTH-T04-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T04"
+    },
+    {
+      "id": "AUTH-T05-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T05"
+    },
+    {
+      "id": "AUTH-T05-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T05"
+    },
+    {
+      "id": "AUTH-T05-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T05"
+    },
+    {
+      "id": "AUTH-T05-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T05"
+    },
+    {
+      "id": "AUTH-T06-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T06-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T06-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T06-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T06-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T06-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T06-07",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T06-08",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T06-09",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T06-10",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T06-11",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T06-12",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T06-13",
+      "controller_semantic_state": "requires_controller_execution",
+      "group_reason": "AUTH-T06"
+    },
+    {
+      "id": "AUTH-T07-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T07"
+    },
+    {
+      "id": "AUTH-T07-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T07"
+    },
+    {
+      "id": "AUTH-T07-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T07"
+    },
+    {
+      "id": "AUTH-T07-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T07"
+    },
+    {
+      "id": "AUTH-T07-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T07"
+    },
+    {
+      "id": "AUTH-T07-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T07"
+    },
+    {
+      "id": "AUTH-T07-07",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T07"
+    },
+    {
+      "id": "AUTH-T07-08",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T07"
+    },
+    {
+      "id": "AUTH-T08-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T08"
+    },
+    {
+      "id": "AUTH-T08-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T08"
+    },
+    {
+      "id": "AUTH-T08-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T08"
+    },
+    {
+      "id": "AUTH-T08-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T08"
+    },
+    {
+      "id": "AUTH-T08-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T08"
+    },
+    {
+      "id": "AUTH-T08-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T08"
+    },
+    {
+      "id": "AUTH-T09-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T09"
+    },
+    {
+      "id": "AUTH-T09-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T09"
+    },
+    {
+      "id": "AUTH-T09-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T09"
+    },
+    {
+      "id": "AUTH-T09-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T09"
+    },
+    {
+      "id": "AUTH-T09-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T09"
+    },
+    {
+      "id": "AUTH-T09-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T09"
+    },
+    {
+      "id": "AUTH-T09-07",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T09"
+    },
+    {
+      "id": "AUTH-T09-08",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T09"
+    },
+    {
+      "id": "AUTH-T09-09",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T09"
+    },
+    {
+      "id": "AUTH-T10-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T10"
+    },
+    {
+      "id": "AUTH-T10-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T10"
+    },
+    {
+      "id": "AUTH-T10-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T10"
+    },
+    {
+      "id": "AUTH-T10-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T10"
+    },
+    {
+      "id": "AUTH-T10-05",
+      "controller_semantic_state": "requires_controller_execution",
+      "group_reason": "AUTH-T10"
+    },
+    {
+      "id": "AUTH-T11-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T11"
+    },
+    {
+      "id": "AUTH-T11-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T11"
+    },
+    {
+      "id": "AUTH-T11-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T11"
+    },
+    {
+      "id": "AUTH-T12-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T12"
+    },
+    {
+      "id": "AUTH-T12-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T12"
+    },
+    {
+      "id": "AUTH-T12-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T12"
+    },
+    {
+      "id": "AUTH-T12-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T12"
+    },
+    {
+      "id": "AUTH-T12-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T12"
+    },
+    {
+      "id": "AUTH-T12-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T12"
+    },
+    {
+      "id": "AUTH-T12-07",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T12"
+    },
+    {
+      "id": "AUTH-T13-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T13"
+    },
+    {
+      "id": "AUTH-T13-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T13"
+    },
+    {
+      "id": "AUTH-T13-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T13"
+    },
+    {
+      "id": "AUTH-T13-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T13"
+    },
+    {
+      "id": "AUTH-T13-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T13"
+    },
+    {
+      "id": "AUTH-T14-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T14"
+    },
+    {
+      "id": "AUTH-T14-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T14"
+    },
+    {
+      "id": "AUTH-T14-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T14"
+    },
+    {
+      "id": "AUTH-T14-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T14"
+    },
+    {
+      "id": "AUTH-T14-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T14"
+    },
+    {
+      "id": "AUTH-T14-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T14"
+    },
+    {
+      "id": "AUTH-T14-07",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T14"
+    },
+    {
+      "id": "AUTH-T15-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T15"
+    },
+    {
+      "id": "AUTH-T15-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T15"
+    },
+    {
+      "id": "AUTH-T15-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T15"
+    },
+    {
+      "id": "AUTH-T15-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T15"
+    },
+    {
+      "id": "AUTH-T15-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T15"
+    },
+    {
+      "id": "AUTH-T15-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T15"
+    },
+    {
+      "id": "AUTH-T15-07",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T15"
+    },
+    {
+      "id": "AUTH-T16-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T16"
+    },
+    {
+      "id": "AUTH-T16-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T16"
+    },
+    {
+      "id": "AUTH-T16-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T16"
+    },
+    {
+      "id": "AUTH-T16-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T16"
+    },
+    {
+      "id": "AUTH-T16-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T16"
+    },
+    {
+      "id": "AUTH-T16-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T16"
+    },
+    {
+      "id": "AUTH-T16-07",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T16"
+    },
+    {
+      "id": "AUTH-T17-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T17"
+    },
+    {
+      "id": "AUTH-T17-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T17"
+    },
+    {
+      "id": "AUTH-T17-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T17"
+    },
+    {
+      "id": "AUTH-T17-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T17"
+    },
+    {
+      "id": "AUTH-T17-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T17"
+    },
+    {
+      "id": "AUTH-T18-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-07",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-08",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-09",
+      "controller_semantic_state": "requires_controller_execution",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-10",
+      "controller_semantic_state": "requires_controller_execution",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-11",
+      "controller_semantic_state": "requires_controller_execution",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-12",
+      "controller_semantic_state": "requires_controller_execution",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-13",
+      "controller_semantic_state": "requires_controller_execution",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-14",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-15",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-16",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-17",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-18",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-19",
+      "controller_semantic_state": "requires_controller_execution",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T18-20",
+      "controller_semantic_state": "requires_controller_execution",
+      "group_reason": "AUTH-T18"
+    },
+    {
+      "id": "AUTH-T19-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T19"
+    },
+    {
+      "id": "AUTH-T19-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T19"
+    },
+    {
+      "id": "AUTH-T19-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T19"
+    },
+    {
+      "id": "AUTH-T19-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T19"
+    },
+    {
+      "id": "AUTH-T19-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T19"
+    },
+    {
+      "id": "AUTH-T19-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T19"
+    },
+    {
+      "id": "AUTH-T20-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T20"
+    },
+    {
+      "id": "AUTH-T20-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T20"
+    },
+    {
+      "id": "AUTH-T20-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T20"
+    },
+    {
+      "id": "AUTH-T20-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T20"
+    },
+    {
+      "id": "AUTH-T20-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T20"
+    },
+    {
+      "id": "AUTH-T20-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T20"
+    },
+    {
+      "id": "AUTH-T21-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T21"
+    },
+    {
+      "id": "AUTH-T21-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T21"
+    },
+    {
+      "id": "AUTH-T21-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T21"
+    },
+    {
+      "id": "AUTH-T21-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T21"
+    },
+    {
+      "id": "AUTH-T21-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T21"
+    },
+    {
+      "id": "AUTH-T21-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T21"
+    },
+    {
+      "id": "AUTH-T21-07",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T21"
+    },
+    {
+      "id": "AUTH-T21-08",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T21"
+    },
+    {
+      "id": "AUTH-T21-09",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T21"
+    },
+    {
+      "id": "AUTH-T21-10",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T21"
+    },
+    {
+      "id": "AUTH-T21-11",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T21"
+    },
+    {
+      "id": "AUTH-T22-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T22"
+    },
+    {
+      "id": "AUTH-T22-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T22"
+    },
+    {
+      "id": "AUTH-T22-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T22"
+    },
+    {
+      "id": "AUTH-T22-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T22"
+    },
+    {
+      "id": "AUTH-T22-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T22"
+    },
+    {
+      "id": "AUTH-T22-06",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T22"
+    },
+    {
+      "id": "AUTH-T23-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T23"
+    },
+    {
+      "id": "AUTH-T23-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T23"
+    },
+    {
+      "id": "AUTH-T23-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T23"
+    },
+    {
+      "id": "AUTH-T23-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T23"
+    },
+    {
+      "id": "AUTH-T23-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T23"
+    },
+    {
+      "id": "AUTH-T24-01",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T24"
+    },
+    {
+      "id": "AUTH-T24-02",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T24"
+    },
+    {
+      "id": "AUTH-T24-03",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T24"
+    },
+    {
+      "id": "AUTH-T24-04",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T24"
+    },
+    {
+      "id": "AUTH-T24-05",
+      "controller_semantic_state": "evidence_reviewed_pending_code_review",
+      "group_reason": "AUTH-T24"
+    }
+  ],
+  "citation_repairs_needed": [
+    "AUTH-T08-05: append hasStorage=false observation",
+    "AUTH-T10-01/02/03: append exact403/rows-null composite observation",
+    "AUTH-T14-01: append core department-change raw proof with explicit partial-field comparison",
+    "AUTH-T18-07: append actual role/membership counts from task5-scale.json"
+  ],
+  "overall_go_inferred": false
+}

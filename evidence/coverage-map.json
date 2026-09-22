@@ -1515,6 +1515,20 @@
           "path": "evidence/raw/task5-final-task3.jsonl",
           "line": 191,
           "observationName": "AUTH-T08 browse never downloads"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "native",
+          "path": "evidence/raw/task5-final-task3.jsonl",
+          "line": 175,
+          "observationName": "AUTH-T08 protected bytes"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "casbin",
+          "path": "evidence/raw/task5-final-task3.jsonl",
+          "line": 190,
+          "observationName": "AUTH-T08 protected bytes"
         }
       ]
     },
@@ -1827,6 +1841,20 @@
           "path": "evidence/raw/task5-final-task4.jsonl",
           "line": 117,
           "observationName": "safe raw error B"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "native",
+          "path": "evidence/raw/task5-final-task4.jsonl",
+          "line": 95,
+          "observationName": "denial random and foreign indistinguishable"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "casbin",
+          "path": "evidence/raw/task5-final-task4.jsonl",
+          "line": 120,
+          "observationName": "denial random and foreign indistinguishable"
         }
       ]
     },
@@ -1849,6 +1877,20 @@
           "path": "evidence/raw/task5-final-task4.jsonl",
           "line": 118,
           "observationName": "safe raw error unknown"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "native",
+          "path": "evidence/raw/task5-final-task4.jsonl",
+          "line": 95,
+          "observationName": "denial random and foreign indistinguishable"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "casbin",
+          "path": "evidence/raw/task5-final-task4.jsonl",
+          "line": 120,
+          "observationName": "denial random and foreign indistinguishable"
         }
       ]
     },
@@ -1885,6 +1927,20 @@
           "path": "evidence/raw/task5-final-task4.jsonl",
           "line": 167,
           "observationName": "same-name other tenant absent from list/count"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "native",
+          "path": "evidence/raw/task5-final-task4.jsonl",
+          "line": 95,
+          "observationName": "denial random and foreign indistinguishable"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "casbin",
+          "path": "evidence/raw/task5-final-task4.jsonl",
+          "line": 120,
+          "observationName": "denial random and foreign indistinguishable"
         }
       ]
     },
@@ -2519,7 +2575,7 @@
       "id": "AUTH-T14-01",
       "requirement": "department move",
       "status": "incomplete",
-      "actualResult": "Native/Casbin runtime observations: clear current manager and change job; move and clear never rewrite historical fields. Focused runtime evidence is supplied for independent per-ID semantic review; this status never follows test/name counts.",
+      "actualResult": "Native/Casbin runtime observations: clear current manager and change job; move and clear never rewrite historical fields. Focused runtime evidence is supplied for independent per-ID semantic review; this status never follows test/name counts. Controller department-change audit preserves original both-candidate lock-wait observations and dynamic revisions; expected person/scope fields match (D2, B/E/M/N). This is explicit partial-field comparison, not full raw-record equality.",
       "evidence": [
         {
           "kind": "http_sql",
@@ -2548,6 +2604,11 @@
           "path": "evidence/raw/task5-final-task4.jsonl",
           "line": 107,
           "observationName": "move and clear never rewrite historical fields"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "shared",
+          "path": "evidence/raw/controller-department-change-audit.json"
         }
       ]
     },
@@ -5651,7 +5712,7 @@
       "id": "AUTH-T18-07",
       "requirement": "20roles and 2to5 memberships",
       "status": "incomplete",
-      "actualResult": "Native/Casbin runtime observations: complex actor actual non-ALL resolved scope and relevant pair caps. Focused runtime evidence is supplied for independent per-ID semantic review; this status never follows test/name counts.",
+      "actualResult": "Native/Casbin runtime observations: complex actor actual non-ALL resolved scope and relevant pair caps. Focused runtime evidence is supplied for independent per-ID semantic review; this status never follows test/name counts. Actual SQL count records20 roles and3 complex-actor memberships.",
       "evidence": [
         {
           "kind": "http_sql",
@@ -5666,6 +5727,11 @@
           "path": "evidence/raw/task5-final4-task5.jsonl",
           "line": 390,
           "observationName": "complex actor actual non-ALL resolved scope and relevant pair caps"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "shared",
+          "path": "evidence/raw/task5-scale.json"
         }
       ]
     },
@@ -6839,7 +6905,7 @@
       "id": "AUTH-T22-04",
       "requirement": "person transfer",
       "status": "incomplete",
-      "actualResult": "Native/Casbin runtime observations: transfer explicit both-company company/dept; old enrollment keeps captured name. Focused runtime evidence is supplied for independent per-ID semantic review; this status never follows test/name counts.",
+      "actualResult": "Native/Casbin runtime observations: transfer explicit both-company company/dept; old enrollment keeps captured name. Focused runtime evidence is supplied for independent per-ID semantic review; this status never follows test/name counts. R1 fix adds explicit old-company enrollment rejection with unchanged full batch/revision/epoch; review pending. Separate legitimate mixed-ID ordering defect remains tracked for whole-branch review.",
       "evidence": [
         {
           "kind": "http_sql",
@@ -6882,6 +6948,34 @@
           "path": "evidence/raw/task5-transfer-final.jsonl",
           "line": 15,
           "observationName": "old enrollment keeps captured name"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "native",
+          "path": "evidence/raw/task5-fix-round1-green.jsonl",
+          "line": 8,
+          "observationName": "R1 single safe denial and unchanged complete roster/revision/epoch"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "native",
+          "path": "evidence/raw/task5-fix-round1-green.jsonl",
+          "line": 9,
+          "observationName": "R1 mixed safe denial and unchanged complete roster/revision/epoch"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "casbin",
+          "path": "evidence/raw/task5-fix-round1-green.jsonl",
+          "line": 42,
+          "observationName": "R1 single safe denial and unchanged complete roster/revision/epoch"
+        },
+        {
+          "kind": "http_sql",
+          "candidate": "casbin",
+          "path": "evidence/raw/task5-fix-round1-green.jsonl",
+          "line": 43,
+          "observationName": "R1 mixed safe denial and unchanged complete roster/revision/epoch"
         }
       ]
     },
@@ -7273,5 +7367,6 @@
         }
       ]
     }
-  ]
+  ],
+  "controllerCitationRepair": "Supplemented protected byte URL absence, exact safe denials, actual department change and role/membership scale; status still requires Task5 review and final semantic verdict."
 }
