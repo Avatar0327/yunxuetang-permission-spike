@@ -2,7 +2,7 @@ import { companyCap } from './scope.js';
 import { randomUUID } from 'node:crypto';
 import { Authority } from './revision.js';
 import { nodes } from './registry.js';
-import { assertCanDelegate, assertGrantSubset } from './delegation.js';
+import { assertRoleDelegateCapabilities } from './delegation.js';
 import { recipientCaps } from './delegation-caps.js';
 import { ObjectResolver } from './objects.js';
 import type { NodePolicy, Membership, ProposedGrant } from './contracts.js';
@@ -18,7 +18,7 @@ export class RoleService {
  async create(identity:Identity,body:RoleCommand){return transaction(async db=>{
   const {context}=await this.authority.load(identity,db,true);validatePolicies(body.policies);
   const memberships=await this.authority.memberships(identity,db), resolver=new ObjectResolver(this.authority,db);
-  try {await assertCanDelegate({context,nodes,memberships,managementRoleMembershipId:body.managementRoleMembershipId,operation:'create',targetLevel:body.level,proposed:proposed(body.policies),resolveObjects:s=>resolver.resolve(s)});}catch{throw new Denied();}
+  try {assertRoleDelegateCapabilities({context,nodes,memberships,managementRoleMembershipId:body.managementRoleMembershipId,operation:'create',targetLevel:body.level,proposed:proposed(body.policies)});}catch{throw new Denied();}
   const id=body.id??randomUUID();if(typeof id!=='string'||!id||!Array.isArray(body.memberPersonIds??[])||(body.memberPersonIds??[]).some(x=>typeof x!=='string'))throw new Denied();
   const prepared:Membership[]=[];
   for(const personId of [...new Set(body.memberPersonIds??[])]){
@@ -41,13 +41,13 @@ export class RoleService {
   const level=role?.level??targets[0]?.level;
   if(!role||level===1||body.level!==level)throw new Denied();
   const memberships=await this.authority.memberships(identity,db),resolver=new ObjectResolver(this.authority,db);
-  try{await assertCanDelegate({context,nodes,memberships,managementRoleMembershipId:body.managementRoleMembershipId,operation:'edit',targetLevel:level,proposed:proposed(body.policies),resolveObjects:s=>resolver.resolve(s)});}catch{throw new Denied();}
+  try{assertRoleDelegateCapabilities({context,nodes,memberships,managementRoleMembershipId:body.managementRoleMembershipId,operation:'edit',targetLevel:level,proposed:proposed(body.policies)});}catch{throw new Denied();}
   const selected=memberships.find(m=>m.id===body.managementRoleMembershipId)!;
   for(const target of targets){
    await this.assertNoCycle(identity.tenantId,target.id,selected.id,db);
    const targetContext=await this.authority.current({tenantId:identity.tenantId,personId:target.personId},db);
    if(!companyCap(context).includes(targetContext.companyId))throw new Denied();
-   const caps=await recipientCaps(context,selected,targetContext,this.effectivePolicies(body.policies,target),resolver);
+   const caps=await recipientCaps(context,selected,targetContext,this.effectivePolicies(body.policies,target),resolver,target.jurisdiction);
    target.policies=body.policies;target.level=level;
    target.delegation={sourceMembershipId:selected.id,sourceActorId:identity.personId,revision:context.revision,caps};
   }
@@ -83,9 +83,9 @@ export class RoleService {
    const sourceContext=await this.authority.current(sourceIdentity,db),sourceMemberships=await this.authority.memberships(sourceIdentity,db);
    const selected=sourceMemberships.find(m=>m.id===row.source_id)!;
    const resolver=new ObjectResolver(this.authority,db);
-   await assertGrantSubset({context:sourceContext,nodes,memberships:sourceMemberships,managementRoleMembershipId:row.source_id,proposed:proposed(target.policies),resolveObjects:s=>resolver.resolve(s)});
+   if(!companyCap(sourceContext).includes(targetFact.companyId))throw new Denied();
    const targetContext=await this.authority.current({tenantId:identity.tenantId,personId:target.personId},db);
-   target.delegation={sourceMembershipId:row.source_id,sourceActorId:sourceIdentity.personId,revision:context.revision,caps:await recipientCaps(sourceContext,selected,targetContext,this.effectivePolicies(target.policies,target),resolver)};
+   target.delegation={sourceMembershipId:row.source_id,sourceActorId:sourceIdentity.personId,revision:context.revision,caps:await recipientCaps(sourceContext,selected,targetContext,this.effectivePolicies(target.policies,target),resolver,target.jurisdiction)};
    state='active';
   }catch(error){if(error instanceof Unavailable)throw error;if(error instanceof Denied || (error instanceof Error && !(error as any).code)){state='suspended';}else throw error;}
   target.provenance=state;
@@ -98,7 +98,7 @@ export class RoleService {
   const role=(await query(db,'SELECT level,policies FROM authz.role WHERE tenant_id=$1 AND id=$2',[identity.tenantId,id])).rows[0];
   if(!role||!role.policies)throw new Denied();
   const memberships=await this.authority.memberships(identity,db),resolver=new ObjectResolver(this.authority,db);
-  try{await assertCanDelegate({context,nodes,memberships,managementRoleMembershipId:body.managementRoleMembershipId,operation:'edit',targetLevel:role.level,proposed:proposed(role.policies),resolveObjects:s=>resolver.resolve(s)});}catch{throw new Denied();}
+  try{assertRoleDelegateCapabilities({context,nodes,memberships,managementRoleMembershipId:body.managementRoleMembershipId,operation:'edit',targetLevel:role.level,proposed:proposed(role.policies)});}catch{throw new Denied();}
   const target=await this.authority.current({tenantId:identity.tenantId,personId:body.personId},db);
   if(!companyCap(context).includes(target.companyId))throw new Denied();
   const caps=await recipientCaps(context,memberships.find(m=>m.id===body.managementRoleMembershipId)!,target,role.policies,resolver);

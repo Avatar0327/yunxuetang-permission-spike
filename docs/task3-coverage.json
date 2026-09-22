@@ -1121,5 +1121,427 @@
       "limitation": "Full AUTH group, browser and performance gate remain unpassed."
     }
   ],
-  "otherRequiredSubcases": "All other required subcases remain as recorded in the unchanged 168-point manifest and Task2 evidence; Task3 does not upgrade them."
+  "otherRequiredSubcases": "All other required subcases remain as recorded in the unchanged 168-point manifest and Task2 evidence; Task3 does not upgrade them.",
+  "reviewFixRound1": {
+    "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+    "sha256": "de4c077594240616589771b5b6270568b567e84dc8a39f0b4c8764b268e6123c",
+    "observations": 252,
+    "candidates": {
+      "native": 125,
+      "casbin": 125,
+      "shared-resolver": 2
+    },
+    "literalMismatches": 0,
+    "scope": "Four accepted Task3 Important findings only; full acceptance/performance remain pending",
+    "subcases": [
+      {
+        "id": "TASK3-REVIEW-R1",
+        "status": "focused-observation-pending-independent-audit",
+        "evidence": [
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 183,
+            "candidate": "native",
+            "name": "R1 initial customer assignment"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 184,
+            "candidate": "native",
+            "name": "R1 original source remains active"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 185,
+            "candidate": "native",
+            "name": "R1 revoke A then Z recheck suspended"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 186,
+            "candidate": "native",
+            "name": "R1 restored source company recheck active"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 215,
+            "candidate": "casbin",
+            "name": "R1 initial customer assignment"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 216,
+            "candidate": "casbin",
+            "name": "R1 original source remains active"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 217,
+            "candidate": "casbin",
+            "name": "R1 revoke A then Z recheck suspended"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 218,
+            "candidate": "casbin",
+            "name": "R1 restored source company recheck active"
+          }
+        ]
+      },
+      {
+        "id": "TASK3-REVIEW-R2",
+        "status": "focused-observation-pending-independent-audit",
+        "evidence": [
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 187,
+            "candidate": "native",
+            "name": "R2 D1 grantor D2 cap to D2 ownDept create"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 188,
+            "candidate": "native",
+            "name": "R2 literal recipient objects"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 189,
+            "candidate": "native",
+            "name": "R2 relative edit"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 190,
+            "candidate": "native",
+            "name": "R2 relative add member"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 191,
+            "candidate": "native",
+            "name": "R2 second recipient cap"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 192,
+            "candidate": "native",
+            "name": "R2 relative recheck"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 193,
+            "candidate": "native",
+            "name": "R2 empty recipient preserves field ceiling"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 194,
+            "candidate": "native",
+            "name": "R2 empty recipient preserves action ceiling"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 195,
+            "candidate": "native",
+            "name": "R2 empty recipient preserves delegability"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 219,
+            "candidate": "casbin",
+            "name": "R2 D1 grantor D2 cap to D2 ownDept create"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 220,
+            "candidate": "casbin",
+            "name": "R2 literal recipient objects"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 221,
+            "candidate": "casbin",
+            "name": "R2 relative edit"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 222,
+            "candidate": "casbin",
+            "name": "R2 relative add member"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 223,
+            "candidate": "casbin",
+            "name": "R2 second recipient cap"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 224,
+            "candidate": "casbin",
+            "name": "R2 relative recheck"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 225,
+            "candidate": "casbin",
+            "name": "R2 empty recipient preserves field ceiling"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 226,
+            "candidate": "casbin",
+            "name": "R2 empty recipient preserves action ceiling"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 227,
+            "candidate": "casbin",
+            "name": "R2 empty recipient preserves delegability"
+          }
+        ]
+      },
+      {
+        "id": "TASK3-REVIEW-R3",
+        "status": "focused-observation-pending-independent-audit",
+        "evidence": [
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 196,
+            "candidate": "native",
+            "name": "R3 selected SELF custom own course"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 197,
+            "candidate": "native",
+            "name": "R3 saved affected course cap"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 198,
+            "candidate": "native",
+            "name": "R3 custom subject can browse own course"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 199,
+            "candidate": "native",
+            "name": "R3 cannot borrow maintain role to grant other uploader"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 200,
+            "candidate": "native",
+            "name": "R3 custom recheck retains target-only set"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 201,
+            "candidate": "native",
+            "name": "R3 SELF category includes inherited own courses only"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 202,
+            "candidate": "native",
+            "name": "R3 category persisted affected set"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 203,
+            "candidate": "native",
+            "name": "R3 category recheck affected set"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 204,
+            "candidate": "native",
+            "name": "R3 forced descendant outside selected SELF denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 205,
+            "candidate": "native",
+            "name": "R3 inherited descendant outside selected SELF denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 228,
+            "candidate": "casbin",
+            "name": "R3 selected SELF custom own course"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 229,
+            "candidate": "casbin",
+            "name": "R3 saved affected course cap"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 230,
+            "candidate": "casbin",
+            "name": "R3 custom subject can browse own course"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 231,
+            "candidate": "casbin",
+            "name": "R3 cannot borrow maintain role to grant other uploader"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 232,
+            "candidate": "casbin",
+            "name": "R3 custom recheck retains target-only set"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 233,
+            "candidate": "casbin",
+            "name": "R3 SELF category includes inherited own courses only"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 234,
+            "candidate": "casbin",
+            "name": "R3 category persisted affected set"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 235,
+            "candidate": "casbin",
+            "name": "R3 category recheck affected set"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 236,
+            "candidate": "casbin",
+            "name": "R3 forced descendant outside selected SELF denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 237,
+            "candidate": "casbin",
+            "name": "R3 inherited descendant outside selected SELF denied"
+          }
+        ]
+      },
+      {
+        "id": "TASK3-REVIEW-R4",
+        "status": "focused-observation-pending-independent-audit",
+        "evidence": [
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 206,
+            "candidate": "native",
+            "name": "R4 source maintains inaccessible"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 207,
+            "candidate": "native",
+            "name": "R4 inaccessible delegation create"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 208,
+            "candidate": "native",
+            "name": "R4 recipient maintains inaccessible"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 209,
+            "candidate": "native",
+            "name": "R4 maintenance survives valid recheck"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 210,
+            "candidate": "native",
+            "name": "R4 inaccessible M browse denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 211,
+            "candidate": "native",
+            "name": "R4 inaccessible M download denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 212,
+            "candidate": "native",
+            "name": "R4 inaccessible L browse denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 213,
+            "candidate": "native",
+            "name": "R4 inaccessible L download denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 214,
+            "candidate": "native",
+            "name": "R4 recipient can restore accessible state"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 238,
+            "candidate": "casbin",
+            "name": "R4 source maintains inaccessible"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 239,
+            "candidate": "casbin",
+            "name": "R4 inaccessible delegation create"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 240,
+            "candidate": "casbin",
+            "name": "R4 recipient maintains inaccessible"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 241,
+            "candidate": "casbin",
+            "name": "R4 maintenance survives valid recheck"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 242,
+            "candidate": "casbin",
+            "name": "R4 inaccessible M browse denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 243,
+            "candidate": "casbin",
+            "name": "R4 inaccessible M download denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 244,
+            "candidate": "casbin",
+            "name": "R4 inaccessible L browse denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 245,
+            "candidate": "casbin",
+            "name": "R4 inaccessible L download denied"
+          },
+          {
+            "path": "evidence/raw/task3-fix1-final-observations.jsonl",
+            "line": 246,
+            "candidate": "casbin",
+            "name": "R4 recipient can restore accessible state"
+          }
+        ]
+      }
+    ]
+  }
 }

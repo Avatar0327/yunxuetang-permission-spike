@@ -1,9 +1,11 @@
 import { query, type DB } from '../infrastructure/db.js';
 import { compile } from '../authz/compiler.js';
 import type { QueryPolicy } from '../authz/contracts.js';
+/** Owning-module resource state rule shared by live queries and delegation enumeration. */
+export function courseAccessPredicate(action:string) {return action==='knowledge.course.maintain'?'':' AND r.accessible=true';}
 export async function knowledgeObjects(db: DB, plan: QueryPolicy) {
  const c=compile(plan,{id:'id',uploaderId:'uploader_id',enabled:'enabled',deleted:'deleted',published:'published'});
- return (await query(db,`SELECT r.id FROM knowledge.course r WHERE ${c.where} AND r.accessible=true ORDER BY r.id`,c.values)).rows.map(r=>r.id as string);
+ return (await query(db,`SELECT r.id FROM knowledge.course r WHERE ${c.where}${courseAccessPredicate(plan.action)} ORDER BY r.id`,c.values)).rows.map(r=>r.id as string);
 }
 
 export interface CategoryFact {id:string;parent_id:string|null;creator_id:string;inherit_parent:boolean;force_children:boolean;provenance?:string;grants:import('../authz/contracts.js').CatalogGrant[]}
@@ -11,10 +13,10 @@ export function effectiveCategory(rows:CategoryFact[],id:string) {
  const chain:CategoryFact[]=[];let current=rows.find(c=>c.id===id);
  while(current){if(chain.some(c=>c.id===current!.id)||chain.length>=10)throw new Error('invalid category ancestry');chain.unshift(current);current=current.parent_id?rows.find(c=>c.id===current!.parent_id):undefined;}
  if(!chain.length||chain[0]!.parent_id)throw new Error('missing category ancestor');
- let grants:CategoryFact['grants']=[],lockedBy:string|undefined,forcedBy:string|undefined;
- for(const c of chain){lockedBy=forcedBy??(c.inherit_parent?c.parent_id??undefined:undefined);if(!lockedBy)grants=(!c.provenance||['active','system_origin'].includes(c.provenance))?c.grants:[];if(!forcedBy&&c.force_children)forcedBy=c.id;}
+ let grants:CategoryFact['grants']=[],lockedBy:string|undefined,forcedBy:string|undefined,policyCategoryId:string|undefined;
+ for(const c of chain){lockedBy=forcedBy??(c.inherit_parent?c.parent_id??undefined:undefined);if(!lockedBy){policyCategoryId=c.id;grants=(!c.provenance||['active','system_origin'].includes(c.provenance))?c.grants:[];}if(!forcedBy&&c.force_children)forcedBy=c.id;}
  const leaf=chain.at(-1)!;
- return {id,tenantId:'',creatorId:leaf.creator_id,grants,lockedBy,forcedBy};
+ return {id,tenantId:'',creatorId:leaf.creator_id,grants,lockedBy,forcedBy,policyCategoryId};
 }
 export async function categoryFacts(db:DB,tenantId:string):Promise<CategoryFact[]>{return (await query(db,'SELECT id,parent_id,creator_id,inherit_parent,force_children,grants,provenance FROM knowledge.category WHERE tenant_id=$1',[tenantId])).rows;}
 

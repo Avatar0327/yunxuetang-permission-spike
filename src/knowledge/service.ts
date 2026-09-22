@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
-import { categoryFacts,effectiveCategory } from './public.js';
-import { Authority,assertGrantSubset,normalizePolicy,nodes,ObjectResolver,compile,type CatalogGrant,type CandidateName } from '../authz/public.js';
+import { categoryFacts,effectiveCategory,courseAccessPredicate } from './public.js';
+import { Authority,assertGrantSubset,nodes,ObjectResolver,compile,type CatalogGrant,type CandidateName } from '../authz/public.js';
 import { pool,transaction,query,Denied,type DB,type Identity } from '../infrastructure/db.js';
 export class KnowledgeService {
  constructor(private authority:Authority){}
@@ -19,13 +19,20 @@ export class KnowledgeService {
   }
   return result;
  }
- private async ceiling(identity:Identity,db:DB,source:string,grants:CatalogGrant[]){
+ private async ceiling(identity:Identity,db:DB,source:string,grants:CatalogGrant[],affected:(action:string)=>string[]){
   const context=await this.authority.current(identity,db),memberships=await this.authority.memberships(identity,db),resolver=new ObjectResolver(this.authority,db);
-  try{await assertGrantSubset({context,nodes,memberships,managementRoleMembershipId:source,proposed:grants.map(g=>({nodeId:'course',action:g.action,scope:{kind:'all'},rawFields:[]})),resolveObjects:s=>resolver.resolve(s)});}catch{throw new Denied();}
-  const selected=memberships.find(m=>m.id===source)!;
-  const capabilities=normalizePolicy({context,nodes,memberships:[selected]}).filter(g=>g.delegable&&g.nodeId==='course'&&grants.some(p=>p.action===g.action));
-  const caps=[];for(const g of capabilities){caps.push({...await resolver.resolve(g.scope),rawFields:g.rawFields});}
-  return {sourceMembershipId:source,revision:context.revision,caps};
+  try{
+   const caps=await assertGrantSubset({context,nodes,memberships,managementRoleMembershipId:source,proposed:[...new Set(grants.map(g=>g.action))].map(action=>({nodeId:'course',action,scope:{kind:'all'},rawFields:[],objectIds:affected(action)})),resolveObjects:s=>resolver.resolve(s)});
+   return {sourceMembershipId:source,revision:context.revision,caps};
+  }catch{throw new Denied();}
+ }
+ private async categoryCeiling(identity:Identity,db:DB,source:string,grants:CatalogGrant[],id:string,patch:{inheritParent?:boolean;forceChildren?:boolean}={}){
+  const categories=await categoryFacts(db,identity.tenantId);
+  const target=categories.find(c=>c.id===id);
+  if(target){target.inherit_parent=patch.inheritParent??target.inherit_parent;target.force_children=patch.forceChildren??target.force_children;}
+  const courses=(await query(db,'SELECT id,category_id,custom_browse FROM knowledge.course WHERE tenant_id=$1 ORDER BY id',[identity.tenantId])).rows;
+  const affected=courses.map(course=>({course,catalog:effectiveCategory(categories,course.category_id)})).filter(({catalog})=>catalog.policyCategoryId===id);
+  return this.ceiling(identity,db,source,grants,action=>affected.filter(({course,catalog})=>action!=='knowledge.course.browse'||catalog.lockedBy||course.custom_browse===null).map(({course})=>course.id));
  }
  private async configure(identity:Identity,candidate:CandidateName,db:DB,id:string,action='knowledge.category.configure'){
   const current=effectiveCategory(await categoryFacts(db,identity.tenantId),id);
@@ -38,7 +45,7 @@ export class KnowledgeService {
   if(typeof body.id!=='string'||!body.id||('inheritParent'in body&&typeof body.inheritParent!=='boolean')||('forceChildren'in body&&typeof body.forceChildren!=='boolean'))throw new Denied();
   const grants=await this.grants(identity,db,body.grants??[]);
   if(body.parentId){const parent=effectiveCategory(await categoryFacts(db,identity.tenantId),body.parentId);if((parent.forcedBy||body.inheritParent)&&grants.length)throw new Denied();}
-  const snapshot=await this.ceiling(identity,db,body.managementRoleMembershipId,grants);
+  const snapshot=await this.categoryCeiling(identity,db,body.managementRoleMembershipId,grants,body.id);
   await query(db,'INSERT INTO knowledge.category(tenant_id,id,parent_id,creator_id,inherit_parent,force_children,grants,source_id,provenance,authority_snapshot) VALUES($1,$2,$3,$4,$5,$6,$7,$8,\'active\',$9)',[identity.tenantId,body.id,body.parentId??null,identity.personId,body.inheritParent??false,body.forceChildren??false,JSON.stringify(grants),body.managementRoleMembershipId,snapshot]);
   return {id:body.id};
  });}
@@ -46,7 +53,7 @@ export class KnowledgeService {
   await this.configure(identity,candidate,db,id);
   // Structural parent mutation is a separate explicit command, never a policy-update bypass.
   if('parentId'in body||('inheritParent'in body&&typeof body.inheritParent!=='boolean')||('forceChildren'in body&&typeof body.forceChildren!=='boolean'))throw new Denied();
-  const grants=await this.grants(identity,db,body.grants);const snapshot=await this.ceiling(identity,db,body.managementRoleMembershipId,grants);
+  const grants=await this.grants(identity,db,body.grants);const snapshot=await this.categoryCeiling(identity,db,body.managementRoleMembershipId,grants,id,body);
   await query(db,'UPDATE knowledge.category SET grants=$3,inherit_parent=coalesce($4,inherit_parent),force_children=coalesce($5,force_children),source_id=$6,provenance=\'active\',authority_snapshot=$7 WHERE tenant_id=$1 AND id=$2',[identity.tenantId,id,JSON.stringify(grants),body.inheritParent??null,body.forceChildren??null,body.managementRoleMembershipId,snapshot]);
   return {id};
  }
@@ -58,19 +65,18 @@ export class KnowledgeService {
  async append(identity:Identity,candidate:CandidateName,id:string,body:any,preview:boolean){return transaction(async db=>{
   const {context}=await this.authority.load(identity,db,true);await this.configure(identity,candidate,db,id,'knowledge.category.append');
   const current=(await query(db,'SELECT grants FROM knowledge.category WHERE tenant_id=$1 AND id=$2',[identity.tenantId,id])).rows[0];
-  const additions=await this.grants(identity,db,body.grants);await this.ceiling(identity,db,body.managementRoleMembershipId,additions);
+  const additions=await this.grants(identity,db,body.grants);await this.categoryCeiling(identity,db,body.managementRoleMembershipId,additions,id);
   if(preview)return {id,revision:context.revision,additions,retained:current.grants};
   if(body.revision!==context.revision)throw new Denied();
   const combined=[...current.grants,...additions];
   // Existing permits must also remain within this selected source before provenance changes.
-  const snapshot=await this.ceiling(identity,db,body.managementRoleMembershipId,combined);
+  const snapshot=await this.categoryCeiling(identity,db,body.managementRoleMembershipId,combined,id);
   await query(db,'UPDATE knowledge.category SET grants=$3,source_id=$4,provenance=\'active\',authority_snapshot=$5 WHERE tenant_id=$1 AND id=$2',[identity.tenantId,id,JSON.stringify(combined),body.managementRoleMembershipId,snapshot]);return {id,appended:additions.length};
  });}
  async courses(identity:Identity,candidate:CandidateName,options:{id?:string;prefix?:string;action?:string;limit?:number;offset?:number}={},db:DB=pool){
   const action=options.action??'knowledge.course.browse';const {plan}=await this.authority.plan(identity,candidate,'course',action,db);
   const c=compile(plan,{id:'id',uploaderId:'uploader_id',enabled:'enabled',deleted:'deleted',published:'published'});
-  let where=c.where;
-  if(action!=='knowledge.course.maintain')where+=' AND r.accessible=true';
+  let where=c.where+courseAccessPredicate(action);
   if(options.id)where+=` AND r.id=${c.bind(options.id)}`;
   if(options.prefix)where+=` AND starts_with(r.id,${c.bind(options.prefix)})`;
   const count=Number((await query(db,`SELECT count(*) n FROM knowledge.course r WHERE ${where}`,c.values)).rows[0].n);
@@ -86,7 +92,7 @@ export class KnowledgeService {
   const row=(await query(db,'SELECT category_id FROM knowledge.course WHERE tenant_id=$1 AND id=$2',[identity.tenantId,id])).rows[0];
   const catalog=effectiveCategory(await categoryFacts(db,identity.tenantId),row.category_id);if(catalog.lockedBy)throw new Denied();
   const grants=await this.grants(identity,db,body.grants);if(grants.some(g=>g.action!=='knowledge.course.browse'))throw new Denied();
-  const snapshot=await this.ceiling(identity,db,body.managementRoleMembershipId,grants);
+  const snapshot=await this.ceiling(identity,db,body.managementRoleMembershipId,grants,()=>[id]);
   await query(db,'UPDATE knowledge.course SET custom_browse=$3,custom_source_id=$4,custom_provenance=\'active\',custom_snapshot=$5 WHERE tenant_id=$1 AND id=$2',[identity.tenantId,id,JSON.stringify(grants),body.managementRoleMembershipId,snapshot]);
   return {id};
  });}
@@ -112,7 +118,7 @@ export class KnowledgeService {
   try{
    const sourceIdentity=await this.authority.sourceMembershipIdentity(identity.tenantId,row.source_id,db);
    if(!sourceIdentity)throw new Denied();
-   snapshot=await this.ceiling(sourceIdentity,db,row.source_id,row.grants);state='active';
+   snapshot=kind==='custom'?await this.ceiling(sourceIdentity,db,row.source_id,row.grants,()=>[id]):await this.categoryCeiling(sourceIdentity,db,row.source_id,row.grants,id);state='active';
   }catch(error){if(!(error instanceof Denied))throw error;}
   if(kind==='category')await query(db,'UPDATE knowledge.category SET provenance=$3,authority_snapshot=coalesce($4,authority_snapshot) WHERE tenant_id=$1 AND id=$2',[identity.tenantId,id,state,snapshot]);
   else await query(db,'UPDATE knowledge.course SET custom_provenance=$3,custom_snapshot=coalesce($4,custom_snapshot) WHERE tenant_id=$1 AND id=$2',[identity.tenantId,id,state,snapshot]);

@@ -190,6 +190,8 @@ export interface ObjectSet {
     objectIds: string[];
 }
 export interface ProposedGrant {
+    /** Trusted owning-module affected IDs; never copied from a request DTO. */
+    objectIds?: string[];
     nodeId: string;
     action: string;
     scope: Scope;

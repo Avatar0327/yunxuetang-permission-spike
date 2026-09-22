@@ -107,3 +107,47 @@ Tests: `test/module-boundaries.test.ts`, all `test/task3-*.ts`, and the canonica
 Docs: README, `docs/kernel-contract.md`, `docs/task2-follow-up.md`, `docs/task3-ports.md`, `docs/task3-coverage.json`, and this report. Raw files intentionally stay ignored in `evidence/raw`.
 
 Do not include controller-owned modified plan, `docs/controller-acceptance-audit-notes.md`, `docs/coverage-map-contract.md`, `tools/capture-runtime.sh`, or `tools/audit-coverage.py` in this implementation commit. Own API processes are stopped. The shared synthetic DB contains the final tests' fixtures; reseed before the next isolated acceptance/performance campaign.
+
+## Review fix round 1/5 — four accepted Important findings
+
+Status: **DONE_WITH_CONCERNS**, ready for independent re-review of the four findings in `task-3-review.md`. All four have fresh real SQL/HTTP RED→GREEN evidence in both Native and Casbin. This does not approve the full spike or expand Task4 scope.
+
+### Changes
+
+1. Original-source company loss: role recheck retains the actor's existing authorization check and separately requires the original source context's current company cap to include the recipient company. A failure persists/audits `suspended`; restoring the source company grant permits explicit recheck to `active`.
+2. Recipient-relative grants: centralized action/field/delegability validation now runs without enumerating the grantor-relative proposal. Each actual recipient is resolved in its own context/jurisdiction and checked against the selected source's actual same-node/action objects. Create, edit, add-member and recheck share that subset implementation. Empty scope results still require available actions, registered fields and explicit delegability. Templates with no members remain inert until add-member validates the real recipient. Existing expansion-negative tests remain unchanged.
+3. Affected knowledge objects: custom browse save/recheck passes its own course ID to central validation and saves the validated proposal cap. Category create/update/import/append/recheck compute actual affected courses from effective policy ownership, inherited/forced descendants and proposed hierarchy flags; unlocked custom browse overrides are excluded from category browse proposals. IDs are trusted owning-module facts and not accepted from DTOs. The selected source's broader unrelated courses no longer become the saved snapshot.
+4. Maintenance accessibility: enumeration and live course queries now share `courseAccessPredicate`. Maintenance includes inaccessible current resources; browse/download still exclude them. The delegate can restore accessibility, and ordinary object mutation freezes dependencies as before.
+
+No revision-lock ordering, isolation level, authorization revision fence, module SQL ownership, physical schema, business-rule fixtures or controller files were changed. Category affected-set coverage includes a positive SELF source with its inherited child, a negative forced descendant uploaded by another person, a negative inherited descendant uploaded by another person, persisted exact IDs and explicit category recheck. These supplementary category assertions were added after the original four REDs and are not claimed as separate historical REDs.
+
+### Fresh commands and evidence
+
+All commands ran in `/Users/peng/Agent本地开发/云学堂权限预研` with `PATH=/opt/homebrew/opt/node@24/bin:$PATH`.
+
+| Command / observation | Exit / result | Raw evidence |
+|---|---|---|
+| `npm run seed`; original `TASK3_OBSERVATIONS=evidence/raw/task3-fix1-red-observations.jsonl node --import tsx --test test/task3-review-regressions.test.ts` | seed0; test1, all four children fail per candidate (8 child failures plus2 parent failures) | `task3-fix1-seed.txt`, `task3-fix1-red.txt`, `task3-fix1-red-observations.jsonl` |
+| Fresh seed; same four regression scenarios after fixes | 0, **10/10** including2 parents | `task3-fix1-green-seed1.txt`, `task3-fix1-green1.txt`, `task3-fix1-green-observations1.jsonl` |
+| Fresh seed; `RACE_EVIDENCE=evidence/raw/task3-fix1-races.jsonl node --import tsx --test --test-concurrency=1 test/semantic.test.ts test/integration.test.ts test/races.test.ts test/review-regressions.test.ts test/cache.test.ts` | 0, **53/53** | `task3-fix1-core-seed.txt`, `task3-fix1-core.txt`, `task3-fix1-races.jsonl` |
+| Fresh seed; `TASK3_OBSERVATIONS=evidence/raw/task3-fix1-final-observations.jsonl npm run test:task3` | 0, **112/112**, including12 review tests/parents | `task3-fix1-domain-seed.txt`, `task3-fix1-domains.txt` |
+| `npm run typecheck`; `npm run build`; `npm audit --json` | 0 / 0 / 0; zero vulnerabilities | `task3-fix1-final-typecheck.txt`, `task3-fix1-final-build.txt`, `task3-fix1-final-audit.json` |
+| Literal JSONL check | **252 records**, Native125/Casbin125/shared-resolver2, zero expected/actual mismatches | `task3-fix1-observation-check.json` |
+| `lsof -nP -iTCP:4311 -iTCP:4312 -sTCP:LISTEN` | 1, expected empty/no API listeners | `task3-fix1-api-process-check.txt` |
+
+The full domain command includes the required role-company, delegation-matrix, protection, knowledge, policy-recheck, module-boundary and review regression suites, plus existing functional timeout/revoke tests. No performance campaign was run. Original RED failures are: R1 `active` instead of `suspended`; R2 valid recipient-relative create403 instead of200; R3 valid own-course custom403 instead of200; R4 delegated inaccessible maintenance403 instead of200. Raw failures were preserved.
+
+`task3-fix1-final-observations.jsonl` SHA256: `de4c077594240616589771b5b6270568b567e84dc8a39f0b4c8764b268e6123c`. `docs/task3-coverage.json.reviewFixRound1` records every new observation with exact line, candidate and name, while retaining the historical baseline map. Focused final line references:
+
+- R1 original-source revoke/restore: Native183–186, Casbin215–218.
+- R2 recipient D2 positive create/edit/add/recheck and empty-set negatives: Native187–195, Casbin219–227. Existing D2-beyond-D1 denial is unchanged in the full suite.
+- R3 own-course positive, cap, browse, unrelated uploader denial and custom recheck: Native196–200, Casbin228–232; category actual descendants: Native201–205, Casbin233–237.
+- R4 source/delegate maintenance, recheck, browse/download denials and restore: Native206–214, Casbin238–246.
+
+One local edit wrapper initially invoked missing `python` (exit127 for that command); no edit was applied. Its subsequent typecheck ran against unchanged sources (`task3-fix1-typecheck-attempt1.txt`), so it is not fix verification. Re-running the edit with `python3` applied the changes, and `task3-fix1-typecheck-attempt2.txt` and final checks passed. No test oracle was weakened, no extra company grant was added to bypass a check, and no failed raw file was overwritten.
+
+### Limits / handoff
+
+The prior whole-spike limitations remain: full168 acceptance, company-qualified schema/large fixtures, independent deployment, browser/UI, production media/export and performance gates are unverified. This round changes small-fixture correctness, not production performance. Category cap construction currently scans tenant category/course facts; large-set efficiency remains deferred. API children were stopped; reseed before an isolated follow-up campaign.
+
+Owned fix files: `src/authz/contracts.ts`, `delegation.ts`, `delegation-caps.ts`, `role-service.ts`; `src/knowledge/public.ts`, `service.ts`; `test/task3-review-regressions.test.ts`; `docs/task3-ports.md`, `docs/task3-coverage.json`; this appended report. Controller `docs/decision-evidence.md`, `docs/reuse-candidates.md`, performance protocol, benchmark auditor and other helper/planning files are excluded from this commit.
