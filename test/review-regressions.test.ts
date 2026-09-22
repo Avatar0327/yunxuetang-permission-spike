@@ -74,7 +74,7 @@ for (const candidate of ['native', 'casbin'] as const) {
             const ordinary = await exportsService.create(identity, candidate, { history: true, fixture: true });
             jobs.push(ordinary.id);
             const normal = await exportsService.phase(identity, candidate, ordinary.id, 'execute');
-            const output = await exportsService.phase(identity, candidate, ordinary.id, 'claim');
+            const output = await collectChunks(exportsService,identity,candidate,ordinary.id);
             const expectedIds = Array.from({ length: 205 }, (_, i) => 'fix1-' + String(i + 1).padStart(3, '0')).concat('h-X-A');
             await record('ordinary-export', { count: 206, ids: expectedIds }, { count: normal.count, ids: output.rows.map((r: any) => r.id) }, candidate);
             assert.equal(normal.count, 206);
@@ -97,7 +97,7 @@ for (const candidate of ['native', 'casbin'] as const)
             await pool.query("INSERT INTO report.learning_fact(tenant_id,id,person_id,data_company_id,historical_department_id,fixture,points) SELECT 'T1','fix1-'||lpad(i::text,3,'0'),'X','A','fix-group-A',true,2 FROM generate_series(1,205)i");
             const job = await service.create(identity, candidate, { history: true, fixture: true, offset: 150, limit: 3 });
             id = job.id;
-            const executed = await service.phase(identity, candidate, id, 'execute'), claimed = await service.phase(identity, candidate, id, 'claim');
+            const executed = await service.phase(identity, candidate, id, 'execute'), claimed = await collectChunks(service,identity,candidate,id);
             const expectedIds = Array.from({ length: 205 }, (_, i) => 'fix1-' + String(i + 1).padStart(3, '0')).concat('h-X-A');
             await record('offset-export', { count: 206, ids: expectedIds }, { count: executed.count, ids: claimed.rows.map((r: any) => r.id) }, candidate);
             assert.equal(executed.count, 206);
@@ -119,3 +119,7 @@ finally {
     await cache.close();
 } });
 test.after(async () => pool.end());
+
+async function collectChunks(service:ExportService,identity:{tenantId:string;personId:string},candidate:'native'|'casbin',id:string){
+ const rows:any[]=[];let chunk=0,total=-1;for(;;){const page=await service.phase(identity,candidate,id,'claim',chunk);assert.ok(page.rows.length<=200);if(total<0)total=page.count;assert.equal(page.count,total);rows.push(...page.rows);if(page.nextChunk===undefined)break;assert.equal(page.nextChunk,chunk+1);chunk=page.nextChunk;}assert.equal(rows.length,total);return {rows,count:total};
+}

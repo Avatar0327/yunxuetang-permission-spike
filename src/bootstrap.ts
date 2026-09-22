@@ -1,3 +1,6 @@
+import {ProjectExports,projectExportRequester} from './training/exports.js';
+import {AccountExports,accountExportRequester} from './account/exports.js';
+import {registerExportLookup} from './authz/public.js';
 import { OrganizationFactsPort } from './organization/public.js';
 import { TrainingFactsPort } from './training/public.js';
 import { KnowledgeFactsPort } from './knowledge/public.js';
@@ -16,7 +19,7 @@ import { ReportService, type ListOptions } from './report/service.js';
 import { EnrollmentService } from './training/enrollment-service.js';
 import { TrainingService } from './training/service.js';
 import { OrganizationService } from './organization/service.js';
-import { ExportService } from './report/exports.js';
+import { ExportService, reportExportRequester } from './report/exports.js';
 import { metrics, Denied, Unavailable } from './infrastructure/db.js';
 import type { CandidateName } from './authz/bulk-candidate.js';
 class AppModule {
@@ -28,7 +31,7 @@ const fastify = app.getHttpAdapter().getInstance();
 const candidate = (process.env.CANDIDATE ?? 'native') as CandidateName;
 if (!['native', 'casbin'].includes(candidate))
     throw new Error('unknown candidate');
-function options(q: any): ListOptions { return { fixture: q.fixture === true || q.fixture === 'true', history: q.history === true || q.history === 'true', aggregate: q.aggregate === true || q.aggregate === 'true', node: typeof q.node === 'string' ? q.node : undefined, limit: q.limit ? Number(q.limit) : 50, offset: q.offset ? Number(q.offset) : 0, search: typeof q.search === 'string' ? q.search : undefined, id: typeof q.id === 'string' ? q.id : undefined, state: ['enabled', 'disabled', 'deleted', 'all'].includes(q.state) ? q.state : 'enabled', cold: process.env.CACHE_MODE === 'cold' }; }
+function options(q: any): ListOptions { return { groupBy:q.groupBy==='department,job,status'?'department,job,status':undefined, fixture: q.fixture === true || q.fixture === 'true', history: q.history === true || q.history === 'true', aggregate: q.aggregate === true || q.aggregate === 'true', node: typeof q.node === 'string' ? q.node : undefined, limit: q.limit ? Number(q.limit) : 50, offset: q.offset ? Number(q.offset) : 0, search: typeof q.search === 'string' ? q.search : undefined, id: typeof q.id === 'string' ? q.id : undefined, state: ['enabled', 'disabled', 'deleted', 'all'].includes(q.state) ? q.state : 'enabled', cold: process.env.CACHE_MODE === 'cold' }; }
 function route(method: string, url: string, handler: (identity: any, req: any) => Promise<any>) {
     fastify.route({ method, url, handler: async (req: any, reply: any) => metrics.run({ queries: 0 }, async () => {
             const at = new Date().toISOString(), start = performance.now();
@@ -38,18 +41,18 @@ function route(method: string, url: string, handler: (identity: any, req: any) =
                 const payload = await handler(identity, req);
                 if (payload.evidence)
                     payload.evidence.permissionMs += tokenMs;
-                return reply.send({ ...payload, meta: { candidate, instance: process.env.INSTANCE_ID ?? String(process.pid), pid: process.pid, pubsub: false, requestAt: at, responseAt: new Date().toISOString(), elapsedMs: performance.now() - start, queryCount: metrics.getStore()!.queries } });
+                return reply.send({ ...payload, meta: { candidate, instance: process.env.INSTANCE_ID ?? String(process.pid), pid: process.pid, pubsub: false, requestAt: at, responseAt: new Date().toISOString(), elapsedMs: performance.now() - start, authorityObservedAt:metrics.getStore()!.authorityObservedAt,observedRevision:metrics.getStore()!.observedRevision, queryCount: metrics.getStore()!.queries } });
             }
             catch (e) {
                 const error = e instanceof Denied ? e : (['23503','23505','23514','P0001'].includes((e as any)?.code) ? new Denied() : new Unavailable());
-                return reply.code(error.status).send({ message: error.message, meta: { candidate, pubsub:false, instance: process.env.INSTANCE_ID ?? String(process.pid), requestAt: at, responseAt: new Date().toISOString(), elapsedMs: performance.now() - start, queryCount: metrics.getStore()!.queries } });
+                return reply.code(error.status).send({ message: error.message, meta: { candidate, pubsub:false, instance: process.env.INSTANCE_ID ?? String(process.pid), requestAt: at, responseAt: new Date().toISOString(), elapsedMs: performance.now() - start, authorityObservedAt:metrics.getStore()!.authorityObservedAt,observedRevision:metrics.getStore()!.observedRevision, queryCount: metrics.getStore()!.queries } });
             }
         }) });
 }
 const account=new AccountService(authority);
 route('GET','/account/own',async(i)=>account.own(i,candidate));
 route('GET','/account/entries',async(i)=>account.list(i,candidate));
-route('GET','/account/export',async(i)=>account.list(i,candidate,true));
+route('GET','/account/export',async(i,r)=>account.exportPage(i,candidate,Math.max(0,Number(r.query.offset??0))));
 route('GET','/account/entries/:id',async(i,r)=>account.list(i,candidate,false,r.params.id));
 route('GET','/account/entries/:id/source',async(i,r)=>account.list(i,candidate,false,r.params.id,true));
 route('POST','/account/offset',async(i,r)=>account.offset(i,candidate,r.body??{}));
@@ -83,7 +86,8 @@ route('GET', '/projects/:id', async (i, r) => { const x = await training.project
 route('GET', '/projects/:id/roster', async (i, r) => training.roster(i, candidate, r.params.id,r.query.search));
 route('GET','/projects/:id/people/:personId/progress',async(i,r)=>training.personal(i,candidate,r.params.id,r.params.personId,'progress'));
 route('GET','/projects/:id/people/:personId/attachment',async(i,r)=>training.personal(i,candidate,r.params.id,r.params.personId,'attachment'));
-route('GET', '/projects/:id/media/:segment', async (i, r) => training.media(i, candidate, r.params.id));
+route('GET','/projects/:id/media/:segment/ticket',async(i,r)=>training.mediaTicket(i,candidate,r.params.id,r.params.segment));
+route('GET', '/projects/:id/media/:segment', async (i, r) => training.media(i, candidate, r.params.id,r.params.segment,r.query.ticket));
 route('POST','/projects/:id/enrollments',async(i,r)=>new EnrollmentService(authority,training).change(i,candidate,r.params.id,r.body??{}));
 route('POST', '/projects/:id', async (i, r) => training.save(i, candidate, r.params.id, r.body ?? {}));
 route('POST', '/appointments', async (i, r) => { if (typeof r.body?.active !== 'boolean')
@@ -92,7 +96,22 @@ route('POST', '/memberships/:id/revoke', async (i, r) => organization.revoke(i, 
 route('POST', '/people/:id', async (i, r) => organization.update(i, candidate, r.params.id, r.body ?? {}));
 route('POST', '/exports', async (i, r) => exportsService.create(i, candidate, options(r.body ?? {})));
 route('POST', '/exports/:id/execute', async (i, r) => exportsService.phase(i, candidate, r.params.id, 'execute'));
-route('GET', '/exports/:id/claim', async (i, r) => exportsService.phase(i, candidate, r.params.id, 'claim'));
+route('GET', '/exports/:id/claim', async (i, r) => exportsService.phase(i, candidate, r.params.id, 'claim',Number(r.query.chunk??0)));
+const projectExports=new ProjectExports(training),accountExports=new AccountExports(account);
+registerExportLookup('report',reportExportRequester);registerExportLookup('training',projectExportRequester);registerExportLookup('account',accountExportRequester);
+route('POST','/projects/:id/exports',async(i,r)=>projectExports.create(i,candidate,{projectId:r.params.id}));
+route('POST','/project-exports/:id/execute',async(i,r)=>projectExports.phase(i,candidate,r.params.id,'execute'));
+route('GET','/project-exports/:id/claim',async(i,r)=>projectExports.phase(i,candidate,r.params.id,'claim',Number(r.query.chunk??0)));
+route('POST','/account/exports',async(i)=>accountExports.create(i,candidate,{}));
+route('POST','/account/exports/:id/execute',async(i,r)=>accountExports.phase(i,candidate,r.params.id,'execute'));
+route('GET','/account/exports/:id/claim',async(i,r)=>accountExports.phase(i,candidate,r.params.id,'claim',Number(r.query.chunk??0)));
+for(const [domain,service] of Object.entries({report:exportsService,training:projectExports,account:accountExports})){
+ fastify.post('/worker/'+domain+'/exports/:id/execute',async(req:any,reply:any)=>metrics.run({queries:0},async()=>{
+  const requestAt=new Date().toISOString();const meta=()=>({candidate,instance:process.env.INSTANCE_ID??String(process.pid),pid:process.pid,pubsub:false,requestAt,responseAt:new Date().toISOString(),authorityObservedAt:metrics.getStore()!.authorityObservedAt,observedRevision:metrics.getStore()!.observedRevision,queryCount:metrics.getStore()!.queries});
+  try{if(Object.keys(req.body??{}).length)throw new Denied();return {...await service.worker(String(req.headers.authorization??'').replace(/^Bearer /,''),candidate,req.params.id),meta:meta()};}
+  catch(e){const error=e instanceof Denied?e:new Unavailable();return reply.code(error.status).send({message:error.message,meta:meta()});}
+ }));
+}
 fastify.get('/', async (_: any, reply: any) => reply.type('text/html').send(await readFile('web/index.html', 'utf8')));
 for (const [url, path, type] of [['/assets/vue.js', 'node_modules/vue/dist/vue.global.prod.js', 'text/javascript'], ['/assets/element.js', 'node_modules/element-plus/dist/index.full.min.js', 'text/javascript'], ['/assets/element.css', 'node_modules/element-plus/dist/index.css', 'text/css']])
     fastify.get(url, async (_: any, reply: any) => reply.type(type).send(await readFile(path!)));

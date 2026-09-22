@@ -1,23 +1,23 @@
-import { writeFile, mkdir } from 'node:fs/promises';
-import { pool, metrics, query } from '../src/infrastructure/db.js';
-import { Authority } from '../src/authz/revision.js';
-import { SessionCache } from '../src/authz/cache.js';
-import { compile } from '../src/authz/compiler.js';
-const cache = new SessionCache(), authority = new Authority(cache);
-const output = process.env.OUTPUT ?? 'evidence/raw/explain';
-await mkdir(output, { recursive: true });
-try {
-    for (const node of ['personal-learning', 'department-report', 'history']) {
-        const auth = await authority.plan({ tenantId: 'T1', personId: 'M' }, 'native', node, node === 'history' ? 'report.history.view' : 'report.personal-learning.view');
-        const history = node === 'history';
-        const c = compile(auth.plan, { id: 'id', personId: 'person_id', companyId: 'company_id', dataCompanyId: 'data_company_id', enabled: 'enabled', deleted: 'deleted' });
-        const sql = history ? `SELECT r.historical_department_id,count(*) FROM report.learning_fact r JOIN report.person_projection p ON p.tenant_id=r.tenant_id AND p.person_id=r.person_id WHERE ${c.where} AND p.enabled=true AND p.deleted=false GROUP BY r.historical_department_id` : `SELECT r.id FROM report.person_projection r WHERE ${c.where} ORDER BY r.id LIMIT 50`;
-        const plan = await pool.query('EXPLAIN (ANALYZE,BUFFERS,FORMAT JSON) ' + sql, c.values);
-        await writeFile(`${output}/${node}.json`, JSON.stringify({ sql, parameters: c.values, revision: auth.plan.revision, plan: plan.rows }, null, 2));
-    }
-    console.log('EXPLAIN ANALYZE BUFFERS saved to ' + output);
-}
-finally {
-    await cache.close();
-    await pool.end();
-}
+import {writeFile,mkdir} from 'node:fs/promises';
+import {pool,type DB} from '../src/infrastructure/db.js';
+import {Authority} from '../src/authz/revision.js';
+import {SessionCache} from '../src/authz/cache.js';
+import {ReportService} from '../src/report/service.js';
+import {scenarioTruth} from './benchmark-truth.js';
+const cache=new SessionCache(),service=new ReportService(new Authority(cache)),output=process.env.OUTPUT??'evidence/raw/explain';
+await mkdir(output,{recursive:true});
+try{
+ for(const candidate of ['native','casbin'] as const)for(const [scenario,def] of Object.entries(scenarioTruth().scenarios)){
+  const captured:any[]=[];
+  const db={query:async(sql:string,parameters:unknown[]=[])=>{
+   if(/^SELECT (?:r\.id|r\.historical_department_id|count\(\*\)::int count FROM report\.)/.test(sql)){
+    const before=new Date().toISOString(),plan=await pool.query('EXPLAIN (ANALYZE,BUFFERS,FORMAT JSON) '+sql,parameters);
+    captured.push({sql,parameters,startedAt:before,endedAt:new Date().toISOString(),plan:plan.rows});
+   }
+   return pool.query(sql,parameters);
+  }} as DB;
+  const result=await service.list({tenantId:'T1',personId:def.actor},candidate,{limit:50,history:def.history,aggregate:def.history,groupBy:def.history?'department,job,status':undefined},db);
+  await writeFile(`${output}/${candidate}-${scenario}.json`,JSON.stringify({candidate,scenario,actualEndpointPath:def.path,revision:result.evidence.revision,captured},null,2));
+ }
+ console.log('Saved exact executed endpoint count/list/aggregate SQL, parameters and EXPLAIN ANALYZE BUFFERS');
+}finally{await cache.close();await pool.end();}

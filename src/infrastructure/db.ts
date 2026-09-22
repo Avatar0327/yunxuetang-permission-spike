@@ -2,6 +2,8 @@ import pg from 'pg';
 import { AsyncLocalStorage } from 'node:async_hooks';
 export const metrics = new AsyncLocalStorage<{
     queries: number;
+    observedRevision?: number;
+    authorityObservedAt?: string;
 }>();
 export const pool = new pg.Pool({ host: process.env.PGHOST ?? '127.0.0.1', port: Number(process.env.PGPORT ?? 55432), database: process.env.PGDATABASE ?? 'permission_spike', user: process.env.PGUSER ?? 'spike', password: process.env.PGPASSWORD ?? 'spike', max: Number(process.env.PGPOOL ?? 20), connectionTimeoutMillis: 800, statement_timeout: 10000 });
 pool.on('error', () => { });

@@ -7,3 +7,5 @@ export { compile } from './compiler.js';
 export type { CandidateName } from './bulk-candidate.js';
 export type { CatalogGrant } from './contracts.js';
 export { normalizePolicy } from './policy.js';
+export { ExportWorker, registerExportLookup } from './export-worker.js';
+export { issueMediaTicket, verifyMediaTicket } from './media-ticket.js';

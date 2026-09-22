@@ -15,7 +15,6 @@ INSERT INTO report.person_projection(tenant_id,id,person_id,company_id,enabled,d
 INSERT INTO report.learning_fact(tenant_id,id,person_id,data_company_id,historical_department_id,enabled,deleted,fixture,points,historical_job_id,historical_status) SELECT 'T1','fact-'||lpad(i::text,7,'0'),'person-'||lpad((1+(i-1)%49987)::text,5,'0'),(ARRAY['I','A','B'])[1+(1+(i-1)%49987)%3],'old-dept-'||(i%20),true,false,false,1,'old-job-'||(i%5),CASE WHEN i%7=0 THEN 'disabled' ELSE 'enabled' END FROM generate_series(1,1000000)i;
 INSERT INTO report.learning_fact(tenant_id,id,person_id,data_company_id,historical_department_id,enabled,deleted,fixture,points) VALUES('T1','h-X-A','X','A','old-A',true,false,true,10),('T1','h-X-B','X','B','old-B',true,false,true,20);
 INSERT INTO training.project(tenant_id,id,created_by,title) VALUES('T1','P','Z','共享项目 P'),('T1','Q','Z','项目 Q');
-INSERT INTO training.roster(tenant_id,project_id,person_id,company_id) VALUES('T1','P','X','A'),('T1','P','Y','B'),('T1','P','A','I');
 INSERT INTO knowledge.category(tenant_id,id,parent_id) SELECT 'T1','cat-'||i,CASE WHEN i=1 THEN null ELSE 'cat-'||(i-1) END FROM generate_series(1,10)i;
 
 UPDATE organization.person SET internal=(company_id='I'),display_name=CASE WHEN tenant_id='T2' THEN 'person-'||lpad(substring(id from 7)::text,5,'0') ELSE id END,job_id='job-'||CASE WHEN company_id='I' THEN 'internal' ELSE 'customer' END;
@@ -23,7 +22,7 @@ UPDATE report.person_projection r SET department_id=p.department_id,manager_id=p
 
 INSERT INTO training.person_projection SELECT tenant_id,id,id,company_id,enabled,deleted,department_id,manager_id,display_name FROM organization.person;
 
-UPDATE training.roster SET progress=CASE person_id WHEN 'X' THEN 25 WHEN 'Y' THEN 75 ELSE 50 END,attachment='attachment-'||person_id;
+
 
 INSERT INTO account.person_projection SELECT tenant_id,id,enabled,deleted FROM organization.person;
 INSERT INTO account.source VALUES('T1','A','source-X-A','A-private-source'),('T1','B','source-X-B','B-private-source');
@@ -32,3 +31,6 @@ INSERT INTO account.entry(tenant_id,id,person_id,data_company_id,currency,kind,a
 ('T1','debt-X-B','X','B','credit','debt',10,10,'source-X-B'),
 ('T1','reward-X-B','X','B','credit','reward',20,20,'source-X-B'),
 ('T1','reward-X-B-point','X','B','point','reward',8,8,'source-X-B');
+INSERT INTO training.roster(tenant_id,project_id,person_id,company_id) VALUES('T1','P','X','A'),('T1','P','Y','B'),('T1','P','A','I');
+
+UPDATE training.roster SET progress=CASE person_id WHEN 'X' THEN 25 WHEN 'Y' THEN 75 ELSE 50 END,attachment='attachment-'||person_id;

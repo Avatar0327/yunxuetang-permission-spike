@@ -22,5 +22,5 @@ export async function start(candidate:string,port=4311) {
  let logs='';child.stdout.on('data',d=>logs+=d);child.stderr.on('data',d=>logs+=d);
  for(let n=0;n<200&&!logs.includes('"ready":true');n++){if(child.exitCode!==null)throw Error(logs);await new Promise(r=>setTimeout(r,20));}
  if(!logs.includes('"ready":true')){child.kill();throw Error(logs);}
- return {async request(method:string,path:string,body?:unknown,actor='Z') { const response=await fetch('http://127.0.0.1:'+port+path,{method,headers:{authorization:'Bearer spike-'+actor,'content-type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});return {status:response.status,body:await response.json() as any};},async close(){child.kill('SIGTERM');await new Promise<void>(r=>child.once('exit',()=>r()));}};
+ return {logs:()=>logs,async request(method:string,path:string,body?:unknown,actor='Z') { const response=await fetch('http://127.0.0.1:'+port+path,{method,headers:{authorization:'Bearer spike-'+actor,'content-type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});return {status:response.status,body:await response.json() as any};},async close(){child.kill('SIGTERM');await new Promise<void>(r=>child.once('exit',()=>r()));}};
 }

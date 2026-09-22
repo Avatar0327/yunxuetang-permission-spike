@@ -1,3 +1,4 @@
+import {issueMediaTicket,verifyMediaTicket} from '../authz/public.js';
 import { pool, query, transaction, Denied, type DB, type Identity } from '../infrastructure/db.js';
 import { Authority } from '../authz/revision.js';
 import { compile } from '../authz/compiler.js';
@@ -20,9 +21,9 @@ export class TrainingService {
         const {auth}=await this.projects(identity,candidate,id);
         const values:unknown[]=[identity.tenantId,id,companyCap(auth.context)];
         let where='r.tenant_id=$1 AND r.project_id=$2 AND r.company_id=ANY($3::text[]) AND p.enabled AND NOT p.deleted';
-        if(search!==undefined){if(typeof search!=='string'||search.length>200)throw new Denied();values.push('%'+search+'%');where+=` AND p.display_name ILIKE $${values.length}`;}
+        if(search!==undefined){if(typeof search!=='string'||search.length>200)throw new Denied();values.push('%'+search+'%');where+=` AND r.snapshot_display_name ILIKE $${values.length}`;}
         if(personId!==undefined){values.push(personId);where+=` AND r.person_id=$${values.length}`;}
-        const rows=(await query(pool,`SELECT r.person_id,r.company_id,p.display_name FROM training.roster r JOIN training.person_projection p ON p.tenant_id=r.tenant_id AND p.person_id=r.person_id WHERE ${where} ORDER BY r.person_id`,values)).rows;
+        const rows=(await query(pool,`SELECT r.person_id,r.company_id,r.snapshot_display_name AS display_name FROM training.roster r JOIN training.person_projection p ON p.tenant_id=r.tenant_id AND p.person_id=r.person_id WHERE ${where} ORDER BY r.person_id`,values)).rows;
         if(personId&&!rows.length)throw new Denied();
         return {rows,count:rows.length};
     }
@@ -62,7 +63,16 @@ export class TrainingService {
             return { id, active };
         });
     }
-    async media(identity: Identity, candidate: CandidateName, id: string) { await this.projects(identity, candidate, id, pool, 'training.project.download'); return { fragment: 'synthetic-media-segment', projectId: id }; }
+    async media(identity: Identity, candidate: CandidateName, id: string, segment='1', ticket?:string) {
+        const {auth}=await this.projects(identity, candidate, id, pool, 'training.project.download');
+        if(ticket!==undefined)verifyMediaTicket(ticket,{...identity,projectId:id,segment,revision:auth.context.revision});
+        return {fragment:'synthetic-media-segment',projectId:id,authorization:{revision:auth.context.revision,cache:auth.cache}};
+    }
+    async mediaTicket(identity:Identity,candidate:CandidateName,id:string,segment:string){
+        if(typeof segment!=='string'||!segment||segment.length>100)throw new Denied();
+        const {auth}=await this.projects(identity,candidate,id,pool,'training.project.download');
+        return {ticket:issueMediaTicket({...identity,projectId:id,segment,revision:auth.context.revision}),expiresInSeconds:60};
+    }
     async faceToFace(identity:Identity,candidate:CandidateName,id?:string){
         const {plan}=await this.authority.plan(identity,candidate,'face-to-face','training.face-to-face.view');
         const c=compile(plan,{id:'id',ownerId:'owner_id',enabled:'enabled',deleted:'deleted'});

@@ -21,7 +21,7 @@ CREATE INDEX person_manager ON organization.person(tenant_id,manager_id,id);
 CREATE INDEX fact_company_person ON report.learning_fact(tenant_id,data_company_id,person_id);
 CREATE INDEX fact_fixture ON report.learning_fact(tenant_id,fixture,id);
 CREATE INDEX projection_company ON report.person_projection(tenant_id,company_id,id);
-CREATE TABLE report.export_job(tenant_id text,id text,person_id text,revision bigint NOT NULL,options jsonb NOT NULL,payload jsonb,state text NOT NULL DEFAULT 'created',PRIMARY KEY(tenant_id,id),FOREIGN KEY(tenant_id,person_id) REFERENCES organization.person);
+
 CREATE TABLE knowledge.category(tenant_id text REFERENCES authz.revision,id text,parent_id text,PRIMARY KEY(tenant_id,id),FOREIGN KEY(tenant_id,parent_id) REFERENCES knowledge.category);
 CREATE TABLE authz.audit(id bigserial PRIMARY KEY,tenant_id text,revision bigint,event text,at timestamptz NOT NULL DEFAULT clock_timestamp());
 CREATE OR REPLACE FUNCTION authz.bump() RETURNS trigger LANGUAGE plpgsql AS $$
@@ -120,3 +120,44 @@ CREATE TABLE account.person_projection(tenant_id text,person_id text,enabled boo
 CREATE TABLE account.source(tenant_id text,company_id text,id text,payload text NOT NULL,PRIMARY KEY(tenant_id,company_id,id),FOREIGN KEY(tenant_id,company_id) REFERENCES organization.company);
 CREATE TABLE account.entry(tenant_id text,id text,person_id text NOT NULL,data_company_id text NOT NULL,currency text NOT NULL CHECK(currency IN('credit','point')),kind text NOT NULL CHECK(kind IN('debt','reward')),amount int NOT NULL CHECK(amount>=0),remaining int NOT NULL CHECK(remaining>=0 AND remaining<=amount),source_id text NOT NULL,enabled boolean NOT NULL DEFAULT true,deleted boolean NOT NULL DEFAULT false,cross_company_reference boolean NOT NULL DEFAULT false CHECK(NOT cross_company_reference),PRIMARY KEY(tenant_id,id),FOREIGN KEY(tenant_id,person_id) REFERENCES account.person_projection,FOREIGN KEY(tenant_id,data_company_id,source_id) REFERENCES account.source);
 CREATE TABLE account.offset_audit(id bigserial PRIMARY KEY,tenant_id text,debt_id text,reward_id text,amount int NOT NULL CHECK(amount>=0),actor_id text NOT NULL,at timestamptz NOT NULL DEFAULT clock_timestamp(),FOREIGN KEY(tenant_id,debt_id) REFERENCES account.entry,FOREIGN KEY(tenant_id,reward_id) REFERENCES account.entry);
+
+-- Task5: protected bounded export persistence, owned per domain.
+CREATE TABLE authz.export_worker(token_hash text PRIMARY KEY,tenant_id text REFERENCES authz.revision,domain text NOT NULL CHECK(domain IN('report','training','account')),enabled boolean NOT NULL DEFAULT true);
+CREATE TABLE report.export_epoch(tenant_id text PRIMARY KEY REFERENCES authz.revision,version bigint NOT NULL DEFAULT 1);
+CREATE TABLE report.export_job(tenant_id text,id text,person_id text,revision bigint NOT NULL,epoch bigint NOT NULL,options jsonb NOT NULL,total_count int NOT NULL,next_offset int NOT NULL DEFAULT 0,chunk_count int NOT NULL DEFAULT 0,state text NOT NULL DEFAULT 'created' CHECK(state IN('created','running','ready')),PRIMARY KEY(tenant_id,id),FOREIGN KEY(tenant_id,person_id) REFERENCES organization.person);
+CREATE TABLE report.export_chunk(tenant_id text,job_id text,chunk_no int NOT NULL CHECK(chunk_no>=0),payload jsonb NOT NULL CHECK(jsonb_typeof(payload)='array' AND jsonb_array_length(payload)<=200),PRIMARY KEY(tenant_id,job_id,chunk_no),FOREIGN KEY(tenant_id,job_id) REFERENCES report.export_job ON DELETE CASCADE);
+CREATE OR REPLACE FUNCTION report.bump_export_epoch() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ UPDATE report.export_epoch SET version=version+1 WHERE tenant_id=COALESCE(NEW.tenant_id,OLD.tenant_id);
+ RETURN COALESCE(NEW,OLD);
+END $$;
+CREATE TABLE training.export_epoch(tenant_id text PRIMARY KEY REFERENCES authz.revision,version bigint NOT NULL DEFAULT 1);
+CREATE TABLE training.export_job(tenant_id text,id text,person_id text,revision bigint NOT NULL,epoch bigint NOT NULL,options jsonb NOT NULL,total_count int NOT NULL,next_offset int NOT NULL DEFAULT 0,chunk_count int NOT NULL DEFAULT 0,state text NOT NULL DEFAULT 'created' CHECK(state IN('created','running','ready')),PRIMARY KEY(tenant_id,id),FOREIGN KEY(tenant_id,person_id) REFERENCES organization.person);
+CREATE TABLE training.export_chunk(tenant_id text,job_id text,chunk_no int NOT NULL CHECK(chunk_no>=0),payload jsonb NOT NULL CHECK(jsonb_typeof(payload)='array' AND jsonb_array_length(payload)<=200),PRIMARY KEY(tenant_id,job_id,chunk_no),FOREIGN KEY(tenant_id,job_id) REFERENCES training.export_job ON DELETE CASCADE);
+CREATE OR REPLACE FUNCTION training.bump_export_epoch() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ UPDATE training.export_epoch SET version=version+1 WHERE tenant_id=COALESCE(NEW.tenant_id,OLD.tenant_id);
+ RETURN COALESCE(NEW,OLD);
+END $$;
+CREATE TABLE account.export_epoch(tenant_id text PRIMARY KEY REFERENCES authz.revision,version bigint NOT NULL DEFAULT 1);
+CREATE TABLE account.export_job(tenant_id text,id text,person_id text,revision bigint NOT NULL,epoch bigint NOT NULL,options jsonb NOT NULL,total_count int NOT NULL,next_offset int NOT NULL DEFAULT 0,chunk_count int NOT NULL DEFAULT 0,state text NOT NULL DEFAULT 'created' CHECK(state IN('created','running','ready')),PRIMARY KEY(tenant_id,id),FOREIGN KEY(tenant_id,person_id) REFERENCES organization.person);
+CREATE TABLE account.export_chunk(tenant_id text,job_id text,chunk_no int NOT NULL CHECK(chunk_no>=0),payload jsonb NOT NULL CHECK(jsonb_typeof(payload)='array' AND jsonb_array_length(payload)<=200),PRIMARY KEY(tenant_id,job_id,chunk_no),FOREIGN KEY(tenant_id,job_id) REFERENCES account.export_job ON DELETE CASCADE);
+CREATE OR REPLACE FUNCTION account.bump_export_epoch() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ UPDATE account.export_epoch SET version=version+1 WHERE tenant_id=COALESCE(NEW.tenant_id,OLD.tenant_id);
+ RETURN COALESCE(NEW,OLD);
+END $$;
+
+-- Captured enrollment name stands in for the full approved immutable person_snapshot.
+ALTER TABLE training.roster ADD COLUMN snapshot_display_name text NOT NULL DEFAULT '';
+CREATE OR REPLACE FUNCTION training.enrollment_snapshot() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ IF TG_OP='INSERT' THEN
+  SELECT display_name INTO NEW.snapshot_display_name FROM training.person_projection WHERE tenant_id=NEW.tenant_id AND person_id=NEW.person_id;
+  IF NEW.snapshot_display_name IS NULL THEN RAISE EXCEPTION 'missing enrollment snapshot'; END IF;
+ ELSIF NEW.company_id IS DISTINCT FROM OLD.company_id OR NEW.person_id IS DISTINCT FROM OLD.person_id OR NEW.snapshot_display_name IS DISTINCT FROM OLD.snapshot_display_name THEN
+  RAISE EXCEPTION 'immutable enrollment snapshot';
+ END IF;
+ RETURN NEW;
+END $$;
+CREATE TRIGGER snapshot BEFORE INSERT OR UPDATE ON training.roster FOR EACH ROW EXECUTE FUNCTION training.enrollment_snapshot();

@@ -1,3 +1,4 @@
+import {benchmarkMemberships} from './benchmark-fixture.js';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { pool, transaction } from '../src/infrastructure/db.js';
@@ -15,10 +16,19 @@ try {
             { id: 'x-self', tenantId: 'T1', personId: 'X', roleId: 'role-3', level: 3, active: true, provenance: 'system_origin', policies: [policy('history', { kind: 'self' }),policy('own-account',{kind:'self'}),policy('account',{kind:'self'},[],['account.entry.view','account.entry.source','account.entry.export'])] },
             { id: 'admin', tenantId: 'T1', personId: 'Z', roleId: 'role-4', level: 1, active: true, provenance: 'system_origin', policies: nodes.map(n => policy(n.id, { kind: 'all' }, n.rawFields)) }
         ];
+        memberships.push(...benchmarkMemberships());
+        await db.query("INSERT INTO authz.company_grant VALUES('T1','person-00003','A')");
         for (const m of memberships)
             await db.query('INSERT INTO authz.membership(tenant_id,id,person_id,role_id,data) VALUES($1,$2,$3,$4,$5)', [m.tenantId, m.id, m.personId, m.roleId, m]);
-        for (const id of ['M', 'X', 'Y', 'L', 'Z', 'disabled', 'deleted'])
+        for (const id of ['M', 'X', 'Y', 'L', 'Z', 'disabled', 'deleted', 'person-00003'])
             await db.query('INSERT INTO authz.session VALUES($1,$2,$3)', [createHash('sha256').update('spike-' + id).digest('hex'), 'T1', id]);
+        for(const domain of ['report','training','account']) {
+            await db.query(`INSERT INTO ${domain}.export_epoch(tenant_id) SELECT tenant_id FROM authz.revision`);
+            await db.query('INSERT INTO authz.export_worker(token_hash,tenant_id,domain) VALUES($1,$2,$3)',[createHash('sha256').update('spike-worker-'+domain).digest('hex'),'T1',domain]);
+        }
+        for(const table of ['report.person_projection','report.learning_fact','training.project','training.roster','training.person_projection','account.entry','account.person_projection']) {
+            const domain=table.split('.')[0];await db.query(`CREATE TRIGGER export_epoch AFTER INSERT OR UPDATE OR DELETE ON ${table} FOR EACH ROW EXECUTE FUNCTION ${domain}.bump_export_epoch()`);
+        }
         await db.query('UPDATE authz.revision SET revision=$1', [Date.now()]);
         for (const table of ['organization.person', 'organization.department', 'authz.company_grant', 'authz.membership', 'training.appointment', 'training.project', 'training.roster', 'knowledge.category', 'authz.role', 'knowledge.course', 'knowledge.classroom_member', 'training.face_to_face'])
             await db.query(`CREATE TRIGGER revision AFTER INSERT OR UPDATE OR DELETE ON ${table} FOR EACH ROW EXECUTE FUNCTION authz.bump()`);

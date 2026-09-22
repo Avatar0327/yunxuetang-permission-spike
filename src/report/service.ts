@@ -13,6 +13,7 @@ export interface ListOptions {
     state?: 'enabled' | 'disabled' | 'deleted' | 'all';
     cold?: boolean;
     aggregate?: boolean;
+    groupBy?: 'department,job,status';
     export?: boolean;
 }
 export class ReportService {
@@ -41,8 +42,12 @@ export class ReportService {
         if (o.aggregate) {
             const permissionMs = auth.permissionMs + performance.now() - compileStart;
             const start = performance.now();
-            const r = await query(db, `SELECT r.historical_department_id,count(*)::int count,sum(r.points)::bigint points FROM ${relation} WHERE ${where} GROUP BY r.historical_department_id ORDER BY r.historical_department_id`, c.values);
-            return { rows: r.rows, count: r.rows.reduce((n, x) => n + x.count, 0), evidence: { candidate, revision: auth.plan.revision, sourceIds: auth.plan.sources.map(s => s.sourceId), permissionMs, dataMs: performance.now() - start, cache: auth.cache } };
+            const grouping=o.groupBy==='department,job,status'?'r.historical_department_id,r.historical_job_id,r.historical_status':'r.historical_department_id';
+            const groupSQL=`SELECT ${grouping},count(*)::int count,sum(r.points)::bigint points FROM ${relation} WHERE ${where} GROUP BY ${grouping}`;
+            const totals=o.export?(await query(db,`SELECT count(*)::int groups,sum(count)::int facts FROM (${groupSQL}) grouped`,c.values)).rows[0]:undefined;
+            const paging=o.export?` LIMIT 200 OFFSET ${c.bind(Math.max(0,o.offset??0))}`:'';
+            const r=await query(db,`${groupSQL} ORDER BY ${grouping}${paging}`,c.values);
+            return { rows: r.rows, groupCount:totals?.groups, count: totals?.facts??r.rows.reduce((n, x) => n + x.count, 0), evidence: { candidate, revision: auth.plan.revision, sourceIds: auth.plan.sources.map(s => s.sourceId), permissionMs, dataMs: performance.now() - start, cache: auth.cache } };
         }
         const countValues = [...c.values];
         const fields = history ? 'r.data_company_id,r.historical_department_id,r.historical_job_id,r.historical_status,r.points' : [c.field('phone'), c.field('email'), c.field('id_card')].join(',');

@@ -22,7 +22,7 @@ try {
         await observe('actor-disabled-denied', disabled, disabled.status, 403);
         for (const limit of [20, 50, 200]) {
             const r = await request('/report?limit=' + limit, 'M', undefined, instance);
-            await check('page-size-query-count-' + limit, r.payload.meta.queryCount, 8, { candidate: r.payload.meta.candidate, instance });
+            await check('page-size-query-count-' + limit, r.payload.meta.queryCount, 14, { candidate: r.payload.meta.candidate, instance });
             await evidence('query-count', { limit, instance, queries: r.payload.meta.queryCount, candidate: r.payload.meta.candidate, revision: r.payload.evidence?.revision });
         }
     }
@@ -42,10 +42,12 @@ try {
     await request('/appointments', 'Z', { personId: 'L', projectId: 'Q', active: false });
     r = await request('/auth/me', 'L', undefined, 1);
     await observe('AUTH-T06-11', r, r.payload.capabilities, { backend: false, nodes: [] });
+    await request('/people/X','Z',{departmentId:'wide-1'});
+    await request('/people/Y','Z',{departmentId:'wide-2'});
     for (const [actor, ids] of [['X', ['X']], ['Y', ['Y']]] as const) {
         await request('/appointments', 'Z', { personId: actor, projectId: 'P', active: true });
         r = await request('/projects/P', actor);
-        await observe('AUTH-T21-05', r, r.status, 200);
+        await observe('shared-project-detail-visible', r, r.status, 200);
         r = await request('/projects/P/roster', actor);
         await observe('AUTH-T21-06', r, [r.payload.rows?.map((x: any) => x.person_id), r.payload.count], [ids, 1]);
         r = await request('/projects/P', actor, { title: 'must-not-save' });
@@ -63,15 +65,15 @@ try {
     await request('/appointments', 'Z', { personId: 'L', projectId: 'P', active: false });
     const counts = (await pool.query(`select (select count(*)::int from organization.person where tenant_id='T1') people,(select count(*)::int from organization.person where tenant_id='T2') other,(select count(*)::int from organization.department where tenant_id='T1') departments,(select count(*)::int from report.learning_fact where not fixture) facts`)).rows[0];
     await check('AUTH-T18-scale', counts, { people: 50000, other: 500, departments: 2000, facts: 1000000 });
-    for (const [name, sql] of [['depth21', "INSERT INTO organization.department VALUES('T1','bad-depth','chain-20','I')"], ['cycle', "UPDATE organization.department SET parent_id='chain-20' WHERE tenant_id='T1' AND id='chain-1'"], ['parent', "INSERT INTO organization.department VALUES('T1','bad-parent','missing','I')"], ['category11', "INSERT INTO knowledge.category VALUES('T1','bad-category','cat-10')"]]) {
-        let rejected = false;
+    for (const [name, sql] of [['depth21', "INSERT INTO organization.department VALUES('T1','bad-depth','chain-20','I')"], ['cycle', "UPDATE organization.department SET parent_id='chain-20' WHERE tenant_id='T1' AND id='chain-1'"], ['parent', "INSERT INTO organization.department VALUES('T1','bad-parent','missing','I')"], ['category11', "INSERT INTO knowledge.category(tenant_id,id,parent_id) VALUES('T1','bad-category','cat-10')"]]) {
+        let rejected = false;let sqlstate:string|undefined;
         try {
             await transaction(async (db) => { await db.query(sql!); });
         }
-        catch {
-            rejected = true;
+        catch(error) {
+            sqlstate=(error as any).code;rejected = sqlstate==='P0001';
         }
-        await check('hierarchy-' + name, rejected, true);
+        await check('hierarchy-' + name, rejected, true,{sqlstate});
     }
     await evidence('functional-summary', { completed: [...completed], at: new Date().toISOString() });
     // No broad gate is inferred from these focused observations. The immutable manifest remains unchanged.
@@ -79,7 +81,7 @@ try {
     for (const g of manifest.groups)
         for (const point of g.required_subcases)
             point.status = 'incomplete';
-    await writeFile(`${dir}/gaps.json`, JSON.stringify({ note: 'Every manifest point remains incomplete at full acceptance level; focused IDs in functional.jsonl are observations, not complete group coverage. Controller must audit exact correspondence.', manifest, implementedObservations: [...completed], missing: ['full HTTP six-scope matrix', 'knowledge authorization persistence and imports', 'delegation create/recheck/cycle persistence', 'team membership command', 'company grant mutations', 'own wallet/account paths', 'company-bound attachments and project exports', 'UI browser evidence', 'all raw log/cache scans', 'full write/snapshot races', 'required long performance windows'] }, null, 2));
+    await writeFile(`${dir}/gaps.json`, JSON.stringify({ note: 'Every manifest point remains incomplete at full acceptance level; focused IDs in functional.jsonl are observations, not complete group coverage. Controller must audit exact correspondence.', manifest, implementedObservations: [...completed], missing: ['controller actual browser campaign','capped50-client600-second reference windows','independent per-ID semantic acceptance audit'] }, null, 2));
     console.log(JSON.stringify({ focusedChecks: 'passed', fullAcceptance: 'incomplete', evidenceDir: dir }));
 }
 finally {

@@ -3,7 +3,7 @@ import {Authority} from '../authz/revision.js';
 import {compile} from '../authz/compiler.js';
 import type {CandidateName} from '../authz/bulk-candidate.js';
 export class AccountService {
- constructor(private authority:Authority){}
+ constructor(public authority:Authority){}
  private async authorized(identity:Identity,candidate:CandidateName,action:string,db:DB=pool,own=false){
   const {plan}=await this.authority.plan(identity,candidate,own?'own-account':'account',action,db);
   return compile(plan,{id:'id',personId:'person_id',dataCompanyId:'data_company_id',enabled:'enabled',deleted:'deleted',crossCompanyReference:'cross_company_reference'});
@@ -14,10 +14,21 @@ export class AccountService {
   return {rows};
  }
  async list(identity:Identity,candidate:CandidateName,exporting=false,id?:string,source=false){
+  if(exporting)return this.exportPage(identity,candidate,0);
   const c=await this.authorized(identity,candidate,source?'account.entry.source':exporting?'account.entry.export':'account.entry.view');
   const where=c.where+(id?` AND r.id=${c.bind(id)}`:'');
   const rows=(await query(pool,`SELECT r.id,r.person_id,r.data_company_id,r.currency,r.kind,r.amount,r.remaining${source?',s.payload':''} FROM account.entry r JOIN account.person_projection p ON p.tenant_id=r.tenant_id AND p.person_id=r.person_id ${source?'JOIN account.source s ON s.tenant_id=r.tenant_id AND s.company_id=r.data_company_id AND s.id=r.source_id':''} WHERE ${where} AND p.enabled AND NOT p.deleted ORDER BY r.id`,c.values)).rows;
   if(id&&!rows.length)throw new Denied();return {rows,count:rows.length};
+ }
+ async exportPage(identity:Identity,candidate:CandidateName,offset=0,db:DB=pool){
+  if(!Number.isSafeInteger(offset)||offset<0)throw new Denied();
+  const auth=await this.authority.plan(identity,candidate,'account','account.entry.export',db);
+  const c=compile(auth.plan,{id:'id',personId:'person_id',dataCompanyId:'data_company_id',enabled:'enabled',deleted:'deleted',crossCompanyReference:'cross_company_reference'});
+  const relation='account.entry r JOIN account.person_projection p ON p.tenant_id=r.tenant_id AND p.person_id=r.person_id';
+  const where=c.where+' AND p.enabled AND NOT p.deleted';
+  const count=(await query(db,`SELECT count(*)::int n FROM ${relation} WHERE ${where}`,c.values)).rows[0].n;
+  const rows=(await query(db,`SELECT r.id,r.person_id,r.data_company_id,r.currency,r.kind,r.amount,r.remaining FROM ${relation} WHERE ${where} ORDER BY r.id LIMIT 200 OFFSET ${c.bind(offset)}`,c.values)).rows;
+  return {rows,count,revision:auth.plan.revision,...(offset+rows.length<count?{nextOffset:offset+rows.length}:{})};
  }
  async offset(identity:Identity,candidate:CandidateName,body:{debtId:string;rewardId:string}){
   if(![body.debtId,body.rewardId].every(x=>typeof x==='string'&&x.length>0)||body.debtId===body.rewardId)throw new Denied();

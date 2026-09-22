@@ -9,7 +9,7 @@ import { OrganizationFactsPort } from '../organization/public.js';
 import { TrainingFactsPort } from '../training/public.js';
 import type { AuthorityPorts } from '../contracts/ports.js';
 import { SessionCache } from './cache.js';
-import { pool, query, requireTransaction, Denied, Unavailable, type DB, type Identity } from '../infrastructure/db.js';
+import { pool, query, metrics, requireTransaction, Denied, Unavailable, type DB, type Identity } from '../infrastructure/db.js';
 interface Snapshot {
     schemaVersion: 1;
     memberships: Membership[];
@@ -68,13 +68,14 @@ export class Authority {
                 // actor and company facts in the next statement's fresh snapshot.
                 await query(db, 'SELECT r.revision FROM authz.revision r WHERE r.tenant_id=$1 FOR UPDATE OF r', [identity.tenantId]);
             }
-            const r = (await query(db, `SELECT revision,schema_version,coalesce((SELECT array_agg(company_id ORDER BY company_id) FROM authz.company_grant WHERE tenant_id=$1 AND person_id=$2),'{}') companies FROM authz.revision WHERE tenant_id=$1`, [identity.tenantId, identity.personId])).rows[0];
+            const r = (await query(db, `SELECT revision,schema_version,clock_timestamp() AS authority_observed_at,coalesce((SELECT array_agg(company_id ORDER BY company_id) FROM authz.company_grant WHERE tenant_id=$1 AND person_id=$2),'{}') companies FROM authz.revision WHERE tenant_id=$1`, [identity.tenantId, identity.personId])).rows[0];
             const p = await this.ports.organization(db).person(identity);
             if (!p || !p.enabled || p.deleted) throw new Denied();
             if (!r || r.schema_version !== 1) throw new Unavailable();
             // Both facts reads follow the revision-only lock; the revision fence also protects nonlocking reads.
             const after = (await query(db, 'SELECT revision FROM authz.revision WHERE tenant_id=$1', [identity.tenantId])).rows[0];
             if (!after || Number(after.revision) !== Number(r.revision)) throw new Unavailable();
+            if(metrics.getStore()){metrics.getStore()!.observedRevision=Number(r.revision);metrics.getStore()!.authorityObservedAt=r.authority_observed_at.toISOString();}
             return { tenantId: p.tenantId, personId: p.id, revision: Number(r.revision), enabled: p.enabled, deleted: p.deleted, authenticated: true, internal: p.internal, companyId: p.companyId, companyIds: r.companies, departmentId: p.departmentId ?? undefined };
         }
         catch (e) {
