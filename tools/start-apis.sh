@@ -19,12 +19,22 @@ for spike_name in yxt-api-a yxt-api-b; do
   fi
 done
 
+spike_full_commit="$(git rev-parse HEAD)"
 spike_commit="$(git rev-parse --short=12 HEAD)"
 spike_image="yxt-permission:spike-$spike_commit"
-spike_docker build --tag "$spike_image" \
-  --build-arg HTTP_PROXY=http://192.168.5.2:7890 \
-  --build-arg HTTPS_PROXY=http://192.168.5.2:7890 \
-  --build-arg NO_PROXY=localhost,127.0.0.1,yxt-pg,yxt-redis .
+if spike_docker image inspect "$spike_image" >/dev/null 2>&1; then
+  spike_built_commit="$(spike_docker image inspect "$spike_image" --format '{{index .Config.Labels "org.opencontainers.image.revision"}}')"
+  if [ "$spike_built_commit" != "$spike_full_commit" ]; then
+    echo 'Existing image has a different or missing source revision label.' >&2
+    exit 1
+  fi
+else
+  spike_docker build --tag "$spike_image" \
+    --label "org.opencontainers.image.revision=$spike_full_commit" \
+    --build-arg HTTP_PROXY=http://192.168.5.2:7890 \
+    --build-arg HTTPS_PROXY=http://192.168.5.2:7890 \
+    --build-arg NO_PROXY=localhost,127.0.0.1,yxt-pg,yxt-redis .
+fi
 
 for spike_instance in A B; do
   if [ "$spike_instance" = A ]; then
