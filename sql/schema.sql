@@ -5,8 +5,8 @@ CREATE SCHEMA IF NOT EXISTS training;
 CREATE SCHEMA IF NOT EXISTS knowledge;
 CREATE TABLE authz.revision(tenant_id text PRIMARY KEY, revision bigint NOT NULL DEFAULT 1, changed_at timestamptz NOT NULL DEFAULT clock_timestamp(), schema_version int NOT NULL DEFAULT 1);
 CREATE TABLE organization.company(tenant_id text REFERENCES authz.revision, id text, PRIMARY KEY(tenant_id,id));
-CREATE TABLE organization.department(tenant_id text REFERENCES authz.revision,id text,parent_id text,PRIMARY KEY(tenant_id,id),FOREIGN KEY(tenant_id,parent_id) REFERENCES organization.department);
-CREATE TABLE organization.person(tenant_id text REFERENCES authz.revision,id text,company_id text NOT NULL,department_id text,manager_id text,internal boolean NOT NULL DEFAULT false,enabled boolean NOT NULL DEFAULT true,deleted boolean NOT NULL DEFAULT false,PRIMARY KEY(tenant_id,id),FOREIGN KEY(tenant_id,company_id) REFERENCES organization.company,FOREIGN KEY(tenant_id,department_id) REFERENCES organization.department,FOREIGN KEY(tenant_id,manager_id) REFERENCES organization.person DEFERRABLE INITIALLY DEFERRED);
+CREATE TABLE organization.department(tenant_id text REFERENCES authz.revision,id text,parent_id text,company_id text NOT NULL,PRIMARY KEY(tenant_id,id),UNIQUE(tenant_id,company_id,id),FOREIGN KEY(tenant_id,company_id) REFERENCES organization.company,FOREIGN KEY(tenant_id,company_id,parent_id) REFERENCES organization.department(tenant_id,company_id,id));
+CREATE TABLE organization.person(tenant_id text REFERENCES authz.revision,id text,company_id text NOT NULL,department_id text,manager_id text,display_name text NOT NULL DEFAULT '',job_id text,internal boolean NOT NULL DEFAULT false,enabled boolean NOT NULL DEFAULT true,deleted boolean NOT NULL DEFAULT false,CHECK(manager_id IS NULL OR manager_id<>id),PRIMARY KEY(tenant_id,id),FOREIGN KEY(tenant_id,company_id) REFERENCES organization.company,FOREIGN KEY(tenant_id,company_id,department_id) REFERENCES organization.department(tenant_id,company_id,id),FOREIGN KEY(tenant_id,manager_id) REFERENCES organization.person DEFERRABLE INITIALLY DEFERRED);
 CREATE TABLE authz.company_grant(tenant_id text,person_id text,company_id text,PRIMARY KEY(tenant_id,person_id,company_id),FOREIGN KEY(tenant_id,person_id) REFERENCES organization.person,FOREIGN KEY(tenant_id,company_id) REFERENCES organization.company);
 CREATE TABLE authz.session(token_hash text PRIMARY KEY,tenant_id text,person_id text,FOREIGN KEY(tenant_id,person_id) REFERENCES organization.person);
 CREATE TABLE authz.role(tenant_id text REFERENCES authz.revision,id text,PRIMARY KEY(tenant_id,id));
@@ -101,3 +101,22 @@ BEGIN
 END $$;
 
 CREATE TABLE knowledge.policy_audit(id bigserial PRIMARY KEY,tenant_id text REFERENCES authz.revision,target_id text,kind text NOT NULL CHECK(kind IN('category','custom')),state text NOT NULL CHECK(state IN('active','suspended')),source_id text NOT NULL,revision bigint NOT NULL,snapshot jsonb,at timestamptz NOT NULL DEFAULT clock_timestamp(),FOREIGN KEY(tenant_id,source_id) REFERENCES authz.membership);
+
+ALTER TABLE report.person_projection ADD COLUMN department_id text, ADD COLUMN manager_id text, ADD COLUMN job_id text, ADD COLUMN display_name text NOT NULL DEFAULT '';
+ALTER TABLE report.learning_fact ADD COLUMN historical_job_id text, ADD COLUMN historical_status text NOT NULL DEFAULT 'enabled' CHECK(historical_status IN('enabled','disabled','deleted'));
+CREATE OR REPLACE FUNCTION report.immutable_history() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+ IF (NEW.person_id,NEW.data_company_id,NEW.historical_department_id,NEW.historical_job_id,NEW.historical_status) IS DISTINCT FROM (OLD.person_id,OLD.data_company_id,OLD.historical_department_id,OLD.historical_job_id,OLD.historical_status) THEN RAISE EXCEPTION 'immutable history'; END IF;
+ RETURN NEW;
+END $$;
+CREATE TRIGGER immutable_history BEFORE UPDATE ON report.learning_fact FOR EACH ROW EXECUTE FUNCTION report.immutable_history();
+
+CREATE TABLE training.person_projection(tenant_id text,id text,person_id text,company_id text NOT NULL,enabled boolean NOT NULL,deleted boolean NOT NULL,department_id text,manager_id text,display_name text NOT NULL,PRIMARY KEY(tenant_id,id));
+
+ALTER TABLE training.roster ADD COLUMN progress int NOT NULL DEFAULT 0 CHECK(progress BETWEEN 0 AND 100), ADD COLUMN attachment text NOT NULL DEFAULT 'synthetic-person-attachment';
+
+CREATE SCHEMA account;
+CREATE TABLE account.person_projection(tenant_id text,person_id text,enabled boolean NOT NULL,deleted boolean NOT NULL,PRIMARY KEY(tenant_id,person_id));
+CREATE TABLE account.source(tenant_id text,company_id text,id text,payload text NOT NULL,PRIMARY KEY(tenant_id,company_id,id),FOREIGN KEY(tenant_id,company_id) REFERENCES organization.company);
+CREATE TABLE account.entry(tenant_id text,id text,person_id text NOT NULL,data_company_id text NOT NULL,currency text NOT NULL CHECK(currency IN('credit','point')),kind text NOT NULL CHECK(kind IN('debt','reward')),amount int NOT NULL CHECK(amount>=0),remaining int NOT NULL CHECK(remaining>=0 AND remaining<=amount),source_id text NOT NULL,enabled boolean NOT NULL DEFAULT true,deleted boolean NOT NULL DEFAULT false,cross_company_reference boolean NOT NULL DEFAULT false CHECK(NOT cross_company_reference),PRIMARY KEY(tenant_id,id),FOREIGN KEY(tenant_id,person_id) REFERENCES account.person_projection,FOREIGN KEY(tenant_id,data_company_id,source_id) REFERENCES account.source);
+CREATE TABLE account.offset_audit(id bigserial PRIMARY KEY,tenant_id text,debt_id text,reward_id text,amount int NOT NULL CHECK(amount>=0),actor_id text NOT NULL,at timestamptz NOT NULL DEFAULT clock_timestamp(),FOREIGN KEY(tenant_id,debt_id) REFERENCES account.entry,FOREIGN KEY(tenant_id,reward_id) REFERENCES account.entry);

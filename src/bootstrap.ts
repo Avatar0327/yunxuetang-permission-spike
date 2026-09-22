@@ -1,6 +1,8 @@
 import { OrganizationFactsPort } from './organization/public.js';
 import { TrainingFactsPort } from './training/public.js';
 import { KnowledgeFactsPort } from './knowledge/public.js';
+import { CompanyGrantService } from './authz/company-service.js';
+import { AccountService } from './account/service.js';
 import { RoleService } from './authz/role-service.js';
 import { KnowledgeService } from './knowledge/service.js';
 import 'reflect-metadata';
@@ -11,6 +13,7 @@ import { readFile } from 'node:fs/promises';
 import { Authority } from './authz/revision.js';
 import { SessionCache } from './authz/cache.js';
 import { ReportService, type ListOptions } from './report/service.js';
+import { EnrollmentService } from './training/enrollment-service.js';
 import { TrainingService } from './training/service.js';
 import { OrganizationService } from './organization/service.js';
 import { ExportService } from './report/exports.js';
@@ -43,7 +46,15 @@ function route(method: string, url: string, handler: (identity: any, req: any) =
             }
         }) });
 }
+const account=new AccountService(authority);
+route('GET','/account/own',async(i)=>account.own(i,candidate));
+route('GET','/account/entries',async(i)=>account.list(i,candidate));
+route('GET','/account/export',async(i)=>account.list(i,candidate,true));
+route('GET','/account/entries/:id',async(i,r)=>account.list(i,candidate,false,r.params.id));
+route('GET','/account/entries/:id/source',async(i,r)=>account.list(i,candidate,false,r.params.id,true));
+route('POST','/account/offset',async(i,r)=>account.offset(i,candidate,r.body??{}));
 const roles=new RoleService(authority),knowledge=new KnowledgeService(authority);
+route('POST','/company-grants',async(i,r)=>new CompanyGrantService(authority).change(i,candidate,r.body??{}));
 route('POST','/roles',async(i,r)=>roles.create(i,r.body??{}));
 route('POST','/roles/:id',async(i,r)=>roles.edit(i,r.params.id,r.body??{}));
 route('POST','/roles/:id/members',async(i,r)=>roles.addMember(i,r.params.id,r.body??{}));
@@ -69,8 +80,11 @@ route('GET', '/report', async (i, r) => report.list(i, candidate, options(r.quer
 route('GET', '/history', async (i, r) => report.list(i, candidate, { ...options(r.query), history: true, aggregate: true }));
 route('GET', '/projects', async (i) => { const r = await training.projects(i, candidate); return { rows: r.rows, count: r.count }; });
 route('GET', '/projects/:id', async (i, r) => { const x = await training.projects(i, candidate, r.params.id); return { rows: x.rows, count: x.count }; });
-route('GET', '/projects/:id/roster', async (i, r) => training.roster(i, candidate, r.params.id));
+route('GET', '/projects/:id/roster', async (i, r) => training.roster(i, candidate, r.params.id,r.query.search));
+route('GET','/projects/:id/people/:personId/progress',async(i,r)=>training.personal(i,candidate,r.params.id,r.params.personId,'progress'));
+route('GET','/projects/:id/people/:personId/attachment',async(i,r)=>training.personal(i,candidate,r.params.id,r.params.personId,'attachment'));
 route('GET', '/projects/:id/media/:segment', async (i, r) => training.media(i, candidate, r.params.id));
+route('POST','/projects/:id/enrollments',async(i,r)=>new EnrollmentService(authority,training).change(i,candidate,r.params.id,r.body??{}));
 route('POST', '/projects/:id', async (i, r) => training.save(i, candidate, r.params.id, r.body ?? {}));
 route('POST', '/appointments', async (i, r) => { if (typeof r.body?.active !== 'boolean')
     throw new Denied(); return training.appoint(i, candidate, r.body.personId, r.body.projectId, r.body.active); });

@@ -63,7 +63,7 @@ try {
     await request('/appointments', 'Z', { personId: 'L', projectId: 'P', active: false });
     const counts = (await pool.query(`select (select count(*)::int from organization.person where tenant_id='T1') people,(select count(*)::int from organization.person where tenant_id='T2') other,(select count(*)::int from organization.department where tenant_id='T1') departments,(select count(*)::int from report.learning_fact where not fixture) facts`)).rows[0];
     await check('AUTH-T18-scale', counts, { people: 50000, other: 500, departments: 2000, facts: 1000000 });
-    for (const [name, sql] of [['depth21', "INSERT INTO organization.department VALUES('T1','bad-depth','chain-20')"], ['cycle', "UPDATE organization.department SET parent_id='chain-20' WHERE tenant_id='T1' AND id='chain-1'"], ['parent', "INSERT INTO organization.department VALUES('T1','bad-parent','missing')"], ['category11', "INSERT INTO knowledge.category VALUES('T1','bad-category','cat-10')"]]) {
+    for (const [name, sql] of [['depth21', "INSERT INTO organization.department VALUES('T1','bad-depth','chain-20','I')"], ['cycle', "UPDATE organization.department SET parent_id='chain-20' WHERE tenant_id='T1' AND id='chain-1'"], ['parent', "INSERT INTO organization.department VALUES('T1','bad-parent','missing','I')"], ['category11', "INSERT INTO knowledge.category VALUES('T1','bad-category','cat-10')"]]) {
         let rejected = false;
         try {
             await transaction(async (db) => { await db.query(sql!); });

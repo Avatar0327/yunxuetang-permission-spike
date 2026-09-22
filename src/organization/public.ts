@@ -25,6 +25,12 @@ export class OrganizationPort implements OrganizationPublic {
 export class OrganizationFactsPort extends OrganizationPort {
     constructor(private factsDb: DB) { super(factsDb); }
     async person(identity: import('../infrastructure/db.js').Identity): Promise<import('../contracts/ports.js').PersonFacts | undefined> {
-        return (await query(this.factsDb, 'SELECT id,tenant_id AS "tenantId",company_id AS "companyId",department_id AS "departmentId",internal,enabled,deleted FROM organization.person WHERE tenant_id=$1 AND id=$2', [identity.tenantId, identity.personId])).rows[0];
+        return (await query(this.factsDb, 'SELECT id,tenant_id AS "tenantId",company_id AS "companyId",department_id AS "departmentId",manager_id AS "managerId",job_id AS "jobId",display_name AS "displayName",internal,enabled,deleted FROM organization.person WHERE tenant_id=$1 AND id=$2', [identity.tenantId, identity.personId])).rows[0];
     }
+}
+
+export async function departmentObjects(db:DB,plan:import('../authz/contracts.js').QueryPolicy){
+    const {compile}=await import('../authz/compiler.js');
+    const c=compile(plan,{id:'id',companyId:'company_id',enabled:'enabled',deleted:'deleted'});
+    return (await query(db,`SELECT r.id FROM (SELECT d.*,true enabled,false deleted FROM organization.department d) r WHERE ${c.where} ORDER BY r.id`,c.values)).rows.map(r=>r.id as string);
 }

@@ -6,7 +6,7 @@ for(const candidate of ['native','casbin'])test(`${candidate}: populated departm
  await prepareAdmin();const api=await start(candidate),id='populated-'+randomUUID();
  const before=(await pool.query("SELECT id,department_id FROM organization.person WHERE tenant_id='T1' AND id IN('A','B')")).rows;
  try{
-  await pool.query("INSERT INTO organization.department VALUES('T1',$1,null),('T1',$2,null)",[id+'cap',id+'incoming']);
+  await pool.query("INSERT INTO organization.department VALUES('T1',$1,null,'I'),('T1',$2,null,'I')",[id+'cap',id+'incoming']);
   await pool.query("UPDATE organization.person SET department_id=CASE WHEN id='A' THEN $1 ELSE $2 END WHERE tenant_id='T1' AND id IN('A','B')",[id+'cap',id+'incoming']);
   const scope={kind:'departments',departmentIds:[id+'cap'],includeDescendants:true},p=policy('department-report',['report.personal-learning.view'],scope);
   const source=await api.request('POST','/roles',{id:id+'source',level:2,managementRoleMembershipId:'admin',policies:[policy('role-management',['authz.role.create','authz.role.update','authz.role.recheck']),p],memberPersonIds:['M']});await observe(candidate,'populated source creation',200,source.status);

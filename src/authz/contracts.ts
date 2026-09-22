@@ -31,6 +31,8 @@ export interface NodeDefinition {
     backend: boolean;
     rawFields: string[];
     publishedActions?: string[];
+    directTeam?: boolean;
+    capDimension?: 'person-company-v1';
 }
 export interface Subject {
     type: string;
@@ -47,7 +49,7 @@ export interface NodePolicy {
     scope: Scope;
     delegableActions: string[];
 }
-export interface DelegationCap { nodeId:string; action:string; objectIds:string[]; rawFields:string[] }
+export interface DelegationCap { dimension?: 'person-company-v1'; nodeId:string; action:string; objectIds:string[]; rawFields:string[] }
 export interface Membership {
     delegation?: { sourceMembershipId:string; sourceActorId:string; revision:number; caps:DelegationCap[] };
     id: string;
@@ -92,6 +94,8 @@ export interface ScopeSpec {
     companyMode: NodeDefinition['companyMode'];
     objectIds?: string[];
     managerId?: string;
+    personCompanyPairs?: [string,string][];
+    capDimension?: 'person-company-v1';
 }
 export interface EffectiveGrant {
     sourceId: string;
@@ -185,6 +189,7 @@ export interface Catalog {
     grants: CatalogGrant[];
 }
 export interface ObjectSet {
+    dimension?: 'person-company-v1';
     tenantId: string;
     actorId: string;
     revision: number;

@@ -45,7 +45,7 @@ export class ReportService {
             return { rows: r.rows, count: r.rows.reduce((n, x) => n + x.count, 0), evidence: { candidate, revision: auth.plan.revision, sourceIds: auth.plan.sources.map(s => s.sourceId), permissionMs, dataMs: performance.now() - start, cache: auth.cache } };
         }
         const countValues = [...c.values];
-        const fields = history ? 'r.data_company_id,r.historical_department_id,r.points' : [c.field('phone'), c.field('email'), c.field('id_card')].join(',');
+        const fields = history ? 'r.data_company_id,r.historical_department_id,r.historical_job_id,r.historical_status,r.points' : [c.field('phone'), c.field('email'), c.field('id_card')].join(',');
         const sourceIds = c.sourceIds();
         const limit = Math.max(1, Math.min(200, o.limit ?? 50));
         const args = [...c.values, limit, Math.max(0, o.offset ?? 0)];

@@ -1,0 +1,3204 @@
+{
+  "boundary": "Task4 focused implementation evidence only; no complete AUTH group/168 gate or overall Go. Frozen manifest is unmodified.",
+  "final": {
+    "path": "evidence/raw/task4-final2-observations.jsonl",
+    "records": 266,
+    "candidates": {
+      "native": 133,
+      "casbin": 133
+    },
+    "mismatches": [],
+    "sha256": "2dfd986d3f819f070772f218d85a4b29ee812490c25df19a244feeb3ad85d3fa"
+  },
+  "observations": [
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 1,
+      "candidate": "native",
+      "name": "account role before any L entry"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 2,
+      "candidate": "native",
+      "name": "future same-company account entry only"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 3,
+      "candidate": "native",
+      "name": "account export uses stable person company cap"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 4,
+      "candidate": "casbin",
+      "name": "account role before any L entry"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 5,
+      "candidate": "casbin",
+      "name": "future same-company account entry only"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 6,
+      "candidate": "casbin",
+      "name": "account export uses stable person company cap"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 7,
+      "candidate": "native",
+      "name": "own wallet separates A and B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 8,
+      "candidate": "native",
+      "name": "B reward cannot offset A debt"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 9,
+      "candidate": "native",
+      "name": "same company different currency denied"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 10,
+      "candidate": "native",
+      "name": "same-company same-currency real offset"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 11,
+      "candidate": "native",
+      "name": "offset persisted separated balances"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 12,
+      "candidate": "native",
+      "name": "own wallet cannot unlock cross-company source"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 13,
+      "candidate": "native",
+      "name": "legitimate own-company source"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 14,
+      "candidate": "native",
+      "name": "account management export only A"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 15,
+      "candidate": "casbin",
+      "name": "own wallet separates A and B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 16,
+      "candidate": "casbin",
+      "name": "B reward cannot offset A debt"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 17,
+      "candidate": "casbin",
+      "name": "same company different currency denied"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 18,
+      "candidate": "casbin",
+      "name": "same-company same-currency real offset"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 19,
+      "candidate": "casbin",
+      "name": "offset persisted separated balances"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 20,
+      "candidate": "casbin",
+      "name": "own wallet cannot unlock cross-company source"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 21,
+      "candidate": "casbin",
+      "name": "legitimate own-company source"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 22,
+      "candidate": "casbin",
+      "name": "account management export only A"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 23,
+      "candidate": "native",
+      "name": "shared content remains accessible X"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 24,
+      "candidate": "native",
+      "name": "shared content remains accessible Y"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 25,
+      "candidate": "native",
+      "name": "shared content remains accessible person-00001"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 26,
+      "candidate": "native",
+      "name": "ordinary customer has no project roster"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 27,
+      "candidate": "native",
+      "name": "ordinary customer no management shell"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 28,
+      "candidate": "native",
+      "name": "cannot grant cross-company range to external"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 29,
+      "candidate": "native",
+      "name": "A manager search does not return A or hidden B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 30,
+      "candidate": "native",
+      "name": "valid company-qualified appointed roster X"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 31,
+      "candidate": "native",
+      "name": "own-company protected attachment X"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 32,
+      "candidate": "native",
+      "name": "valid company-qualified appointed roster Y"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 33,
+      "candidate": "native",
+      "name": "own-company protected attachment Y"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 34,
+      "candidate": "native",
+      "name": "B manager own-company progress"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 35,
+      "candidate": "native",
+      "name": "A manager own-company progress"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 36,
+      "candidate": "native",
+      "name": "X manager hidden progress"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 37,
+      "candidate": "native",
+      "name": "X manager hidden attachment"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 38,
+      "candidate": "native",
+      "name": "Y manager hidden progress"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 39,
+      "candidate": "native",
+      "name": "Y manager hidden attachment"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 40,
+      "candidate": "native",
+      "name": "explicit grant customer A"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 41,
+      "candidate": "native",
+      "name": "explicit grant customer B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 42,
+      "candidate": "native",
+      "name": "internal owns plus explicit A B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 43,
+      "candidate": "native",
+      "name": "revoke A"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 44,
+      "candidate": "native",
+      "name": "next request retains I B only"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 45,
+      "candidate": "native",
+      "name": "whole project cannot hide affected A"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 46,
+      "candidate": "native",
+      "name": "all affected companies positive"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 47,
+      "candidate": "casbin",
+      "name": "shared content remains accessible X"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 48,
+      "candidate": "casbin",
+      "name": "shared content remains accessible Y"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 49,
+      "candidate": "casbin",
+      "name": "shared content remains accessible person-00001"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 50,
+      "candidate": "casbin",
+      "name": "ordinary customer has no project roster"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 51,
+      "candidate": "casbin",
+      "name": "ordinary customer no management shell"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 52,
+      "candidate": "casbin",
+      "name": "cannot grant cross-company range to external"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 53,
+      "candidate": "casbin",
+      "name": "A manager search does not return A or hidden B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 54,
+      "candidate": "casbin",
+      "name": "valid company-qualified appointed roster X"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 55,
+      "candidate": "casbin",
+      "name": "own-company protected attachment X"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 56,
+      "candidate": "casbin",
+      "name": "valid company-qualified appointed roster Y"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 57,
+      "candidate": "casbin",
+      "name": "own-company protected attachment Y"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 58,
+      "candidate": "casbin",
+      "name": "B manager own-company progress"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 59,
+      "candidate": "casbin",
+      "name": "A manager own-company progress"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 60,
+      "candidate": "casbin",
+      "name": "X manager hidden progress"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 61,
+      "candidate": "casbin",
+      "name": "X manager hidden attachment"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 62,
+      "candidate": "casbin",
+      "name": "Y manager hidden progress"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 63,
+      "candidate": "casbin",
+      "name": "Y manager hidden attachment"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 64,
+      "candidate": "casbin",
+      "name": "explicit grant customer A"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 65,
+      "candidate": "casbin",
+      "name": "explicit grant customer B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 66,
+      "candidate": "casbin",
+      "name": "internal owns plus explicit A B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 67,
+      "candidate": "casbin",
+      "name": "revoke A"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 68,
+      "candidate": "casbin",
+      "name": "next request retains I B only"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 69,
+      "candidate": "casbin",
+      "name": "whole project cannot hide affected A"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 70,
+      "candidate": "casbin",
+      "name": "all affected companies positive"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 71,
+      "candidate": "native",
+      "name": "current mutation {\"enabled\":false}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 72,
+      "candidate": "native",
+      "name": "current state selects historical row {\"enabled\":false}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 73,
+      "candidate": "native",
+      "name": "history snapshots unchanged {\"enabled\":false}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 74,
+      "candidate": "native",
+      "name": "current mutation {\"enabled\":true,\"deleted\":true}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 75,
+      "candidate": "native",
+      "name": "current state selects historical row {\"enabled\":true,\"deleted\":true}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 76,
+      "candidate": "native",
+      "name": "history snapshots unchanged {\"enabled\":true,\"deleted\":true}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 77,
+      "candidate": "native",
+      "name": "current mutation {\"enabled\":true,\"deleted\":false}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 78,
+      "candidate": "native",
+      "name": "current state selects historical row {\"enabled\":true,\"deleted\":false}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 79,
+      "candidate": "native",
+      "name": "history snapshots unchanged {\"enabled\":true,\"deleted\":false}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 80,
+      "candidate": "native",
+      "name": "clear current manager and change job"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 81,
+      "candidate": "native",
+      "name": "all current projections delivered atomically"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 82,
+      "candidate": "native",
+      "name": "move and clear never rewrite historical fields"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 83,
+      "candidate": "native",
+      "name": "physical snapshot immutable"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 84,
+      "candidate": "native",
+      "name": "transfer explicit both-company company/dept"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 85,
+      "candidate": "native",
+      "name": "new company SELF cannot read old company history"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 86,
+      "candidate": "native",
+      "name": "transfer history data company retained"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 87,
+      "candidate": "native",
+      "name": "invalid relationship {\"departmentId\":\"wide-1\"}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 88,
+      "candidate": "native",
+      "name": "invalid relationship {\"managerId\":\"B\"}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 89,
+      "candidate": "native",
+      "name": "invalid relationship {\"managerId\":\"other-1\"}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 90,
+      "candidate": "native",
+      "name": "same-row raw fields A"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 91,
+      "candidate": "native",
+      "name": "same-row raw fields B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 92,
+      "candidate": "native",
+      "name": "safe raw error B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 93,
+      "candidate": "native",
+      "name": "safe raw error unknown"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 94,
+      "candidate": "native",
+      "name": "safe raw error other-1"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 95,
+      "candidate": "native",
+      "name": "denial random and foreign indistinguishable"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 96,
+      "candidate": "casbin",
+      "name": "current mutation {\"enabled\":false}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 97,
+      "candidate": "casbin",
+      "name": "current state selects historical row {\"enabled\":false}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 98,
+      "candidate": "casbin",
+      "name": "history snapshots unchanged {\"enabled\":false}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 99,
+      "candidate": "casbin",
+      "name": "current mutation {\"enabled\":true,\"deleted\":true}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 100,
+      "candidate": "casbin",
+      "name": "current state selects historical row {\"enabled\":true,\"deleted\":true}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 101,
+      "candidate": "casbin",
+      "name": "history snapshots unchanged {\"enabled\":true,\"deleted\":true}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 102,
+      "candidate": "casbin",
+      "name": "current mutation {\"enabled\":true,\"deleted\":false}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 103,
+      "candidate": "casbin",
+      "name": "current state selects historical row {\"enabled\":true,\"deleted\":false}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 104,
+      "candidate": "casbin",
+      "name": "history snapshots unchanged {\"enabled\":true,\"deleted\":false}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 105,
+      "candidate": "casbin",
+      "name": "clear current manager and change job"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 106,
+      "candidate": "casbin",
+      "name": "all current projections delivered atomically"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 107,
+      "candidate": "casbin",
+      "name": "move and clear never rewrite historical fields"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 108,
+      "candidate": "casbin",
+      "name": "physical snapshot immutable"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 109,
+      "candidate": "casbin",
+      "name": "transfer explicit both-company company/dept"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 110,
+      "candidate": "casbin",
+      "name": "new company SELF cannot read old company history"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 111,
+      "candidate": "casbin",
+      "name": "transfer history data company retained"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 112,
+      "candidate": "casbin",
+      "name": "invalid relationship {\"departmentId\":\"wide-1\"}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 113,
+      "candidate": "casbin",
+      "name": "invalid relationship {\"managerId\":\"B\"}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 114,
+      "candidate": "casbin",
+      "name": "invalid relationship {\"managerId\":\"other-1\"}"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 115,
+      "candidate": "casbin",
+      "name": "same-row raw fields A"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 116,
+      "candidate": "casbin",
+      "name": "same-row raw fields B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 117,
+      "candidate": "casbin",
+      "name": "safe raw error B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 118,
+      "candidate": "casbin",
+      "name": "safe raw error unknown"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 119,
+      "candidate": "casbin",
+      "name": "safe raw error other-1"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 120,
+      "candidate": "casbin",
+      "name": "denial random and foreign indistinguishable"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 121,
+      "candidate": "native",
+      "name": "revoke committed before waiting batch denies"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 122,
+      "candidate": "native",
+      "name": "waiting denied batch writes zero"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 123,
+      "candidate": "native",
+      "name": "batch saves before later revoke"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 124,
+      "candidate": "native",
+      "name": "next new remove sees committed revoke"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 125,
+      "candidate": "native",
+      "name": "committed authorized batch retained"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 126,
+      "candidate": "native",
+      "name": "two instances next request company revoke no pubsub"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 127,
+      "candidate": "native",
+      "name": "warm own-account Redis failure has no balances"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 128,
+      "candidate": "native",
+      "name": "recovered account uses current authority"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 129,
+      "candidate": "native",
+      "name": "cold attachment Redis failure has no bytes"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 130,
+      "candidate": "casbin",
+      "name": "revoke committed before waiting batch denies"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 131,
+      "candidate": "casbin",
+      "name": "waiting denied batch writes zero"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 132,
+      "candidate": "casbin",
+      "name": "batch saves before later revoke"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 133,
+      "candidate": "casbin",
+      "name": "next new remove sees committed revoke"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 134,
+      "candidate": "casbin",
+      "name": "committed authorized batch retained"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 135,
+      "candidate": "casbin",
+      "name": "two instances next request company revoke no pubsub"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 136,
+      "candidate": "casbin",
+      "name": "warm own-account Redis failure has no balances"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 137,
+      "candidate": "casbin",
+      "name": "recovered account uses current authority"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 138,
+      "candidate": "casbin",
+      "name": "cold attachment Redis failure has no bytes"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 139,
+      "candidate": "native",
+      "name": "person-only move denied"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 140,
+      "candidate": "native",
+      "name": "department source covers D11 and parent D1"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 141,
+      "candidate": "native",
+      "name": "department parent outside cap"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 142,
+      "candidate": "native",
+      "name": "department child D11 outside cap"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 143,
+      "candidate": "native",
+      "name": "department root has no parent object"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 144,
+      "candidate": "casbin",
+      "name": "person-only move denied"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 145,
+      "candidate": "casbin",
+      "name": "department source covers D11 and parent D1"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 146,
+      "candidate": "casbin",
+      "name": "department parent outside cap"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 147,
+      "candidate": "casbin",
+      "name": "department child D11 outside cap"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 148,
+      "candidate": "casbin",
+      "name": "department root has no parent object"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 149,
+      "candidate": "native",
+      "name": "normal command rejects missing required main department"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 150,
+      "candidate": "casbin",
+      "name": "normal command rejects missing required main department"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 151,
+      "candidate": "native",
+      "name": "empty scope missing-department"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 152,
+      "candidate": "native",
+      "name": "empty scope missing-subtree"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 153,
+      "candidate": "native",
+      "name": "empty scope empty-departments"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 154,
+      "candidate": "native",
+      "name": "empty scope unknown-department"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 155,
+      "candidate": "native",
+      "name": "empty scope missing-jurisdiction"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 156,
+      "candidate": "native",
+      "name": "unregistered course department scope fails closed"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 157,
+      "candidate": "native",
+      "name": "same-name other tenant absent from list/count"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 158,
+      "candidate": "native",
+      "name": "nonmatching source field never borrowed phone"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 159,
+      "candidate": "native",
+      "name": "nonmatching source field never borrowed email"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 160,
+      "candidate": "native",
+      "name": "nonmatching source field never borrowed id_card"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 161,
+      "candidate": "casbin",
+      "name": "empty scope missing-department"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 162,
+      "candidate": "casbin",
+      "name": "empty scope missing-subtree"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 163,
+      "candidate": "casbin",
+      "name": "empty scope empty-departments"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 164,
+      "candidate": "casbin",
+      "name": "empty scope unknown-department"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 165,
+      "candidate": "casbin",
+      "name": "empty scope missing-jurisdiction"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 166,
+      "candidate": "casbin",
+      "name": "unregistered course department scope fails closed"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 167,
+      "candidate": "casbin",
+      "name": "same-name other tenant absent from list/count"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 168,
+      "candidate": "casbin",
+      "name": "nonmatching source field never borrowed phone"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 169,
+      "candidate": "casbin",
+      "name": "nonmatching source field never borrowed email"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 170,
+      "candidate": "casbin",
+      "name": "nonmatching source field never borrowed id_card"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 171,
+      "candidate": "native",
+      "name": "history role for person without facts"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 172,
+      "candidate": "native",
+      "name": "new same-company fact appears, other company denied"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 173,
+      "candidate": "native",
+      "name": "history cap dimension and literal no-fact person/company"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 174,
+      "candidate": "native",
+      "name": "history new fact detail"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 175,
+      "candidate": "native",
+      "name": "history aggregate new fact"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 176,
+      "candidate": "native",
+      "name": "history export shares person/company cap"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 177,
+      "candidate": "native",
+      "name": "legacy or unknown fact-id cap fails closed undefined"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 178,
+      "candidate": "native",
+      "name": "legacy or unknown fact-id cap fails closed unknown-dimension"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 179,
+      "candidate": "native",
+      "name": "disabled history actor denied"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 180,
+      "candidate": "native",
+      "name": "restoration retains source-change freeze"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 181,
+      "candidate": "native",
+      "name": "explicit recheck after restore"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 182,
+      "candidate": "native",
+      "name": "original-source history revoke freezes derived"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 183,
+      "candidate": "native",
+      "name": "original-source missing history remains suspended"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 184,
+      "candidate": "native",
+      "name": "restored source explicit recheck active"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 185,
+      "candidate": "casbin",
+      "name": "history role for person without facts"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 186,
+      "candidate": "casbin",
+      "name": "new same-company fact appears, other company denied"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 187,
+      "candidate": "casbin",
+      "name": "history cap dimension and literal no-fact person/company"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 188,
+      "candidate": "casbin",
+      "name": "history new fact detail"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 189,
+      "candidate": "casbin",
+      "name": "history aggregate new fact"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 190,
+      "candidate": "casbin",
+      "name": "history export shares person/company cap"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 191,
+      "candidate": "casbin",
+      "name": "legacy or unknown fact-id cap fails closed undefined"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 192,
+      "candidate": "casbin",
+      "name": "legacy or unknown fact-id cap fails closed unknown-dimension"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 193,
+      "candidate": "casbin",
+      "name": "disabled history actor denied"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 194,
+      "candidate": "casbin",
+      "name": "restoration retains source-change freeze"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 195,
+      "candidate": "casbin",
+      "name": "explicit recheck after restore"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 196,
+      "candidate": "casbin",
+      "name": "original-source history revoke freezes derived"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 197,
+      "candidate": "casbin",
+      "name": "original-source missing history remains suspended"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 198,
+      "candidate": "casbin",
+      "name": "restored source explicit recheck active"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 199,
+      "candidate": "native",
+      "name": "Task4 department company required"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 200,
+      "candidate": "native",
+      "name": "Task4 null company"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 201,
+      "candidate": "native",
+      "name": "Task4 cross-company parent"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 202,
+      "candidate": "native",
+      "name": "Task4 invalid parent"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 203,
+      "candidate": "native",
+      "name": "Task4 depth 21"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 204,
+      "candidate": "native",
+      "name": "Task4 cycle"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 205,
+      "candidate": "native",
+      "name": "Task4 exact valid scale"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 206,
+      "candidate": "native",
+      "name": "Task4 company department distribution"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 207,
+      "candidate": "native",
+      "name": "Task4 same-name tenant interference 500"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 208,
+      "candidate": "native",
+      "name": "Task4 cross-company department command"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 209,
+      "candidate": "native",
+      "name": "Task4 normal command clears nullable manager"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 210,
+      "candidate": "native",
+      "name": "Task4 normal command rejects null department"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 211,
+      "candidate": "native",
+      "name": "Task4 synthetic abnormal missing department"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 212,
+      "candidate": "native",
+      "name": "Task4 cross-company person rejected"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 213,
+      "candidate": "casbin",
+      "name": "Task4 department company required"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 214,
+      "candidate": "casbin",
+      "name": "Task4 null company"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 215,
+      "candidate": "casbin",
+      "name": "Task4 cross-company parent"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 216,
+      "candidate": "casbin",
+      "name": "Task4 invalid parent"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 217,
+      "candidate": "casbin",
+      "name": "Task4 depth 21"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 218,
+      "candidate": "casbin",
+      "name": "Task4 cycle"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 219,
+      "candidate": "casbin",
+      "name": "Task4 exact valid scale"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 220,
+      "candidate": "casbin",
+      "name": "Task4 company department distribution"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 221,
+      "candidate": "casbin",
+      "name": "Task4 same-name tenant interference 500"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 222,
+      "candidate": "casbin",
+      "name": "Task4 cross-company department command"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 223,
+      "candidate": "casbin",
+      "name": "Task4 normal command clears nullable manager"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 224,
+      "candidate": "casbin",
+      "name": "Task4 normal command rejects null department"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 225,
+      "candidate": "casbin",
+      "name": "Task4 synthetic abnormal missing department"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 226,
+      "candidate": "casbin",
+      "name": "Task4 cross-company person rejected"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 227,
+      "candidate": "native",
+      "name": "person command cannot borrow broad report role for C"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 228,
+      "candidate": "native",
+      "name": "person command permits same-source capped B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 229,
+      "candidate": "casbin",
+      "name": "person command cannot borrow broad report role for C"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 230,
+      "candidate": "casbin",
+      "name": "person command permits same-source capped B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 231,
+      "candidate": "native",
+      "name": "company mutation cannot borrow admin range beyond selected L cap"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 232,
+      "candidate": "casbin",
+      "name": "company mutation cannot borrow admin range beyond selected L cap"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 233,
+      "candidate": "native",
+      "name": "team includes direct A and cross-department B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 234,
+      "candidate": "native",
+      "name": "team persisted literal A B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 235,
+      "candidate": "native",
+      "name": "team denies C"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 236,
+      "candidate": "native",
+      "name": "team denies D"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 237,
+      "candidate": "native",
+      "name": "team denies E"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 238,
+      "candidate": "native",
+      "name": "team denies missing"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 239,
+      "candidate": "native",
+      "name": "team denies other-1"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 240,
+      "candidate": "native",
+      "name": "team denies disabled"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 241,
+      "candidate": "native",
+      "name": "team denies deleted"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 242,
+      "candidate": "native",
+      "name": "cleared manager removes direct-team authority"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 243,
+      "candidate": "native",
+      "name": "disabled target removes team authority"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 244,
+      "candidate": "native",
+      "name": "direct subordinate still intersected with company cap"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 245,
+      "candidate": "native",
+      "name": "team mixed batch all-or-nothing"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 246,
+      "candidate": "native",
+      "name": "batch retained A B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 247,
+      "candidate": "native",
+      "name": "switch off denies team"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 248,
+      "candidate": "native",
+      "name": "appointment remains independent from switch"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 249,
+      "candidate": "native",
+      "name": "team removal A B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 250,
+      "candidate": "casbin",
+      "name": "team includes direct A and cross-department B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 251,
+      "candidate": "casbin",
+      "name": "team persisted literal A B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 252,
+      "candidate": "casbin",
+      "name": "team denies C"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 253,
+      "candidate": "casbin",
+      "name": "team denies D"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 254,
+      "candidate": "casbin",
+      "name": "team denies E"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 255,
+      "candidate": "casbin",
+      "name": "team denies missing"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 256,
+      "candidate": "casbin",
+      "name": "team denies other-1"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 257,
+      "candidate": "casbin",
+      "name": "team denies disabled"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 258,
+      "candidate": "casbin",
+      "name": "team denies deleted"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 259,
+      "candidate": "casbin",
+      "name": "cleared manager removes direct-team authority"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 260,
+      "candidate": "casbin",
+      "name": "disabled target removes team authority"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 261,
+      "candidate": "casbin",
+      "name": "direct subordinate still intersected with company cap"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 262,
+      "candidate": "casbin",
+      "name": "team mixed batch all-or-nothing"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 263,
+      "candidate": "casbin",
+      "name": "batch retained A B"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 264,
+      "candidate": "casbin",
+      "name": "switch off denies team"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 265,
+      "candidate": "casbin",
+      "name": "appointment remains independent from switch"
+    },
+    {
+      "path": "evidence/raw/task4-final2-observations.jsonl",
+      "line": 266,
+      "candidate": "casbin",
+      "name": "team removal A B"
+    }
+  ],
+  "acceptanceAuditChecklist": [
+    {
+      "id": "AUTH-T01-01",
+      "requirement": "node independence",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T01-02",
+      "requirement": "direct ID",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T01-03",
+      "requirement": "list",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T01-04",
+      "requirement": "count",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T02-01",
+      "requirement": "all",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T02-02",
+      "requirement": "own subtree",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T02-03",
+      "requirement": "own department",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T02-04",
+      "requirement": "specified default false",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T02-05",
+      "requirement": "specified descendants true",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T02-06",
+      "requirement": "jurisdiction",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T02-07",
+      "requirement": "self",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T02-08",
+      "requirement": "empty department",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T02-09",
+      "requirement": "empty jurisdiction",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T02-10",
+      "requirement": "unsupported scope",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T03-01",
+      "requirement": "union same action",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-person-cap.test.ts",
+        "test/task4-source-boundary.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T03-02",
+      "requirement": "edit restricted/view broad",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-person-cap.test.ts",
+        "test/task4-source-boundary.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T03-03",
+      "requirement": "source field binding",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-person-cap.test.ts",
+        "test/task4-source-boundary.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T04-01",
+      "requirement": "membership jurisdiction",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T04-02",
+      "requirement": "override only A",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T04-03",
+      "requirement": "other role retained",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T04-04",
+      "requirement": "empty override denies source",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T04-05",
+      "requirement": "delete override restores",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T04-06",
+      "requirement": "regrant does not revive",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T05-01",
+      "requirement": "cross-department direct report included",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T05-02",
+      "requirement": "same-department non-report excluded",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T05-03",
+      "requirement": "indirect report excluded",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T05-04",
+      "requirement": "department report uses node scope",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-01",
+      "requirement": "learner backend denied",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-02",
+      "requirement": "P backend shell allowed",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-03",
+      "requirement": "training capability whitelist",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-04",
+      "requirement": "list and count",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-05",
+      "requirement": "detail",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-06",
+      "requirement": "save",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-07",
+      "requirement": "export",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-08",
+      "requirement": "other module denied",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-09",
+      "requirement": "other project denied",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-10",
+      "requirement": "P revoked Q retained",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-11",
+      "requirement": "last revoked shell removed",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-12",
+      "requirement": "independent role retained",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T06-13",
+      "requirement": "browser evidence",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T07-01",
+      "requirement": "level1 creation denied",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-department-cap.test.ts",
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T07-02",
+      "requirement": "level1 ordinary edit denied",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-department-cap.test.ts",
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T07-03",
+      "requirement": "level2/3 same-level denied",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-department-cap.test.ts",
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T07-04",
+      "requirement": "higher-level denied",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-department-cap.test.ts",
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T07-05",
+      "requirement": "node/action ceiling",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-department-cap.test.ts",
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T07-06",
+      "requirement": "resolved-set ceiling",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-department-cap.test.ts",
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T07-07",
+      "requirement": "field ceiling",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-department-cap.test.ts",
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T07-08",
+      "requirement": "explicit delegability",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-department-cap.test.ts",
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T08-01",
+      "requirement": "browse",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T08-02",
+      "requirement": "maintain",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T08-03",
+      "requirement": "distribute",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T08-04",
+      "requirement": "download",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T08-05",
+      "requirement": "no direct storage URL",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T08-06",
+      "requirement": "current publication state",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T09-01",
+      "requirement": "inheritance lock",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T09-02",
+      "requirement": "creator lock",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T09-03",
+      "requirement": "direct API",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T09-04",
+      "requirement": "batch import",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T09-05",
+      "requirement": "course custom browse only",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T09-06",
+      "requirement": "custom locked deny",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T09-07",
+      "requirement": "parent append retains grants",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T09-08",
+      "requirement": "classroom SubjectResolver extension",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T09-09",
+      "requirement": "category depth10/11",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T10-01",
+      "requirement": "out-of-scope detail",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T10-02",
+      "requirement": "random nonexistent ID",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T10-03",
+      "requirement": "other-tenant same-name",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T10-04",
+      "requirement": "equal denial payload",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T10-05",
+      "requirement": "safe browser copy",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T11-01",
+      "requirement": "team switch off",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T11-02",
+      "requirement": "team switch on direct only",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T11-03",
+      "requirement": "appointment source unaffected",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-team.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T12-01",
+      "requirement": "phone/email/id card source binding",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T12-02",
+      "requirement": "list",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T12-03",
+      "requirement": "detail",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T12-04",
+      "requirement": "export",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T12-05",
+      "requirement": "log scan",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T12-06",
+      "requirement": "cache scan",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T12-07",
+      "requirement": "denial payload scan",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-empty-scope.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T13-01",
+      "requirement": "shrink scope then pagination",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T13-02",
+      "requirement": "same count predicate",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T13-03",
+      "requirement": "aggregate authorized set",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T13-04",
+      "requirement": "export authorized set",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T13-05",
+      "requirement": "search no leaks",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T14-01",
+      "requirement": "department move",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T14-02",
+      "requirement": "manager change",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T14-03",
+      "requirement": "disable",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T14-04",
+      "requirement": "soft delete",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T14-05",
+      "requirement": "restore",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T14-06",
+      "requirement": "history immutable",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T14-07",
+      "requirement": "current-state filtering",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-current-history.test.ts",
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T15-01",
+      "requirement": "two independent processes",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T15-02",
+      "requirement": "B warm L1/L2",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T15-03",
+      "requirement": "PubSub deliberately lost",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T15-04",
+      "requirement": "A revoke committed",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T15-05",
+      "requirement": "B next request denied",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T15-06",
+      "requirement": "media next fragment denied",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T15-07",
+      "requirement": "version timeline",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T16-01",
+      "requirement": "Redis disconnect warm",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T16-02",
+      "requirement": "Redis timeout warm",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T16-03",
+      "requirement": "Redis cold fault",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T16-04",
+      "requirement": "Redis reconnect current version",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T16-05",
+      "requirement": "DB authority read failure",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T16-06",
+      "requirement": "no business payload",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T16-07",
+      "requirement": "no fallback",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T17-01",
+      "requirement": "direct domain call bypassing Guard",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T17-02",
+      "requirement": "export create",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T17-03",
+      "requirement": "export execution recheck",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T17-04",
+      "requirement": "export claim recheck",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T17-05",
+      "requirement": "limited service identity",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-01",
+      "requirement": "50000 main people",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-02",
+      "requirement": "500 second tenant people",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-03",
+      "requirement": "2000 departments",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-04",
+      "requirement": "20depth",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-05",
+      "requirement": "21depth rejection",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-06",
+      "requirement": "department cycle rejection",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-07",
+      "requirement": "20roles and 2to5 memberships",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-08",
+      "requirement": "1000000 learning facts",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-09",
+      "requirement": "hot authorized overhead",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-10",
+      "requirement": "cold authorized overhead",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-11",
+      "requirement": "hot list/count",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-12",
+      "requirement": "cold list/count",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-13",
+      "requirement": "history aggregate",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-14",
+      "requirement": "separate denials",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-15",
+      "requirement": "separate Redis failures",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-16",
+      "requirement": "page20/50/200 query counts",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-17",
+      "requirement": "parameterized SQL",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-18",
+      "requirement": "EXPLAIN ANALYZE BUFFERS",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-19",
+      "requirement": "50clients 600seconds",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T18-20",
+      "requirement": "resource caps",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-organization.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T19-01",
+      "requirement": "save wins before revoke ordered",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T19-02",
+      "requirement": "revoke wins before save denied",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T19-03",
+      "requirement": "batch delegation race",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T19-04",
+      "requirement": "download race",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T19-05",
+      "requirement": "old signed ticket rejected",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T19-06",
+      "requirement": "snapshot build race",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-delivery.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T20-01",
+      "requirement": "delegated department move",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-department-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T20-02",
+      "requirement": "source scope shrink",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-department-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T20-03",
+      "requirement": "dependent frozen",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-department-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T20-04",
+      "requirement": "explicit recheck",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-department-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T20-05",
+      "requirement": "invalid remains suspended",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-department-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T20-06",
+      "requirement": "provenance audit",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-history-caps.test.ts",
+        "test/task4-department-cap.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T21-01",
+      "requirement": "customer A appointed manager",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T21-02",
+      "requirement": "customer B appointed manager",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T21-03",
+      "requirement": "ordinary customer learner",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T21-04",
+      "requirement": "internal non-super manager",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T21-05",
+      "requirement": "shared content still accessible",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T21-06",
+      "requirement": "roster/company count",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T21-07",
+      "requirement": "search",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T21-08",
+      "requirement": "personal progress",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T21-09",
+      "requirement": "attachment",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T21-10",
+      "requirement": "export",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T21-11",
+      "requirement": "whole-project affected-company check",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T22-01",
+      "requirement": "internal grant customer A",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T22-02",
+      "requirement": "revoke customer A next request",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T22-03",
+      "requirement": "other company grants retained",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T22-04",
+      "requirement": "person transfer",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T22-05",
+      "requirement": "historical company unchanged",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T22-06",
+      "requirement": "new company cannot read old history",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-company.test.ts",
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T23-01",
+      "requirement": "own wallet separate A/B",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-account.test.ts",
+        "test/task4-account-caps.test.ts",
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T23-02",
+      "requirement": "B reward cannot offset A debt",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-account.test.ts",
+        "test/task4-account-caps.test.ts",
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T23-03",
+      "requirement": "SELF history still company-bound",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-account.test.ts",
+        "test/task4-account-caps.test.ts",
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T23-04",
+      "requirement": "cross-company source references denied",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-account.test.ts",
+        "test/task4-account-caps.test.ts",
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T23-05",
+      "requirement": "management export constrained",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-account.test.ts",
+        "test/task4-account-caps.test.ts",
+        "test/task4-current-history.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T24-01",
+      "requirement": "selected management membership A",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts",
+        "test/task4-history-caps.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T24-02",
+      "requirement": "cannot borrow B",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts",
+        "test/task4-history-caps.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T24-03",
+      "requirement": "source revoke freezes",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts",
+        "test/task4-history-caps.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T24-04",
+      "requirement": "source regrant recheck",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts",
+        "test/task4-history-caps.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    },
+    {
+      "id": "AUTH-T24-05",
+      "requirement": "new membership old override remains dead",
+      "fullAcceptance": "incomplete",
+      "relatedFocusedTests": [
+        "test/task4-source-boundary.test.ts",
+        "test/task4-person-cap.test.ts",
+        "test/task4-history-caps.test.ts"
+      ],
+      "remaining": "Controller Task6 must verify exact subcase; Task5 includes export/cache/log/UI/deployment/performance and remaining race evidence. Related tests alone do not close this point."
+    }
+  ],
+  "continuation": "docs/task4-ports.md",
+  "seedOracle": "docs/task4-seed-contract.md",
+  "historicalRedNote": "task4-org-red documented original NULL-clear interpretation; controller clarified required main department and normal command now denies NULL, proven by task4-dept-required-red/green1. Original files unchanged."
+}

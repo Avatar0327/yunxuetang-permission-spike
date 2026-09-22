@@ -29,6 +29,10 @@ export function compile(plan: QueryPolicy, m: Mapping, alias = 'r') {
         let predicate = r.all ? 'true' : r.anchor ? `${col(r.anchor)}=ANY(${bind(r.anchorIds ?? [])}::text[])` : `${col('personId')} IN (SELECT unnest(${bind(r.personIds)}::text[]))`;
         if (r.objectIds)
             predicate = `(${predicate}) AND ${col('id')}=ANY(${bind(r.objectIds)}::text[])`;
+        if(r.spec.personCompanyPairs !== undefined) {
+            const pairs=r.spec.personCompanyPairs;
+            predicate=`(${predicate}) AND EXISTS (SELECT 1 FROM jsonb_array_elements(${bind(JSON.stringify(pairs))}::jsonb) pc(pair) WHERE pc.pair->>0=${col('personId')} AND pc.pair->>1=${col('dataCompanyId')})`;
+        }
         return { ...s, predicate: `(${predicate})` };
     });
     terms.push(`(${sources.map(s => s.predicate).join(' OR ') || 'false'})`);

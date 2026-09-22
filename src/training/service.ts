@@ -16,7 +16,22 @@ export class TrainingService {
             throw new Denied();
         return { rows, count: rows.length, auth };
     }
-    async roster(identity: Identity, candidate: CandidateName, id: string) { const { auth } = await this.projects(identity, candidate, id); const rows = (await query(pool, 'SELECT person_id,company_id FROM training.roster WHERE tenant_id=$1 AND project_id=$2 AND company_id=ANY($3::text[]) ORDER BY person_id', [identity.tenantId, id, companyCap(auth.context)])).rows; return { rows, count: rows.length }; }
+    async roster(identity: Identity, candidate: CandidateName, id: string, search?:string, personId?:string) {
+        const {auth}=await this.projects(identity,candidate,id);
+        const values:unknown[]=[identity.tenantId,id,companyCap(auth.context)];
+        let where='r.tenant_id=$1 AND r.project_id=$2 AND r.company_id=ANY($3::text[]) AND p.enabled AND NOT p.deleted';
+        if(search!==undefined){if(typeof search!=='string'||search.length>200)throw new Denied();values.push('%'+search+'%');where+=` AND p.display_name ILIKE $${values.length}`;}
+        if(personId!==undefined){values.push(personId);where+=` AND r.person_id=$${values.length}`;}
+        const rows=(await query(pool,`SELECT r.person_id,r.company_id,p.display_name FROM training.roster r JOIN training.person_projection p ON p.tenant_id=r.tenant_id AND p.person_id=r.person_id WHERE ${where} ORDER BY r.person_id`,values)).rows;
+        if(personId&&!rows.length)throw new Denied();
+        return {rows,count:rows.length};
+    }
+    async personal(identity:Identity,candidate:CandidateName,id:string,personId:string,kind:'progress'|'attachment'){
+        await this.roster(identity,candidate,id,undefined,personId);
+        const row=(await query(pool,'SELECT progress,attachment FROM training.roster WHERE tenant_id=$1 AND project_id=$2 AND person_id=$3',[identity.tenantId,id,personId])).rows[0];
+        if(!row)throw new Denied();
+        return kind==='progress'?{personId,progress:row.progress}:{personId,bytes:row.attachment};
+    }
     async save(identity: Identity, candidate: CandidateName, id: string, body: {
         title?: string;
         teamEnabled?: boolean;

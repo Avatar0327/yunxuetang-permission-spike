@@ -24,3 +24,10 @@ Initial RED outputs prove missing integration module / absent HTTP server, not a
 
 
 Task3 evidence is separately recorded in `.superpowers/sdd/2026-09-23-permission-spike/task-3-report.md`. Its focused successes do not mark full AUTH groups passed. CompanyCap now includes an internal actor's own company plus explicit cross-company grants, per 02 §5; external actors remain capped to own company. Task4 still owns company-qualified department schema, valid cross-company fixtures, team enrollment, account/wallet, project exports/attachments/progress, remaining 168-point matrix, UI, fault and performance gates.
+
+
+## Task4 handoff update
+
+Earlier “missing” rows above describe the Task2/Task3 handoff and are historical. Task4 now implements company-qualified department/person fixtures, strict team add/remove, selected-source company grants, roster/search/progress/attachments, minimal own/management account and real same-company/currency offset, current projection delivery and immutable department/job/status/company history. It also corrects history/account delegation to tagged person/company caps and separates department.move from person.update. See [Task4 ports/remaining work](task4-ports.md), [independent seed formulas](task4-seed-contract.md) and [focused coverage](task4-coverage.json). Normal main-department null clears reject; synthetic missing-department injection is not a product flow.
+
+Project export and full export/cache/log sweeps remain Task5. Explicitly include synchronous `/account/export` in protected chunking/revocation checks. Full168, browser/UI, independent deployment, production credit/media/workers and large capped performance windows remain incomplete. Task4 does not reduce those gates.

@@ -14,7 +14,7 @@ PORT=4311 INSTANCE_ID=A CANDIDATE=native npm run start
 PORT=4312 INSTANCE_ID=B CANDIDATE=native npm run start
 ```
 
-`seed` drops only this synthetic database's `authz`, `organization`, `training`, `report`, `knowledge` schemas and rebuilds fixtures. Do not seed during requests or benchmarks. Every reset initializes a unique time-based revision so old Redis/L1 snapshot keys cannot be reused. The seed reports configured counts; integration tests query and assert actual counts independently.
+`seed` drops only this synthetic database's `authz`, `organization`, `training`, `report`, `knowledge`, `account` schemas and rebuilds fixtures. Do not seed during requests or benchmarks. Every reset initializes a unique time-based revision so old Redis/L1 snapshot keys cannot be reused. The seed reports configured counts; integration tests query and assert actual counts independently.
 
 Environment: `PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`, `PGPOOL` (default20), `REDIS_HOST`, `REDIS_PORT`, `REDIS_TIMEOUT_MS` (default300), `PORT`, `INSTANCE_ID`, `CANDIDATE=native|casbin`, `CACHE_MODE=hot|cold`. Within the Docker network use `PGHOST=yxt-pg PGPORT=5432 REDIS_HOST=yxt-redis REDIS_PORT=6379`. Bootstrap is `dist/src/bootstrap.js`; build includes source/tests/scripts. No Docker changes were made by this task.
 
@@ -27,10 +27,10 @@ The API binds 0.0.0.0. The synthetic UI is `/` and bundled Vue3/ElementPlus asse
 - `GET /report?history=true`: learning facts, immutable data company and historical department. `state=enabled|disabled|deleted|all` applies current person projection; acting disabled/deleted accounts always deny.
 - `GET /history`: history grouped by historical department from the same authorized relation.
 - `GET /projects`, `/projects/:id`, `/projects/:id/roster`, `/projects/:id/media/:segment`.
-- `POST /projects/:id` with `{title?,teamEnabled?}`: whole-project authority with all roster companies required. Team toggle persistence is present; actual team enrollment mutation is not.
+- `POST /projects/:id` with `{title?,teamEnabled?}`: whole-project authority with all roster companies required. Team enrollment commands are implemented in Task4 below.
 - `POST /appointments` with `{personId,projectId,active}`: exact registered appointment command capability, company cap and transactional revision bump.
 - `POST /memberships/:id/revoke`: revoke source and freeze existing dependency descendants. Role creation/edit/recheck are implemented below.
-- `POST /people/:id` with `{departmentId?,managerId?,companyId?,enabled?,deleted?}`: central authority and synchronous ReportProjection public-port delivery; historical facts stay immutable. Clearing nullable relationships is not implemented.
+- `POST /people/:id` with `{departmentId?,managerId?,companyId?,enabled?,deleted?}`: central authority and synchronous ReportProjection public-port delivery; historical facts stay immutable. Manager/job can be explicitly cleared; a normal command cannot clear the required main department. NULL-department fixtures are synthetic abnormal data only.
 - `POST /exports` with report query options; `POST /exports/:id/execute`; `GET /exports/:id/claim`. Exports are report exports, not project exports. Every phase reauthorizes; any tenant revision change invalidates an old job conservatively. Payload remains in the protected database. The runner is a synthetic inline execution route, not a durable queue.
 
 Responses include synthetic evidence metadata: instance, candidate, request/response time, query count; report data adds revision, sources, actual cache state, permission and data milliseconds. Error responses contain only safe copy and timing/instance metadata. Production observability design is not claimed here.
@@ -72,7 +72,7 @@ New commands (synthetic authenticated session still required):
 
 - `POST /roles` accepts `{id?,level:2|3,managementRoleMembershipId,policies,memberPersonIds?}`. Every policy uses registered `nodeId,navigation,actions,rawFields,scope,delegableActions`; grants are resolved from the single selected source. Same/higher restriction applies to editing only.
 - `POST /roles/:id` updates canonical policy and all memberships, preserving local overrides and lifecycle status. `POST /roles/:id/members` grants a new membership ID; old overrides never attach. `POST /memberships/:id/recheck` takes the acting `managementRoleMembershipId`, rechecks the stored original source, then audits `active` or `suspended`.
-- `POST /departments/:id/move` takes `{parentId:string|null}` and validates the entire subtree's depth, then freezes dependent configurations in the same transaction. Company-qualified department constraints remain Task 4.
+- `POST /departments/:id/move` takes `{parentId:string|null}` and validates the entire subtree's depth, then freezes dependent configurations in the same transaction. Company-qualified parent and person constraints are implemented in Task4; movement uses its own registered department action.
 - `POST /categories` accepts `{id,parentId?,inheritParent?,forceChildren?,grants,managementRoleMembershipId}`. Each grant has an exact course action and a subject `{type,id}`. Supported subjects are same-tenant authenticated `public` (browse only), user, role, and the synthetic `classroom_member` relation.
 - `POST /categories/:id` replaces local policy; `/categories/import` takes `{updates:[{id,...}]}` atomically. Locked descendants and creators cannot change local policies. `POST /categories/:id/append-preview` returns exact retained/additional grants and a revision; `/append` requires that revision plus the additions and selected source. It changes only that named parent.
 - `GET /courses` and `/courses/:id` accept registered `action`, default browse, with narrowing `prefix,limit,offset`. Four independent actions are `knowledge.course.browse|maintain|distribute|download`. These actions share one authorized SQL relation; no resource-row candidate calls.
@@ -90,3 +90,26 @@ npm run functional:task3
 ```
 
 The functional extension starts both API processes itself, verifies warm B download → real Redis CLIENT PAUSE timeout with no bytes → recovery → A membership revoke → B next request denied, with Pub/Sub unused, then stops both processes. It does not stop Docker services. The download fixture is a protected database payload, not a production OSS/CDN deployment.
+
+
+## Task4: company, team, account, current/history
+
+This is still a synthetic permission spike. See [seed formulas](docs/task4-seed-contract.md), [public contracts and continuation](docs/task4-ports.md), and [focused evidence map](docs/task4-coverage.json). No 168-point gate or overall Go is inferred.
+
+- `POST /projects/:id/enrollments` accepts `{operation:"add"|"remove",personIds:[...]}`;1..200 unique targets, atomic batch. Direct team is strict manager equality. Project role/appointment add/remove permissions are independent of the team switch.
+- `/projects/:id/roster?search=...` applies company/current-person constraints before list/count/search. `GET /projects/:id/people/:personId/progress|attachment` protects personal data; shared course browse stays under content grants.
+- `POST /company-grants` accepts `{personId,companyId,active,managementRoleMembershipId}` with exact selected-source delegability and target/company caps. Only internal people receive cross-company grants.
+- `GET /account/own` returns the actor's balances/debts by company/currency. `GET /account/entries`, `/account/entries/:id`, `/account/entries/:id/source`, `/account/export` are separate management actions, still company-bound. Account export is presently synchronous protected JSON; Task5 must include it in protected chunking, revocation and leakage work.
+- `POST /account/offset` takes `{debtId,rewardId}` and performs a real atomic same-person/company/currency offset under its registered action. It is not a formal reward/credit engine.
+- `POST /departments/:id/move` now uses the department node and `organization.department.move`; all affected descendants and the destination parent must be covered. `organization.person.update` alone cannot move departments.
+- Normal `POST /people/:id` consumes actual same-action person caps and both companies on transfer. `managerId:null` and `jobId:null` clear those nullable fields; `departmentId:null` denies per approved02. Tests inject missing departments through an explicit abnormal-fixture helper and synchronize projections; nullable storage remains a documented prototype exception.
+
+History and management account delegation now use a tagged person/company cap instead of generated fact/entry IDs, so newly generated same-company rows are readable without treating row creation as a permission change. Existing source/organization/company changes retain freeze/recheck. Old or unknown cap dimensions fail closed until original-source recheck. See task4-ports.md for migration and scalability boundaries.
+
+```
+npm run seed
+TASK3_OBSERVATIONS=evidence/raw/my-task4-run.jsonl npm run test:task4
+npm run functional:task4
+```
+
+The observer environment name is retained for compatibility. Always choose fresh evidence filenames; RED evidence is immutable. Task4's delivery suite starts and stops bothAPI processes, uses real revision lock waits, and injects Redis CLIENT PAUSE. Data-mutating suites run serially, with a fresh seed before scale assertions. Task3 role/dept test fixtures can persist past their suite, so reseed before Task4 or benchmarking.

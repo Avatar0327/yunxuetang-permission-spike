@@ -11,7 +11,7 @@ export interface DelegateInput {
     proposed: readonly ProposedGrant[];
     resolveObjects: (spec: ScopeSpec) => Promise<ObjectSet>;
 }
-function checkBound(set: ObjectSet, spec: ScopeSpec) { if (set.tenantId !== spec.tenantId || set.actorId !== spec.actorId || set.revision !== spec.revision || set.nodeId !== spec.nodeId || set.action !== spec.action)
+function checkBound(set: ObjectSet, spec: ScopeSpec) { if (set.tenantId !== spec.tenantId || set.actorId !== spec.actorId || set.revision !== spec.revision || set.nodeId !== spec.nodeId || set.action !== spec.action || set.dimension !== spec.capDimension)
     throw new Error('delegation resolution binding mismatch'); }
 /** Role mutation and capability checks only; recipients are resolved separately. */
 export function assertRoleDelegateCapabilities(input: Omit<DelegateInput, 'resolveObjects'>): void {
@@ -85,7 +85,7 @@ export async function assertGrantSubset(input: GrantSubsetInput): Promise<Delega
             if (!p.rawFields.every(f => coverage.get(id)!.has(f)))
                 throw new Error('field exceeds selected membership');
         }
-        result.push({nodeId:p.nodeId, action:p.action, objectIds:proposed.objectIds, rawFields:p.rawFields});
+        result.push({...(proposed.dimension?{dimension:proposed.dimension}:{}),nodeId:p.nodeId, action:p.action, objectIds:proposed.objectIds, rawFields:p.rawFields});
     }
     return result;
 }

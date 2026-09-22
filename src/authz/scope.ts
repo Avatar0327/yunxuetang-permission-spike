@@ -8,7 +8,7 @@ export function makeScope(context: Context, node: NodeDefinition, action: string
     if (['ownDept', 'ownDeptSubtree', 'departments', 'managed'].includes(scope.kind) && !node.departmentAnchor)
         return null;
     const effective = scope.kind === 'managed' ? (jurisdiction?.kind === 'departments' ? jurisdiction : { kind: 'departments' as const, departmentIds: [] }) : scope;
-    return { tenantId: context.tenantId, actorId: context.personId, revision: context.revision, nodeId: node.id, action, resourceType: node.resourceType, scope: structuredClone(effective), departmentId: context.departmentId, anchor: node.selfAnchor, departmentAnchor: node.departmentAnchor, companyIds: companyCap(context), companyMode: node.companyMode };
+    return { tenantId: context.tenantId, actorId: context.personId, revision: context.revision, nodeId: node.id, action, resourceType: node.resourceType, scope: structuredClone(effective), ...(node.directTeam?{managerId:context.personId}:{}), departmentId: context.departmentId, anchor: node.selfAnchor, departmentAnchor: node.departmentAnchor, companyIds: companyCap(context), companyMode: node.companyMode, ...(node.capDimension?{capDimension:node.capDimension}:{}) };
 }
 function validate(spec: ScopeSpec, org: OrganizationSnapshot) {
     if (spec.tenantId !== org.tenantId)
@@ -72,6 +72,7 @@ export function scopeMatches(scope: ResolvedScope, resource: Resource): boolean 
     const spec = scope.spec;
     if (resource.tenantId !== spec.tenantId || resource.type !== spec.resourceType)
         return false;
+    if(spec.personCompanyPairs && !spec.personCompanyPairs.some(([person,company])=>person===resource.personId&&company===resource.dataCompanyId))return false;
     if (scope.objectIds && !scope.objectIds.includes(resource.id))
         return false;
     if (scope.all)
