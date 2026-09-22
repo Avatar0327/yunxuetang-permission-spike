@@ -1,0 +1,60 @@
+import 'reflect-metadata';
+import { Module } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { FastifyAdapter } from '@nestjs/platform-fastify';
+import { readFile } from 'node:fs/promises';
+import { Authority } from './authz/revision.js';
+import { SessionCache } from './authz/cache.js';
+import { ReportService, type ListOptions } from './report/service.js';
+import { TrainingService } from './training/service.js';
+import { OrganizationService } from './organization/service.js';
+import { ExportService } from './report/exports.js';
+import { metrics, Denied, Unavailable } from './infrastructure/db.js';
+import type { CandidateName } from './authz/bulk-candidate.js';
+class AppModule {
+}
+Module({})(AppModule);
+const cache = new SessionCache(), authority = new Authority(cache), report = new ReportService(authority), training = new TrainingService(authority), organization = new OrganizationService(authority), exportsService = new ExportService(report);
+const app = await NestFactory.create(AppModule, new FastifyAdapter({ logger: false }), { logger: false });
+const fastify = app.getHttpAdapter().getInstance();
+const candidate = (process.env.CANDIDATE ?? 'native') as CandidateName;
+if (!['native', 'casbin'].includes(candidate))
+    throw new Error('unknown candidate');
+function options(q: any): ListOptions { return { fixture: q.fixture === true || q.fixture === 'true', history: q.history === true || q.history === 'true', aggregate: q.aggregate === true || q.aggregate === 'true', node: typeof q.node === 'string' ? q.node : undefined, limit: q.limit ? Number(q.limit) : 50, offset: q.offset ? Number(q.offset) : 0, search: typeof q.search === 'string' ? q.search : undefined, id: typeof q.id === 'string' ? q.id : undefined, state: ['enabled', 'disabled', 'deleted', 'all'].includes(q.state) ? q.state : 'enabled', cold: process.env.CACHE_MODE === 'cold' }; }
+function route(method: string, url: string, handler: (identity: any, req: any) => Promise<any>) {
+    fastify.route({ method, url, handler: async (req: any, reply: any) => metrics.run({ queries: 0 }, async () => {
+            const at = new Date().toISOString(), start = performance.now();
+            try {
+                const identity = await authority.token(String(req.headers.authorization ?? '').replace(/^Bearer /, ''));
+                const tokenMs = performance.now() - start;
+                const payload = await handler(identity, req);
+                if (payload.evidence)
+                    payload.evidence.permissionMs += tokenMs;
+                return reply.send({ ...payload, meta: { candidate, instance: process.env.INSTANCE_ID ?? String(process.pid), pid: process.pid, pubsub: false, requestAt: at, responseAt: new Date().toISOString(), elapsedMs: performance.now() - start, queryCount: metrics.getStore()!.queries } });
+            }
+            catch (e) {
+                const error = e instanceof Denied ? e : new Unavailable();
+                return reply.code(error.status).send({ message: error.message, meta: { candidate, instance: process.env.INSTANCE_ID ?? String(process.pid), requestAt: at, responseAt: new Date().toISOString(), elapsedMs: performance.now() - start, queryCount: metrics.getStore()!.queries } });
+            }
+        }) });
+}
+route('GET', '/auth/me', async (i) => { const r = await authority.load(i); return { capabilities: r.capabilities, revision: r.context.revision }; });
+route('GET', '/report', async (i, r) => report.list(i, candidate, options(r.query)));
+route('GET', '/history', async (i, r) => report.list(i, candidate, { ...options(r.query), history: true, aggregate: true }));
+route('GET', '/projects', async (i) => { const r = await training.projects(i, candidate); return { rows: r.rows, count: r.count }; });
+route('GET', '/projects/:id', async (i, r) => { const x = await training.projects(i, candidate, r.params.id); return { rows: x.rows, count: x.count }; });
+route('GET', '/projects/:id/roster', async (i, r) => training.roster(i, candidate, r.params.id));
+route('GET', '/projects/:id/media/:segment', async (i, r) => training.media(i, candidate, r.params.id));
+route('POST', '/projects/:id', async (i, r) => training.save(i, candidate, r.params.id, r.body ?? {}));
+route('POST', '/appointments', async (i, r) => { if (typeof r.body?.active !== 'boolean')
+    throw new Denied(); return training.appoint(i, candidate, r.body.personId, r.body.projectId, r.body.active); });
+route('POST', '/memberships/:id/revoke', async (i, r) => organization.revoke(i, candidate, r.params.id));
+route('POST', '/people/:id', async (i, r) => organization.update(i, candidate, r.params.id, r.body ?? {}));
+route('POST', '/exports', async (i, r) => exportsService.create(i, candidate, options(r.body ?? {})));
+route('POST', '/exports/:id/execute', async (i, r) => exportsService.phase(i, candidate, r.params.id, 'execute'));
+route('GET', '/exports/:id/claim', async (i, r) => exportsService.phase(i, candidate, r.params.id, 'claim'));
+fastify.get('/', async (_: any, reply: any) => reply.type('text/html').send(await readFile('web/index.html', 'utf8')));
+for (const [url, path, type] of [['/assets/vue.js', 'node_modules/vue/dist/vue.global.prod.js', 'text/javascript'], ['/assets/element.js', 'node_modules/element-plus/dist/index.full.min.js', 'text/javascript'], ['/assets/element.css', 'node_modules/element-plus/dist/index.css', 'text/css']])
+    fastify.get(url, async (_: any, reply: any) => reply.type(type).send(await readFile(path!)));
+await app.listen(Number(process.env.PORT ?? 4311), '0.0.0.0');
+console.log(JSON.stringify({ ready: true, port: process.env.PORT ?? 4311, candidate, instance: process.env.INSTANCE_ID ?? process.pid, pubsub: false }));

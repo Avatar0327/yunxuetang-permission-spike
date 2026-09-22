@@ -9,17 +9,37 @@
   "scripts": {
     "test:semantic": "tsx --test test/semantic.test.ts",
     "typecheck": "tsc --noEmit",
-    "bench:kernel": "tsx test/kernel-benchmark.ts"
+    "bench:kernel": "tsx test/kernel-benchmark.ts",
+    "build": "tsc",
+    "start": "node dist/src/bootstrap.js",
+    "seed": "tsx scripts/seed.ts",
+    "test:integration": "tsx --test test/integration.test.ts",
+    "test:http": "tsx --test test/http.test.ts",
+    "functional": "tsx scripts/run-functional.ts",
+    "faults": "tsx scripts/run-faults.ts",
+    "benchmark": "tsx scripts/benchmark.ts",
+    "explain": "tsx scripts/explain.ts"
   },
   "dependencies": {
-    "casbin": "5.38.0"
+    "@nestjs/common": "11.2.5",
+    "@nestjs/core": "11.2.5",
+    "@nestjs/platform-fastify": "11.2.5",
+    "casbin": "5.38.0",
+    "element-plus": "2.11.4",
+    "pg": "8.16.3",
+    "redis": "5.8.2",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2",
+    "vue": "3.5.22"
   },
   "devDependencies": {
     "@types/node": "24.10.1",
+    "@types/pg": "8.15.5",
     "tsx": "4.20.6",
     "typescript": "5.9.3"
   },
   "overrides": {
-    "csv-parse": "7.0.2"
+    "csv-parse": "7.0.2",
+    "fastify": "5.12.1"
   }
 }

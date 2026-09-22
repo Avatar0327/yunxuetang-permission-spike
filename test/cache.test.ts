@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {SessionCache} from '../src/authz/cache.js';
+test('concurrent cold-process Redis checks await the single live connection',async()=>{const cache=new SessionCache();try{const results=await Promise.allSettled(Array.from({length:20},()=>cache.available()));assert.deepEqual(results.map(r=>r.status),Array.from({length:20},()=> 'fulfilled'));}finally{await cache.close();}});
