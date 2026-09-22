@@ -5,10 +5,12 @@ import type { CandidateName } from '../authz/bulk-candidate.js';
 export class ExportService {
     constructor(public report: ReportService) { }
     async create(identity: Identity, candidate: CandidateName, options: ListOptions) {
+        // Export the complete filtered relation, independently of UI pagination.
+        const { limit: _limit, offset: _offset, ...filters } = options;
         return transaction(async (db) => {
-            const result = await this.report.list(identity, candidate, { ...options, export: true, limit: 1 }, db, true);
+            const result = await this.report.list(identity, candidate, { ...filters, export: true, limit: 1, offset: 0 }, db, true);
             const id = randomUUID();
-            await query(db, 'INSERT INTO report.export_job(tenant_id,id,person_id,revision,options) VALUES($1,$2,$3,$4,$5)', [identity.tenantId, id, identity.personId, result.evidence.revision, options]);
+            await query(db, 'INSERT INTO report.export_job(tenant_id,id,person_id,revision,options) VALUES($1,$2,$3,$4,$5)', [identity.tenantId, id, identity.personId, result.evidence.revision, filters]);
             return { id, revision: result.evidence.revision };
         });
     }
@@ -17,7 +19,7 @@ export class ExportService {
             const job = (await query(db, 'SELECT revision,options,payload,state FROM report.export_job WHERE tenant_id=$1 AND id=$2 AND person_id=$3 FOR UPDATE', [identity.tenantId, id, identity.personId])).rows[0];
             if (!job)
                 throw new Denied();
-            const result = await this.report.list(identity, candidate, { ...job.options, export: true, limit: 200 }, db, true);
+            const result = await this.report.list(identity, candidate, { ...job.options, export: true, limit: 200, offset: 0 }, db, true);
             if (Number(job.revision) !== result.evidence.revision)
                 throw new Denied();
             if (phase === 'claim') {
@@ -26,7 +28,9 @@ export class ExportService {
                 return { rows: job.payload, count: job.payload.length };
             }
             const rows = [...result.rows];
-            for (let offset = 200; offset < result.count; offset += 200) {
+            // Aggregate returns every group once; its count measures facts, not
+            // pageable groups. Only ordinary rows need the 200-row cursor loop.
+            for (let offset = 200; !job.options.aggregate && offset < result.count; offset += 200) {
                 const page = await this.report.list(identity, candidate, { ...job.options, export: true, limit: 200, offset }, db, true);
                 rows.push(...page.rows);
             }

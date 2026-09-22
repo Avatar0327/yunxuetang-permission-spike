@@ -6,10 +6,16 @@ export const metrics = new AsyncLocalStorage<{
 export const pool = new pg.Pool({ host: process.env.PGHOST ?? '127.0.0.1', port: Number(process.env.PGPORT ?? 55432), database: process.env.PGDATABASE ?? 'permission_spike', user: process.env.PGUSER ?? 'spike', password: process.env.PGPASSWORD ?? 'spike', max: Number(process.env.PGPOOL ?? 20), connectionTimeoutMillis: 800, statement_timeout: 10000 });
 pool.on('error', () => { });
 export type DB = Pick<pg.PoolClient, 'query'>;
+// Only this transaction boundary may grant a live, pinned transaction client.
+const activeTransactions = new WeakSet<DB>();
+export function requireTransaction(db: DB): void {
+    if (!activeTransactions.has(db)) throw new Unavailable();
+}
 export async function query(db: DB, sql: string, args: unknown[] = []) { const m = metrics.getStore(); if (m)
     m.queries++; return db.query(sql, args); }
 export async function transaction<T>(fn: (db: DB) => Promise<T>) { const db = await pool.connect(); try {
-    await query(db, 'BEGIN');
+    await query(db, 'BEGIN ISOLATION LEVEL READ COMMITTED');
+    activeTransactions.add(db);
     const result = await fn(db);
     await query(db, 'COMMIT');
     return result;
@@ -19,6 +25,7 @@ catch (e) {
     throw e;
 }
 finally {
+    activeTransactions.delete(db);
     db.release();
 } }
 export class Denied extends Error {

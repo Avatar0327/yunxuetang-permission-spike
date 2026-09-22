@@ -5,7 +5,7 @@ import { nodes, appointmentCapabilities } from './registry.js';
 import { selectSources, type CandidateName } from './bulk-candidate.js';
 import { OrganizationPort } from '../organization/public.js';
 import { SessionCache } from './cache.js';
-import { pool, query, Denied, Unavailable, type DB, type Identity } from '../infrastructure/db.js';
+import { pool, query, requireTransaction, Denied, Unavailable, type DB, type Identity } from '../infrastructure/db.js';
 interface Snapshot {
     schemaVersion: 1;
     memberships: Membership[];
@@ -26,7 +26,14 @@ export class Authority {
     } }
     async current(identity: Identity, db: DB = pool, lock = false): Promise<Context> {
         try {
-            const r = await query(db, `select r.revision,r.schema_version,p.*,coalesce((select array_agg(company_id order by company_id) from authz.company_grant g where g.tenant_id=p.tenant_id and g.person_id=p.id),'{}') companies from authz.revision r join organization.person p on p.tenant_id=r.tenant_id where r.tenant_id=$1 and p.id=$2 ${lock ? 'FOR UPDATE OF r' : ''}`, [identity.tenantId, identity.personId]);
+            if (lock) {
+                requireTransaction(db);
+                // A READ COMMITTED statement that waits for this lock can retain
+                // old joined facts. Acquire only the revision lock here, then read
+                // actor and company facts in the next statement's fresh snapshot.
+                await query(db, 'SELECT r.revision FROM authz.revision r WHERE r.tenant_id=$1 FOR UPDATE OF r', [identity.tenantId]);
+            }
+            const r = await query(db, `select r.revision,r.schema_version,p.*,coalesce((select array_agg(company_id order by company_id) from authz.company_grant g where g.tenant_id=p.tenant_id and g.person_id=p.id),'{}') companies from authz.revision r join organization.person p on p.tenant_id=r.tenant_id where r.tenant_id=$1 and p.id=$2`, [identity.tenantId, identity.personId]);
             const p = r.rows[0];
             if (!p || !p.enabled || p.deleted)
                 throw new Denied();
