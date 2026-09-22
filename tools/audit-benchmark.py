@@ -54,8 +54,10 @@ def audit(folder):
             classification=sample.get('classification')
             categories[classification]+=1
             clients[sample.get('clientId')]+=1
-            if classification not in {'success','denial','failure','authorization_error'}:
+            if classification not in {'success','denial','failure','authorization_error','measurement_error'}:
                 issues.append(f'line {line_no}: unknown classification')
+            if classification == 'measurement_error':
+                issues.append(f'line {line_no}: runner reported invalid measurement')
             try:
                 request_times.append(datetime.fromisoformat(sample['requestAt'].replace('Z','+00:00')))
             except (KeyError, ValueError, AttributeError):
