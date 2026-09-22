@@ -18,7 +18,7 @@ else
     -e POSTGRES_USER=spike -e POSTGRES_PASSWORD=spike -e POSTGRES_DB=permission_spike \
     postgres@sha256:639ab7ceb90e13123085b741fb31ef493fba25463002f6da665352e7b534b652 \
     -c shared_buffers=2GB -c work_mem=16MB -c max_connections=160 \
-    -c shared_preload_libraries=pg_stat_statements -c track_io_timing=on
+    -c shared_preload_libraries=pg_stat_statements -c track_io_timing=on -c track_commit_timestamp=on
 fi
 
 if spike_docker container inspect yxt-redis >/dev/null 2>&1; then
