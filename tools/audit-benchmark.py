@@ -83,6 +83,8 @@ def audit(folder):
                     issues.append(f'line {line_no}: success with wrong HTTP status/phase')
                 if summary['cache']=='cold' and sample.get('cache')!='cold':
                     issues.append(f'line {line_no}: cold snapshot cache hit')
+                if summary['cache']=='hot' and sample.get('cache') not in {'L1','L2'}:
+                    issues.append(f'line {line_no}: hot snapshot was not a measured L1/L2 hit')
                 if (summary.get('configuredSeconds')==600 and summary.get('concurrency')==50 or 'actualCandidate' in sample) and sample.get('actualCandidate')!=summary['candidate']:
                     issues.append(f'line {line_no}: actual server candidate mismatch')
             for key,bucket in metrics.items():
