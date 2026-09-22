@@ -18,6 +18,20 @@ differences = sorted(k for k in set(actual) | set(expected) if actual.get(k) != 
 if len(actual) != 65 or differences:
     raise SystemExit(json.dumps({'count': len(actual), 'unexpected_differences': differences}, ensure_ascii=False))
 
+filesystem = [p for p in ROOT.rglob('*') if p.is_file()]
+filesystem_counts = {
+    'all_files': len(filesystem),
+    'canonical_inputs': len(actual),
+    'technical_outputs_excluding_metadata': sum(TECH in p.parents and p.name != '.DS_Store' for p in filesystem),
+    'metadata_all_directories': sum(p.name == '.DS_Store' for p in filesystem),
+}
+if sum(filesystem_counts[k] for k in ['canonical_inputs', 'technical_outputs_excluding_metadata', 'metadata_all_directories']) != filesystem_counts['all_files']:
+    raise SystemExit('Filesystem count partition failed')
+execution_path = TECH / '预研证据/权限_v8.3_20260923/执行状态.json'
+execution = json.loads(execution_path.read_text()) if execution_path.exists() else {}
+permission_gate = execution.get('permission_gate', 'PENDING_EVIDENCE')
+if permission_gate not in {'PENDING_EVIDENCE', 'NO_GO', 'GO'}:
+    raise SystemExit('Unknown permission gate status; do not infer approval')
 docs = sorted(TECH.glob('[0-9][0-9]_*.md'))
 trace = (TECH / '07_需求与验收追踪.md').read_text()
 req_source = re.findall(r'^## (REQ-[A-Z]+-\d+) (.+)$', (ROOT / '02_规划交付物/交付物4_需求基线.md').read_text(), re.M)
@@ -90,7 +104,7 @@ result = {
     'verification_kind': 'documentation_and_v83_input_audit_not_permission_gate',
     'design_version': '1.0', 'input_baseline_version': manifest['baseline_version'],
     'input_rebaseline_complete': True, 'canonical_input_count': len(actual),
-    'metadata_excluded': 3, 'unchanged_content_count': 62, 'unchanged_manual_count': 24,
+    'metadata_entries_removed_from_original_manifest': 3, 'filesystem_current_counts': filesystem_counts, 'unchanged_content_count': 62, 'unchanged_manual_count': 24,
     'unexpected_content_differences': differences, 'canonical_document_count': len(docs),
     'requirements_source': len(req_source), 'requirements_trace': len(req_trace), 'requirements_exact': req_ok,
     'scenario_entries_source': len(ac_source), 'scenario_entries_trace': len(ac_trace), 'scenario_exact': ac_ok,
@@ -104,7 +118,7 @@ result = {
     'mechanical_document_checks_passed': bool(req_ok and ac_ok and row_ok and sum_ok and not (missing_links or unbalanced or json_errors or table_errors)),
     'business_design_review_complete': True, 'deliverable_A_user_review_complete': True,
     'permission_spike_authorized': True, 'permission_spike_started': True,
-    'permission_spike_gate': 'PENDING_EVIDENCE', 'formal_B1_started': False,
+    'permission_spike_gate': permission_gate, 'formal_B1_started': False,
     'planning_input_written_by_verifier': False,
     'previous_verification_sha256': sha(record_path), 'previous_verification_date': previous['checked_at'],
     'document_sha256': {p.name: sha(p) for p in docs},
