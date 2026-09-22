@@ -79,7 +79,9 @@ export function hardAllowed(context: Context, node: NodeDefinition | undefined, 
     if (affectedCompanyIds && !affectedCompanyIds.every(id => cap.includes(id)))
         return false;
     if (node.companyMode === 'ownWallet')
-        return resource.personId === context.personId && !resource.crossCompanyReference;
+        return resource.personId === context.personId
+            && typeof resource.dataCompanyId === 'string' && resource.dataCompanyId.trim().length > 0
+            && resource.crossCompanyReference === false;
     if (node.companyMode === 'content')
         return true;
     const company = resource[node.companyMode];

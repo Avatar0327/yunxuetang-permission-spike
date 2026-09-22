@@ -146,7 +146,7 @@ test('SELF uses only each registered node anchor and wallet exception stays narr
     await expectSources([m], { ...learning('A', 'CB'), dataCompanyId: 'CA' }, [], view, 'personal-learning', customer);
     const wallet = membership('wallet', { kind: 'self' }, 'account.own.view', 'wallet-own');
     wallet.personId = 'A';
-    await expectSources([wallet], { ...learning('A', 'CB'), type: 'account', dataCompanyId: 'CA' }, ['role:wallet:wallet-own:account.own.view'], 'account.own.view', 'wallet-own', customer);
+    await expectSources([wallet], { ...learning('A', 'CB'), type: 'account', dataCompanyId: 'CA', crossCompanyReference: false }, ['role:wallet:wallet-own:account.own.view'], 'account.own.view', 'wallet-own', customer);
     await expectSources([wallet], { ...learning('B'), type: 'account' }, [], 'account.own.view', 'wallet-own', customer);
     await expectSources([wallet], { ...learning('A'), type: 'account', crossCompanyReference: true }, [], 'account.own.view', 'wallet-own', customer);
     // Historical department D2 does not remove current D1 person A; current D2 B cannot borrow historical D1.
@@ -263,3 +263,23 @@ test('delegation additionally requires role mutation action from selected member
  const a=membership('A',{kind:'ownDept'},edit);a.policies[0]!.delegableActions=[edit];
  await assert.rejects(()=>assertCanDelegate({context:ctx,nodes,memberships:[a],managementRoleMembershipId:'A',operation:'create',targetLevel:3,proposed:[],resolveObjects:async s=>({...s,objectIds:[]})}),/role mutation action/);
 });
+
+for (const engine of engines) {
+    const customer = { ...ctx, internal: false, companyId: 'CB', companyIds: ['CB'] };
+    const wallet = membership('wallet', { kind: 'self' }, 'account.own.view', 'wallet-own');
+    const known: Resource = { id: 'known-old-company-account', tenantId: 'T1', type: 'account', personId: 'M', exists: true, enabled: true, deleted: false, dataCompanyId: 'CA', crossCompanyReference: false };
+    const cases: { name: string; resource: Resource; expected: string[] }[] = [
+        { name: 'known separate old-company account', resource: known, expected: ['role:wallet:wallet-own:account.own.view'] },
+        { name: 'missing data company', resource: { ...known, id: 'missing-company', dataCompanyId: undefined }, expected: [] },
+        { name: 'empty data company', resource: { ...known, id: 'empty-company', dataCompanyId: '' }, expected: [] },
+        { name: 'blank data company', resource: { ...known, id: 'blank-company', dataCompanyId: ' ' }, expected: [] },
+        { name: 'missing reference status', resource: { ...known, id: 'missing-reference', crossCompanyReference: undefined }, expected: [] },
+        { name: 'unbound reviewer account', resource: { id: 'unbound-account', tenantId: 'T1', type: 'account', personId: 'M', exists: true, enabled: true, deleted: false }, expected: [] },
+    ];
+    for (const c of cases) test(`wallet hard facts: ${engine.name}: ${c.name}`, async () => {
+        const result = await engine.match({ context: customer, nodes, nodeId: 'wallet-own', action: 'account.own.view', resource: c.resource, grants: plan([wallet], customer), organization: org });
+        assert.deepEqual(result.sourceIds, c.expected, `${engine.name}/${c.resource.id}`);
+        assert.equal(result.allowed, c.expected.length > 0);
+        assert.deepEqual(result.rawFields, []);
+    });
+}
