@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import {issueMediaTicket,verifyMediaTicket} from '../authz/public.js';
 import { pool, query, transaction, Denied, type DB, type Identity } from '../infrastructure/db.js';
 import { Authority } from '../authz/revision.js';
@@ -58,9 +59,13 @@ export class TrainingService {
             const p = await this.authority.ports.organization(db).person({tenantId: identity.tenantId, personId});
             if (!p || !companyCap(auth.context).includes(p.companyId))
                 throw new Denied();
-            const id = `${personId}-${projectId}`;
-            await query(db, 'INSERT INTO training.appointment(tenant_id,id,person_id,project_id,active) VALUES($1,$2,$3,$4,$5) ON CONFLICT(tenant_id,id) DO UPDATE SET active=excluded.active', [identity.tenantId, id, personId, projectId, active]);
-            return { id, active };
+            // Idempotency belongs to the authorized relation, never a concatenated ID.
+            const result = await query(db, `
+                INSERT INTO training.appointment(tenant_id,id,person_id,project_id,active)
+                VALUES($1,$2,$3,$4,$5)
+                ON CONFLICT(tenant_id,person_id,project_id) DO UPDATE SET active=excluded.active
+                RETURNING id,active`, [identity.tenantId, randomUUID(), personId, projectId, active]);
+            return result.rows[0];
         });
     }
     async media(identity: Identity, candidate: CandidateName, id: string, segment='1', ticket?:string) {

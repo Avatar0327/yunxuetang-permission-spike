@@ -1,7 +1,8 @@
+import { appendFile } from 'node:fs/promises';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 const base = process.env.API_A ?? 'http://127.0.0.1:4311';
-async function req(path: string, actor = 'L', body?: unknown) { const r = await fetch(base + path, { method: body ? 'POST' : 'GET', headers: { authorization: 'Bearer spike-' + actor, 'content-type': 'application/json' }, body: body ? JSON.stringify(body) : undefined }); return { status: r.status, body: await r.json() as any }; }
+async function req(path: string, actor = 'L', body?: unknown) { const r = await fetch(base + path, { method: body ? 'POST' : 'GET', headers: { authorization: 'Bearer spike-' + actor, 'content-type': 'application/json' }, body: body ? JSON.stringify(body) : undefined }); const result = { status: r.status, body: await r.json() as any }; if (process.env.HTTP_OBSERVATIONS) await appendFile(process.env.HTTP_OBSERVATIONS, JSON.stringify({ candidate: process.env.CANDIDATE, source: process.env.FINAL_FIX_SOURCE, path, actor, request: body, response: result, at: new Date().toISOString() }) + '\n'); return result; }
 test('real HTTP appointments derive backend then revoke last; direct object denied', async () => {
     assert.equal((await req('/auth/me')).body.capabilities.backend, false);
     assert.equal((await req('/projects/P')).status, 403);

@@ -13,5 +13,5 @@ for(const candidate of ['native','casbin'])test(`${candidate}: signed segment ti
   for(const change of [{expires:0},{tenantId:'T2'}]){const payload={...JSON.parse(Buffer.from(issued.body.ticket.split('.')[0],'base64url').toString()),...change},body=Buffer.from(JSON.stringify(payload)).toString('base64url'),signed=body+'.'+createHmac('sha256',process.env.MEDIA_TICKET_SECRET??'isolated-synthetic-permission-spike-media-key-v1').update(body).digest('base64url');await observe(candidate,'valid signature with expired or wrong-tenant binding denies '+JSON.stringify(change),403,(await b.request('GET','/projects/P/media/7?ticket='+encodeURIComponent(signed),undefined,'L')).status);}
   await a.request('POST','/appointments',{personId:'L',projectId:'P',active:false});
   const after=await b.request('GET','/projects/P/media/7?ticket='+ticket,undefined,'L');await observe(candidate,'old signed ticket after revoke next request no bytes',{status:403,fragment:null},{status:after.status,fragment:after.body.fragment??null});
- }finally{await b.close();await a.close();await pool.query("DELETE FROM training.appointment WHERE tenant_id='T1' AND id='L-P'");}
+ }finally{await b.close();await a.close();await pool.query("DELETE FROM training.appointment WHERE tenant_id='T1' AND person_id='L' AND project_id='P'");}
 });test.after(()=>pool.end());

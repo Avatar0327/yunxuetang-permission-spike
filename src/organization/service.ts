@@ -1,3 +1,4 @@
+import { sameUniqueIds } from '../infrastructure/sets.js';
 import { query, transaction, Denied, type Identity } from '../infrastructure/db.js';
 import { Authority } from '../authz/revision.js';
 import {compile} from '../authz/compiler.js';
@@ -58,7 +59,7 @@ export class OrganizationService {
         const ids=[...new Set(affected.map(r=>r.id))].sort();
         const c=compile(auth.plan,{id:'id',companyId:'company_id',enabled:'enabled',deleted:'deleted'});
         const allowed=(await query(db,`SELECT r.id FROM (SELECT d.*,true enabled,false deleted FROM organization.department d) r WHERE ${c.where} AND r.id=ANY(${c.bind(ids)}::text[]) ORDER BY r.id`,c.values)).rows.map(r=>r.id);
-        if(JSON.stringify(allowed)!==JSON.stringify(ids))throw new Denied();
+        if (!sameUniqueIds(ids, allowed)) throw new Denied();
         await query(db,'UPDATE organization.department SET parent_id=$3 WHERE tenant_id=$1 AND id=$2',[identity.tenantId,id,parentId]);
         await this.authority.freezeDerived(identity.tenantId,db);return {id,parentId};
     });}

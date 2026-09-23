@@ -53,7 +53,11 @@ export class KnowledgeService {
   if(custom.size)await query(db,"UPDATE knowledge.course SET custom_provenance='recheck_required' WHERE tenant_id=$1 AND id=ANY($2::text[]) AND custom_source_id IS NOT NULL AND custom_provenance<>'recheck_required'",[identity.tenantId,[...custom]]);
  }
  private async configure(identity:Identity,candidate:CandidateName,db:DB,id:string,action='knowledge.category.configure'){
-  const current=effectiveCategory(await categoryFacts(db,identity.tenantId),id);
+  const categories = await categoryFacts(db, identity.tenantId);
+  // Missing request targets are safe denials; broken ancestry of an existing
+  // target remains an unexpected error and therefore fails unavailable.
+  if (!categories.some(category => category.id === id)) throw new Denied();
+  const current = effectiveCategory(categories, id);
   if(current.lockedBy)throw new Denied();
   if(current.creatorId!==identity.personId)await this.authority.plan(identity,candidate,'category',action,db);
   return current;
@@ -62,7 +66,12 @@ export class KnowledgeService {
   await this.authority.plan(identity,candidate,'category','knowledge.category.create',db,true);
   if(typeof body.id!=='string'||!body.id||('inheritParent'in body&&typeof body.inheritParent!=='boolean')||('forceChildren'in body&&typeof body.forceChildren!=='boolean'))throw new Denied();
   const grants=await this.grants(identity,db,body.grants??[]);
-  if(body.parentId){const parent=effectiveCategory(await categoryFacts(db,identity.tenantId),body.parentId);if((parent.forcedBy||body.inheritParent)&&grants.length)throw new Denied();}
+  if (body.parentId) {
+   const categories = await categoryFacts(db, identity.tenantId);
+   if (!categories.some(category => category.id === body.parentId)) throw new Denied();
+   const parent = effectiveCategory(categories, body.parentId);
+   if ((parent.forcedBy || body.inheritParent) && grants.length) throw new Denied();
+  }
   const snapshot=await this.categoryCeiling(identity,db,body.managementRoleMembershipId,grants,body.id);
   await query(db,'INSERT INTO knowledge.category(tenant_id,id,parent_id,creator_id,inherit_parent,force_children,grants,source_id,provenance,authority_snapshot) VALUES($1,$2,$3,$4,$5,$6,$7,$8,\'active\',$9)',[identity.tenantId,body.id,body.parentId??null,identity.personId,body.inheritParent??false,body.forceChildren??false,JSON.stringify(grants),body.managementRoleMembershipId,snapshot]);
   return {id:body.id};

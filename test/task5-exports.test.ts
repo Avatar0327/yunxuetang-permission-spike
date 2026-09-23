@@ -36,6 +36,6 @@ for(const candidate of ['native','casbin'])test(`${candidate}: protected domain 
    await api.request('POST','/exports/'+job.body.id+'/execute',{},'M');
    const claim=await api.request('GET','/exports/'+job.body.id+'/claim',undefined,'M');await observe(candidate,'report claim bounded 200 with exact total',{rows:200,count:49998,nextChunk:1},{rows:claim.body.rows?.length,count:claim.body.count,nextChunk:claim.body.nextChunk});
   });
- }finally{captured.logs=api.logs();await writeFile('evidence/raw/task5-domain-export-scans-'+candidate+'.json',JSON.stringify(captured,null,2));await api.close();await syntheticMissingDepartment('X');await syntheticMissingDepartment('Y');await pool.query("DELETE FROM training.appointment WHERE tenant_id='T1' AND id='X-P'");}
+ }finally{captured.logs=api.logs();await writeFile('evidence/raw/task5-domain-export-scans-'+candidate+'.json',JSON.stringify(captured,null,2));await api.close();await syntheticMissingDepartment('X');await syntheticMissingDepartment('Y');await pool.query("DELETE FROM training.appointment WHERE tenant_id='T1' AND person_id='X' AND project_id='P'");}
 });
 test.after(()=>pool.end());
