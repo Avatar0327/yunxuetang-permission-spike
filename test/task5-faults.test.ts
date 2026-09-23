@@ -23,7 +23,12 @@ for(const candidate of ['native','casbin'])test(`${candidate}: all protected out
   await campaign('warm protected controls',200);
   await redis.connect();await redis.sendCommand(['CLIENT','PAUSE','10000','ALL']);
   try{await campaign('Redis timeout warm',503);}finally{await redis.sendCommand(['CLIENT','UNPAUSE']);}
+  // A is restarted without any health/request warmup; B remains warm for the later L1 proof.
+  await a.close();a=await start(candidate,4311);
+  await redis.sendCommand(['CLIENT','PAUSE','10000','ALL']);
+  try{await campaign('Redis timeout cold restarted process',503,a);}finally{await redis.sendCommand(['CLIENT','UNPAUSE']);}
   await recovery();await campaign('Redis timeout recovery current authority',200);
+  await campaign('Redis timeout cold process recovery current authority',200,a);
   try{await docker('stop','--time','1','yxt-redis');redisStopped=true;await campaign('Redis disconnected warm',503);await a.close();a=await start(candidate,4311);await campaign('Redis disconnected cold restarted process',503,a);}finally{if(redisStopped){await docker('start','yxt-redis');redisStopped=false;}}
   await recovery();await campaign('Redis reconnected current authority',200);
   try{await docker('stop','--time','1','yxt-pg');pgStopped=true;await campaign('DB authority unavailable',503);}finally{if(pgStopped){await docker('start','yxt-pg');pgStopped=false;}}
