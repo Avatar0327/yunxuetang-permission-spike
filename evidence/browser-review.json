@@ -1,0 +1,289 @@
+{
+  "at": "2026-09-23T00:39:23.186995+00:00",
+  "applicationSource": "cb72484ed8e7547146920fd4312dd24f8c9e2402",
+  "sourceCommit": "d6e2d66",
+  "checks": [
+    {
+      "candidate": "native",
+      "step": "learner",
+      "path": "output/playwright/final-native/02-learner.txt",
+      "criteria": {
+        "learning-heading": true,
+        "no-admin-heading": true,
+        "no-admin-navigation": true
+      },
+      "pass": true,
+      "sha256": "1943091a7a3e1e03d22d4f52edc7bf3d2f2f265979451419ac84302be9c10aae"
+    },
+    {
+      "candidate": "native",
+      "step": "P-only",
+      "path": "output/playwright/final-native/05-P-only.txt",
+      "criteria": {
+        "admin": true,
+        "only-training": true,
+        "P-only": true
+      },
+      "pass": true,
+      "sha256": "639ffc40f9f63ed62ca68011ae9c6249e79b9e34a3464177b4184f5cdae5643e"
+    },
+    {
+      "candidate": "native",
+      "step": "P-detail",
+      "path": "output/playwright/final-native/08-P-detail.txt",
+      "criteria": {
+        "allowed-P": true
+      },
+      "pass": true,
+      "sha256": "b1f87be75d08626f89787aae9d2a1bb63efe92ef0d6ee40542b650251eb86e76"
+    },
+    {
+      "candidate": "native",
+      "step": "Q-denied",
+      "path": "output/playwright/final-native/10-Q-denied.txt",
+      "criteria": {
+        "safe-denial": true,
+        "no-resource-details": true,
+        "no-internals": true
+      },
+      "pass": true,
+      "sha256": "4ace8ea5bbb156828d16e7135a153c6a34de04bcc4a0e9b5793cd177f793f706"
+    },
+    {
+      "candidate": "native",
+      "step": "module-denied",
+      "path": "output/playwright/final-native/14-module-denied.txt",
+      "criteria": {
+        "safe-denial": true,
+        "no-resource-details": true,
+        "no-internals": true
+      },
+      "pass": true,
+      "sha256": "0e6da8484b10f253dfbaa6edba5d2a2123bd67657112a198cef96cda41a8f7e7"
+    },
+    {
+      "candidate": "native",
+      "step": "Q-retained",
+      "path": "output/playwright/final-native/18-Q-retained.txt",
+      "criteria": {
+        "Q-only": true
+      },
+      "pass": true,
+      "sha256": "07dd3ec7cf9d26bfe84ed4b2054d1a99ef17b0496e3530b2b9770c236649a7ea"
+    },
+    {
+      "candidate": "native",
+      "step": "P-revoked",
+      "path": "output/playwright/final-native/21-revoked-P-denied.txt",
+      "criteria": {
+        "safe-denial": true,
+        "no-resource-details": true,
+        "no-internals": true
+      },
+      "pass": true,
+      "sha256": "ddcfef3a383eadde6c0b0cdb1d11608f33435900e88d5bbe2c625bb3af49cf13"
+    },
+    {
+      "candidate": "native",
+      "step": "backend-closed",
+      "path": "output/playwright/final-native/25-backend-closed.txt",
+      "criteria": {
+        "learning-heading": true,
+        "no-admin-heading": true,
+        "no-admin-navigation": true
+      },
+      "pass": true,
+      "sha256": "3ac2d1a768b5417f365c8b40f26391da7590c846d5e3df7de911208f69f44b80"
+    },
+    {
+      "candidate": "native",
+      "step": "combined",
+      "path": "output/playwright/final-native/44-combined-valid.txt",
+      "criteria": {
+        "both-sources": true
+      },
+      "pass": true,
+      "sha256": "66064302c7de93b4a8df7cdaeef8dd28f59e07d2ad1e15b043384043e84c588c"
+    },
+    {
+      "candidate": "native",
+      "step": "independent",
+      "path": "output/playwright/final-native/47-independent-valid.txt",
+      "criteria": {
+        "admin-retained": true,
+        "report-only": true,
+        "self-count-one": true
+      },
+      "pass": true,
+      "sha256": "88c4f568f51d520ca3a6740249ece84ffa86a5ebf612077a36f3115fcbe38cf8"
+    },
+    {
+      "candidate": "native",
+      "step": "return",
+      "path": "output/playwright/final-native/50-return-snapshot.txt",
+      "criteria": {
+        "learning-heading": true,
+        "no-admin-heading": true,
+        "no-admin-navigation": true
+      },
+      "pass": true,
+      "sha256": "82f7f942a677ad60f0960d155d74255c7a4298770d08f482bb9d2a8489f214b1"
+    },
+    {
+      "candidate": "casbin",
+      "step": "learner",
+      "path": "output/playwright/final-casbin/02-learner.txt",
+      "criteria": {
+        "learning-heading": true,
+        "no-admin-heading": true,
+        "no-admin-navigation": true
+      },
+      "pass": true,
+      "sha256": "0e5d05730d71e8dba78f4fb25cd7116cbd64f061353232725b406e67c1a03a97"
+    },
+    {
+      "candidate": "casbin",
+      "step": "P-only",
+      "path": "output/playwright/final-casbin/06-P-only.txt",
+      "criteria": {
+        "admin": true,
+        "only-training": true,
+        "P-only": true
+      },
+      "pass": true,
+      "sha256": "d32d9fef0069edcc7e28b1f0998dfe544b56abfae3c850272b41a31c6334ef06"
+    },
+    {
+      "candidate": "casbin",
+      "step": "P-detail",
+      "path": "output/playwright/final-casbin/09-P-detail.txt",
+      "criteria": {
+        "allowed-P": true
+      },
+      "pass": true,
+      "sha256": "b1f87be75d08626f89787aae9d2a1bb63efe92ef0d6ee40542b650251eb86e76"
+    },
+    {
+      "candidate": "casbin",
+      "step": "Q-denied",
+      "path": "output/playwright/final-casbin/11-Q-denied.txt",
+      "criteria": {
+        "safe-denial": true,
+        "no-resource-details": true,
+        "no-internals": true
+      },
+      "pass": true,
+      "sha256": "2be499565955ce765c1deff45f9c9a27fec04ecd25f9c053e6ff929a98bd8e57"
+    },
+    {
+      "candidate": "casbin",
+      "step": "module-denied",
+      "path": "output/playwright/final-casbin/14-module-denied.txt",
+      "criteria": {
+        "safe-denial": true,
+        "no-resource-details": true,
+        "no-internals": true
+      },
+      "pass": true,
+      "sha256": "98ed4932733de6e571a7db9d3b996c1f713a31a7fbd22b96f3e6cf3a802a28a6"
+    },
+    {
+      "candidate": "casbin",
+      "step": "Q-retained",
+      "path": "output/playwright/final-casbin/18-Q-only.txt",
+      "criteria": {
+        "Q-only": true
+      },
+      "pass": true,
+      "sha256": "20cac16aaf675045ff60f606c233f85474e15ed3cccc064f18e55ae5187e643c"
+    },
+    {
+      "candidate": "casbin",
+      "step": "P-revoked",
+      "path": "output/playwright/final-casbin/20-revoked-P.txt",
+      "criteria": {
+        "safe-denial": true,
+        "no-resource-details": true,
+        "no-internals": true
+      },
+      "pass": true,
+      "sha256": "132316c6e7bb012c7cb122892422a52b9ff0fb2d16273a85e526943dbee46593"
+    },
+    {
+      "candidate": "casbin",
+      "step": "backend-closed",
+      "path": "output/playwright/final-casbin/23-backend-closed.txt",
+      "criteria": {
+        "learning-heading": true,
+        "no-admin-heading": true,
+        "no-admin-navigation": true
+      },
+      "pass": true,
+      "sha256": "3ac2d1a768b5417f365c8b40f26391da7590c846d5e3df7de911208f69f44b80"
+    },
+    {
+      "candidate": "casbin",
+      "step": "combined",
+      "path": "output/playwright/final-casbin/27-combined.txt",
+      "criteria": {
+        "both-sources": true
+      },
+      "pass": true,
+      "sha256": "42b5103c9a95b1a1094a2aff1073c573b58e86d584bbd0c709391267ec183ed8"
+    },
+    {
+      "candidate": "casbin",
+      "step": "independent",
+      "path": "output/playwright/final-casbin/30-independent.txt",
+      "criteria": {
+        "admin-retained": true,
+        "report-only": true,
+        "self-count-one": true
+      },
+      "pass": true,
+      "sha256": "e213bf5af6a2c61c088b6060bd39c1c4c0ee4cb6c43c1266d376ee5af6f9c8f1"
+    },
+    {
+      "candidate": "casbin",
+      "step": "return",
+      "path": "output/playwright/final-casbin/33-return-snapshot.txt",
+      "criteria": {
+        "learning-heading": true,
+        "no-admin-heading": true,
+        "no-admin-navigation": true
+      },
+      "pass": true,
+      "sha256": "c932d87ada99f0bb9486cf49245689da4b4d8eafd90b165e9e3dee5b17ec4bff"
+    }
+  ],
+  "allPassed": true,
+  "artifactFiles": 94,
+  "excludedEvidence": [
+    {
+      "paths": [
+        "output/playwright/final-native/Q-denied.png",
+        "output/playwright/final-native/11-Q-network.txt"
+      ],
+      "reason": "Controller mistakenly overlapped two CLI command sequences; ambiguous capture state. Retain but not denial proof. Use exact10 snapshot and sequential21/22 instead."
+    },
+    {
+      "paths": [
+        "output/playwright/final-native/26-independent-role.json",
+        "output/playwright/final-native/29-combined.txt",
+        "output/playwright/final-native/32-independent.txt",
+        "output/playwright/final-native/34-independent-refreshed.txt",
+        "output/playwright/final-native/36-self-report.txt",
+        "output/playwright/final-native/41-combined.txt",
+        "output/playwright/final-native/independent-report.png"
+      ],
+      "reason": "Malformed controller fixture omitted navigation/delegableActions. Correctly denied or503, not valid independent-role acceptance. Correction SQL38/42; valid44/47/50 used."
+    }
+  ],
+  "limits": [
+    "Controller inspected real DOM plus screenshots for both candidates, with actual button navigation.",
+    "Synthetic fixture admin setup is not role configuration UI acceptance. Host Node processes are not resource-capped reference windows.",
+    "Console retains expected403, favicon404 and Native malformed-fixture503; no compiler error.",
+    "Native trace begins at revokedP; earlier real snapshots/control records remain separate. Casbin trace covers full grant/revoke flow.",
+    "Browser flow covers AUTH-T06/T10 business shell only, not formal product AC completion or whole Go."
+  ]
+}

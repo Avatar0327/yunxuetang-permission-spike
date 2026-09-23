@@ -17,7 +17,7 @@ required = {case['id'] for group in manifest['groups'] for case in group['requir
 if set(ids) != required or any(count != 1 for count in ids.values()):
     raise SystemExit('Require exactly the frozen168 IDs once each; run audit-coverage.py.')
 by_id = {item['id']: item for item in items}
-status_labels = {'pass': '实测通过（待核证据充分性）', 'fail': '未通过', 'incomplete': '未完成'}
+status_labels = {'pass': '通过（已逐项复核，限原型）' if document.get('controllerSemanticReviewCompleted') else '实测通过（待核证据充分性）', 'fail': '未通过', 'incomplete': '未完成'}
 
 def cell(value):
     return str(value).replace('|', '\\|').replace('\n', '<br>')
