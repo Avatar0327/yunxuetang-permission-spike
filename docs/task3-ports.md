@@ -1,3 +1,5 @@
+> 历史阶段底稿：下文的待执行/未完成指当时交接时点；2026-09-23最终实测为163通过/5性能失败、整体No-Go，见evidence/coverage-matrix.md和performance-statistics.md及03/12、13。原规则与阶段证据保留。
+
 # Task3 module ports and persistence contract
 
 `src/contracts/ports.ts` defines trusted internal contracts. Bootstrap binds OrganizationFactsPort, TrainingFactsPort and KnowledgeFactsPort. Existing direct service construction uses equivalent default bindings for compatibility. These ports are not exposed as HTTP endpoints and never call Authority recursively.

@@ -32,6 +32,8 @@ commit = git('rev-parse', 'HEAD')
 DEST.mkdir(parents=True, exist_ok=True)
 archive = DEST / f'权限预研源码_{commit[:7]}.tar.gz'
 subprocess.run(['git', '-C', str(LOCAL), 'archive', '--format=tar.gz', f'--output={archive}', commit], check=True)
+bundle = DEST / f'权限预研提交历史_{commit[:7]}.bundle'
+subprocess.run(['git', '-C', str(LOCAL), 'bundle', 'create', str(bundle), git('branch', '--show-current')], check=True)
 
 copied = []
 roots = [
@@ -64,6 +66,7 @@ manifest = {
     'packaged_at': datetime.now().astimezone().isoformat(timespec='seconds'),
     'source_commit': commit, 'source_branch': git('branch', '--show-current'),
     'source_archive': {'path': archive.name, 'bytes': archive.stat().st_size, 'sha256': sha(archive)},
+    'history_bundle': {'path': bundle.name, 'bytes': bundle.stat().st_size, 'sha256': sha(bundle)},
     'input_baseline_version': fingerprints['baseline_version'],
     'input_fingerprint_manifest_sha256': sha(baseline), 'input_count': 65,
     'planning_input_modified': False,

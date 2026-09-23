@@ -1,3 +1,5 @@
+> 启动前冻结的执行计划：下列未勾选框保留计划原貌，实际完成/审查记录在 `.superpowers/sdd/2026-09-23-permission-spike/progress.md`，最终168点证据见 `evidence/coverage-matrix.md`。本轮交付No-Go：163通过/5性能失败，未放行正式B1。
+
 # Permission spike implementation plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development. This is an isolated research prototype, not formal B1 development.

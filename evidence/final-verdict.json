@@ -1,0 +1,28 @@
+{
+  "at": "2026-09-23T10:13:05+08:00",
+  "gate": "NO_GO",
+  "functional_matrix": {
+    "pass": 163,
+    "fail": 5
+  },
+  "failed_ids": [
+    "AUTH-T18-09",
+    "AUTH-T18-10",
+    "AUTH-T18-11",
+    "AUTH-T18-12",
+    "AUTH-T18-13"
+  ],
+  "reference_source": "eb3fb3eae8332eea6acfc31da0696119225933f1",
+  "application_source": "cb72484ed8e7547146920fd4312dd24f8c9e2402",
+  "requests": 30863,
+  "successful_requests": 28830,
+  "non_success_statuses": {
+    "503": 1789,
+    "transport_exception": 244
+  },
+  "authorization_errors": 0,
+  "measurement_errors": 0,
+  "formal_B1_started": false,
+  "prototype_reuse_credit": 0,
+  "human_signature": null
+}

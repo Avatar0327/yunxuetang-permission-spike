@@ -1,3 +1,5 @@
+> 历史阶段底稿：下文的待执行/未完成指当时交接时点；2026-09-23最终实测为163通过/5性能失败、整体No-Go，见evidence/coverage-matrix.md和performance-statistics.md及03/12、13。原规则与阶段证据保留。
+
 # Task4 public contracts and continuation
 
 Task4 preserves the reviewed READ COMMITTED revision-only lock, then fresh person/company facts and version fencing. All high-risk mutations call that authority boundary before object/row locks. Native and Casbin select sources through genuinely separate existing engine paths; central normalization, scopes, SQL compiler and row predicates remain shared.

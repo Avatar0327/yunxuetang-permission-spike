@@ -1,0 +1,10 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import json,hashlib
+source=Path('evidence/raw/final-fix-full-campaign/task5-commit-timeline.jsonl');rows=[json.loads(s) for s in source.read_text().splitlines()];out=[]
+for i,r in enumerate(rows,1):
+ w=r['warm'];a=r['revoke'];b=r['next'];am=a['body']['meta'];bm=b['body']['meta'];c=r['committed'];before=r['before']
+ checks={'two_processes':str(am['instance'])!=str(bm['instance']),'B_previously_warm':all(x['status']==200 and x['body']['authorization']['cache']=='L1' and str(x['body']['meta']['instance'])==str(bm['instance']) for x in w),'pubsub_absent':all(x['body']['meta']['pubsub']==False for x in [*w,a,b]),'revision_increment':int(c['revision'])==int(before['revision'])+1,'different_transaction':c['xmin']!=before['xmin'],'host_request_after_revoke_ack':bm['requestAt']>=am['responseAt'],'DB_authority_read_after_commit':bm['authorityObservedAt']>=c['committed_at'],'new_revision_observed':int(bm['observedRevision'])==int(c['revision']),'denied_without_business_payload':b['status']==403 and set(b['body'])=={'message','meta'}}
+ out.append({'candidate':r['candidate'],'line':i,'checks':checks,'all_checks':all(checks.values()),'A':am['instance'],'B':bm['instance'],'db_xmin':c['xmin'],'db_commit':c['committed_at'],'host_revoke_ack':am['responseAt'],'host_next_request':bm['requestAt'],'db_next_authority_read':bm['authorityObservedAt'],'old_revision':before['revision'],'new_revision':c['revision']})
+result={'at':datetime.now(timezone.utc).isoformat(),'source':str(source),'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'results':out,'all_checks':all(x['all_checks'] for x in out),'limitation':'Independent capture audit, no live API/database request. Same-clock comparisons only; L2 existence is a separate actual observation.'}
+Path('evidence/raw/controller-final-timeline-audit.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(json.dumps(result,ensure_ascii=False,indent=2));assert result['all_checks']

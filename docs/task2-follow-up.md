@@ -1,3 +1,5 @@
+> 历史阶段底稿：下文的待执行/未完成指当时交接时点；2026-09-23最终实测为163通过/5性能失败、整体No-Go，见evidence/coverage-matrix.md和performance-statistics.md及03/12、13。原规则与阶段证据保留。
+
 # Core + Task 3: continuation map
 
 All 168 full acceptance points remain incomplete pending independent audit. Focused passing observations do not mark whole AUTH groups passed. Continue within the authorized isolated spike, not formal B1.

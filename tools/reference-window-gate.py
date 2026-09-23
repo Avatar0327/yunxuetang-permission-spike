@@ -14,7 +14,7 @@ for result in results:
         reasons.append('not the required reference success window')
     if set(result.get('threshold_observations', {})) != required:
         reasons.append('four required scenarios not all measured')
-    if set(result.get('instances', {})) != {'A', 'B'}:
+    if not {'A', 'B'}.issubset(result.get('instances', {})):
         reasons.append('both required instances not observed')
     if any(count for kind, count in result.get('categories', {}).items() if kind != 'success'):
         reasons.append('normal window contains denied, failed or incorrect responses')

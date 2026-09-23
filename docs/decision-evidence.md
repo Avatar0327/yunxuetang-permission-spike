@@ -1,3 +1,5 @@
+> 历史阶段底稿：下文的待执行/未完成指当时交接时点；2026-09-23最终实测为163通过/5性能失败、整体No-Go，见evidence/coverage-matrix.md和performance-statistics.md及03/12、13。原规则与阶段证据保留。
+
 # Native / Casbin 决策证据备忘
 
 这是ADR的事实输入，不是候选选定或Go结论。最终取舍需要完整功能、故障和资源匹配的性能统计。

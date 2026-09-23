@@ -1,3 +1,5 @@
+> 历史阶段底稿：下文的待执行/未完成指当时交接时点；2026-09-23最终实测为163通过/5性能失败、整体No-Go，见evidence/coverage-matrix.md和performance-statistics.md及03/12、13。原规则与阶段证据保留。
+
 # Controller acceptance audit notes
 
 This file is a coverage audit, not an implemented/accepted matrix. Full source authority is04§9.4 and the168-subcase manifest.

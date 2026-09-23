@@ -1,147 +1,19 @@
 {
-  "source": "evidence/raw/task5-final4-task5.jsonl",
+  "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
   "phases": [
     {
       "candidate": "native",
       "phase": "Redis timeout warm",
       "count": 16,
-      "first_at": "2026-09-22T23:16:02.353Z",
-      "last_at": "2026-09-22T23:16:07.044Z",
+      "first_at": "2026-09-23T00:18:31.059Z",
+      "last_at": "2026-09-23T00:18:35.759Z",
       "statuses": [
         "503"
       ],
       "all_expected_actual_equal": true,
       "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
       "lines": [
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65,
-        66,
-        67,
-        68,
-        69,
-        70,
-        71,
-        72,
-        73,
-        74
-      ]
-    },
-    {
-      "candidate": "native",
-      "phase": "Redis timeout recovery current authority",
-      "count": 16,
-      "first_at": "2026-09-22T23:16:12.130Z",
-      "last_at": "2026-09-22T23:16:12.279Z",
-      "statuses": [
-        "200"
-      ],
-      "all_expected_actual_equal": true,
-      "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
-      "lines": [
-        75,
-        76,
-        77,
-        78,
-        79,
-        80,
-        81,
-        82,
-        83,
-        84,
-        85,
-        86,
-        87,
-        88,
-        89,
-        90
-      ]
-    },
-    {
-      "candidate": "native",
-      "phase": "Redis disconnected warm",
-      "count": 16,
-      "first_at": "2026-09-22T23:16:12.506Z",
-      "last_at": "2026-09-22T23:16:12.559Z",
-      "statuses": [
-        "503"
-      ],
-      "all_expected_actual_equal": true,
-      "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
-      "lines": [
-        91,
-        92,
-        93,
-        94,
-        95,
-        96,
-        97,
-        98,
-        99,
-        100,
-        101,
-        102,
-        103,
-        104,
-        105,
-        106
-      ]
-    },
-    {
-      "candidate": "native",
-      "phase": "Redis disconnected cold restarted process",
-      "count": 16,
-      "first_at": "2026-09-22T23:16:12.884Z",
-      "last_at": "2026-09-22T23:16:12.945Z",
-      "statuses": [
-        "503"
-      ],
-      "all_expected_actual_equal": true,
-      "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
-      "lines": [
-        107,
-        108,
-        109,
-        110,
-        111,
-        112,
-        113,
-        114,
-        115,
-        116,
-        117,
-        118,
-        119,
-        120,
-        121,
-        122
-      ]
-    },
-    {
-      "candidate": "native",
-      "phase": "Redis reconnected current authority",
-      "count": 16,
-      "first_at": "2026-09-22T23:16:13.047Z",
-      "last_at": "2026-09-22T23:16:13.195Z",
-      "statuses": [
-        "200"
-      ],
-      "all_expected_actual_equal": true,
-      "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
-      "lines": [
-        123,
-        124,
-        125,
-        126,
         127,
         128,
         129,
@@ -153,26 +25,26 @@
         135,
         136,
         137,
-        138
+        138,
+        139,
+        140,
+        141,
+        142
       ]
     },
     {
       "candidate": "native",
-      "phase": "DB authority unavailable",
+      "phase": "Redis timeout recovery current authority",
       "count": 16,
-      "first_at": "2026-09-22T23:16:13.471Z",
-      "last_at": "2026-09-22T23:16:13.479Z",
+      "first_at": "2026-09-23T00:18:40.824Z",
+      "last_at": "2026-09-23T00:18:40.972Z",
       "statuses": [
-        "503"
+        "200"
       ],
       "all_expected_actual_equal": true,
       "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
       "lines": [
-        139,
-        140,
-        141,
-        142,
         143,
         144,
         145,
@@ -184,26 +56,26 @@
         151,
         152,
         153,
-        154
+        154,
+        155,
+        156,
+        157,
+        158
       ]
     },
     {
       "candidate": "native",
-      "phase": "DB recovered authoritative current state",
+      "phase": "Redis disconnected warm",
       "count": 16,
-      "first_at": "2026-09-22T23:16:13.809Z",
-      "last_at": "2026-09-22T23:16:13.958Z",
+      "first_at": "2026-09-23T00:18:41.241Z",
+      "last_at": "2026-09-23T00:18:41.297Z",
       "statuses": [
-        "200"
+        "503"
       ],
       "all_expected_actual_equal": true,
       "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
       "lines": [
-        155,
-        156,
-        157,
-        158,
         159,
         160,
         161,
@@ -215,22 +87,64 @@
         167,
         168,
         169,
-        170
+        170,
+        171,
+        172,
+        173,
+        174
       ]
     },
     {
-      "candidate": "casbin",
-      "phase": "Redis timeout warm",
+      "candidate": "native",
+      "phase": "Redis disconnected cold restarted process",
       "count": 16,
-      "first_at": "2026-09-22T23:16:15.253Z",
-      "last_at": "2026-09-22T23:16:19.953Z",
+      "first_at": "2026-09-23T00:18:41.622Z",
+      "last_at": "2026-09-23T00:18:41.685Z",
       "statuses": [
         "503"
       ],
       "all_expected_actual_equal": true,
       "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
       "lines": [
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190
+      ]
+    },
+    {
+      "candidate": "native",
+      "phase": "Redis reconnected current authority",
+      "count": 16,
+      "first_at": "2026-09-23T00:18:41.799Z",
+      "last_at": "2026-09-23T00:18:41.947Z",
+      "statuses": [
+        "200"
+      ],
+      "all_expected_actual_equal": true,
+      "all_fault_payloads_empty": true,
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
+      "lines": [
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
         198,
         199,
         200,
@@ -239,29 +153,29 @@
         203,
         204,
         205,
-        206,
+        206
+      ]
+    },
+    {
+      "candidate": "native",
+      "phase": "DB authority unavailable",
+      "count": 16,
+      "first_at": "2026-09-23T00:18:42.293Z",
+      "last_at": "2026-09-23T00:18:42.304Z",
+      "statuses": [
+        "503"
+      ],
+      "all_expected_actual_equal": true,
+      "all_fault_payloads_empty": true,
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
+      "lines": [
         207,
         208,
         209,
         210,
         211,
         212,
-        213
-      ]
-    },
-    {
-      "candidate": "casbin",
-      "phase": "Redis timeout recovery current authority",
-      "count": 16,
-      "first_at": "2026-09-22T23:16:25.013Z",
-      "last_at": "2026-09-22T23:16:25.166Z",
-      "statuses": [
-        "200"
-      ],
-      "all_expected_actual_equal": true,
-      "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
-      "lines": [
+        213,
         214,
         215,
         216,
@@ -270,29 +184,29 @@
         219,
         220,
         221,
-        222,
+        222
+      ]
+    },
+    {
+      "candidate": "native",
+      "phase": "DB recovered authoritative current state",
+      "count": 16,
+      "first_at": "2026-09-23T00:18:42.634Z",
+      "last_at": "2026-09-23T00:18:42.780Z",
+      "statuses": [
+        "200"
+      ],
+      "all_expected_actual_equal": true,
+      "all_fault_payloads_empty": true,
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
+      "lines": [
         223,
         224,
         225,
         226,
         227,
         228,
-        229
-      ]
-    },
-    {
-      "candidate": "casbin",
-      "phase": "Redis disconnected warm",
-      "count": 16,
-      "first_at": "2026-09-22T23:16:25.393Z",
-      "last_at": "2026-09-22T23:16:25.442Z",
-      "statuses": [
-        "503"
-      ],
-      "all_expected_actual_equal": true,
-      "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
-      "lines": [
+        229,
         230,
         231,
         232,
@@ -301,64 +215,22 @@
         235,
         236,
         237,
-        238,
-        239,
-        240,
-        241,
-        242,
-        243,
-        244,
-        245
+        238
       ]
     },
     {
       "candidate": "casbin",
-      "phase": "Redis disconnected cold restarted process",
+      "phase": "Redis timeout warm",
       "count": 16,
-      "first_at": "2026-09-22T23:16:26.007Z",
-      "last_at": "2026-09-22T23:16:26.069Z",
+      "first_at": "2026-09-23T00:18:44.073Z",
+      "last_at": "2026-09-23T00:18:48.769Z",
       "statuses": [
         "503"
       ],
       "all_expected_actual_equal": true,
       "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
       "lines": [
-        246,
-        247,
-        248,
-        249,
-        250,
-        251,
-        252,
-        253,
-        254,
-        255,
-        256,
-        257,
-        258,
-        259,
-        260,
-        261
-      ]
-    },
-    {
-      "candidate": "casbin",
-      "phase": "Redis reconnected current authority",
-      "count": 16,
-      "first_at": "2026-09-22T23:16:26.177Z",
-      "last_at": "2026-09-22T23:16:26.326Z",
-      "statuses": [
-        "200"
-      ],
-      "all_expected_actual_equal": true,
-      "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
-      "lines": [
-        262,
-        263,
-        264,
-        265,
         266,
         267,
         268,
@@ -370,26 +242,26 @@
         274,
         275,
         276,
-        277
+        277,
+        278,
+        279,
+        280,
+        281
       ]
     },
     {
       "candidate": "casbin",
-      "phase": "DB authority unavailable",
+      "phase": "Redis timeout recovery current authority",
       "count": 16,
-      "first_at": "2026-09-22T23:16:26.475Z",
-      "last_at": "2026-09-22T23:16:26.482Z",
+      "first_at": "2026-09-23T00:18:53.856Z",
+      "last_at": "2026-09-23T00:18:54.010Z",
       "statuses": [
-        "503"
+        "200"
       ],
       "all_expected_actual_equal": true,
       "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
       "lines": [
-        278,
-        279,
-        280,
-        281,
         282,
         283,
         284,
@@ -401,26 +273,26 @@
         290,
         291,
         292,
-        293
+        293,
+        294,
+        295,
+        296,
+        297
       ]
     },
     {
       "candidate": "casbin",
-      "phase": "DB recovered authoritative current state",
+      "phase": "Redis disconnected warm",
       "count": 16,
-      "first_at": "2026-09-22T23:16:26.808Z",
-      "last_at": "2026-09-22T23:16:26.959Z",
+      "first_at": "2026-09-23T00:18:54.254Z",
+      "last_at": "2026-09-23T00:18:54.312Z",
       "statuses": [
-        "200"
+        "503"
       ],
       "all_expected_actual_equal": true,
       "all_fault_payloads_empty": true,
-      "source": "evidence/raw/task5-final4-task5.jsonl",
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
       "lines": [
-        294,
-        295,
-        296,
-        297,
         298,
         299,
         300,
@@ -432,7 +304,135 @@
         306,
         307,
         308,
-        309
+        309,
+        310,
+        311,
+        312,
+        313
+      ]
+    },
+    {
+      "candidate": "casbin",
+      "phase": "Redis disconnected cold restarted process",
+      "count": 16,
+      "first_at": "2026-09-23T00:18:54.633Z",
+      "last_at": "2026-09-23T00:18:54.695Z",
+      "statuses": [
+        "503"
+      ],
+      "all_expected_actual_equal": true,
+      "all_fault_payloads_empty": true,
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
+      "lines": [
+        314,
+        315,
+        316,
+        317,
+        318,
+        319,
+        320,
+        321,
+        322,
+        323,
+        324,
+        325,
+        326,
+        327,
+        328,
+        329
+      ]
+    },
+    {
+      "candidate": "casbin",
+      "phase": "Redis reconnected current authority",
+      "count": 16,
+      "first_at": "2026-09-23T00:18:54.805Z",
+      "last_at": "2026-09-23T00:18:54.957Z",
+      "statuses": [
+        "200"
+      ],
+      "all_expected_actual_equal": true,
+      "all_fault_payloads_empty": true,
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
+      "lines": [
+        330,
+        331,
+        332,
+        333,
+        334,
+        335,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        345
+      ]
+    },
+    {
+      "candidate": "casbin",
+      "phase": "DB authority unavailable",
+      "count": 16,
+      "first_at": "2026-09-23T00:18:55.085Z",
+      "last_at": "2026-09-23T00:18:55.094Z",
+      "statuses": [
+        "503"
+      ],
+      "all_expected_actual_equal": true,
+      "all_fault_payloads_empty": true,
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
+      "lines": [
+        346,
+        347,
+        348,
+        349,
+        350,
+        351,
+        352,
+        353,
+        354,
+        355,
+        356,
+        357,
+        358,
+        359,
+        360,
+        361
+      ]
+    },
+    {
+      "candidate": "casbin",
+      "phase": "DB recovered authoritative current state",
+      "count": 16,
+      "first_at": "2026-09-23T00:18:55.419Z",
+      "last_at": "2026-09-23T00:18:55.572Z",
+      "statuses": [
+        "200"
+      ],
+      "all_expected_actual_equal": true,
+      "all_fault_payloads_empty": true,
+      "source": "evidence/raw/final-fix-full-campaign/task5.jsonl",
+      "lines": [
+        362,
+        363,
+        364,
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        372,
+        373,
+        374,
+        375,
+        376,
+        377
       ]
     }
   ],
