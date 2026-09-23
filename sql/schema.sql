@@ -104,6 +104,10 @@ CREATE TABLE knowledge.policy_audit(id bigserial PRIMARY KEY,tenant_id text REFE
 
 ALTER TABLE report.person_projection ADD COLUMN department_id text, ADD COLUMN manager_id text, ADD COLUMN job_id text, ADD COLUMN display_name text NOT NULL DEFAULT '';
 ALTER TABLE report.learning_fact ADD COLUMN historical_job_id text, ADD COLUMN historical_status text NOT NULL DEFAULT 'enabled' CHECK(historical_status IN('enabled','disabled','deleted'));
+-- Native candidate 1: cover the unchanged historical aggregate and its fact predicates.
+-- Retain fact_company_person to measure this additive physical candidate in isolation.
+CREATE INDEX fact_company_person_cover ON report.learning_fact(tenant_id,data_company_id,person_id)
+ INCLUDE (enabled,deleted,historical_department_id,historical_job_id,historical_status,points);
 CREATE OR REPLACE FUNCTION report.immutable_history() RETURNS trigger LANGUAGE plpgsql AS $$
 BEGIN
  IF (NEW.person_id,NEW.data_company_id,NEW.historical_department_id,NEW.historical_job_id,NEW.historical_status) IS DISTINCT FROM (OLD.person_id,OLD.data_company_id,OLD.historical_department_id,OLD.historical_job_id,OLD.historical_status) THEN RAISE EXCEPTION 'immutable history'; END IF;
