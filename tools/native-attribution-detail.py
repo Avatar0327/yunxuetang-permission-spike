@@ -8,7 +8,10 @@ q=mod.quantile
 
 def stats(a):return {'n':len(a),'p50':q(a,.5),'p95':q(a,.95),'p99':q(a,.99),'max':max(a) if a else None}
 def window(folder):
- ds,loops,samples,dups,loss,late=mod.read_window(folder);groups=defaultdict(list);sql=defaultdict(list);pools=defaultdict(list);failures=[];bad=[];missingrows=0;phaseDurations=defaultdict(list)
+ ds,loops,samples,dups,loss,late=mod.read_window(folder);aborts=defaultdict(list)
+ for event in late:
+  if event.get('type')=='request_transport_abort':aborts[event['requestId']].append(event)
+ groups=defaultdict(list);sql=defaultdict(list);pools=defaultdict(list);failures=[];bad=[];missingrows=0;phaseDurations=defaultdict(list)
  def permission(d):
   spans=d['spans'];roots=[s for s in spans if s['name'] in ['authority.token','authority.plan','report.compile']];parts=Counter();observed=0
   for root in roots:
@@ -37,8 +40,21 @@ def window(folder):
    elif s['name']=='pool.acquire':pools[r['scenario']].append(s)
   if r['classification']!='success':
    concrete=[e for e in d['errors'] if e.get('code') not in [None,'UNKNOWN','SERVICE_UNAVAILABLE','RESPONSE_CLOSED','AUTHZ_DENIED']]
-   cause=concrete[0]['code'] if concrete else None
-   failures.append({'requestId':r['requestId'],'requestIndex':r['requestIndex'],'scenario':r['scenario'],'status':r.get('status'),'clientFailure':r.get('error'),'cause':cause,'originalErrors':d['errors'],'failingSpans':[s for s in d['spans'] if s.get('error')],'outcome':d['outcome'],'serverElapsedMs':d['elapsedMs']});continue
+   server_code=concrete[0]['code'] if concrete else None
+   cause=server_code;transport={}
+   if r.get('failurePhase')=='headers' and r.get('error',{}).get('code')=='CLIENT_TIMEOUT':
+    cause='CLIENT_TIMEOUT_HEADERS';events=aborts.get(r['requestId'],[]);queries=[s for s in d['spans'] if s['name']=='sql.roundtrip'];last=queries[-1] if queries else {}
+    active=[s for s in d['spans'] if len(events)==1 and s['startMs']<=events[0]['elapsedMs']<s['startMs']+s['durationMs']]
+    if any(k in r for k in ('status','serverRequestId','instance','queryCount')) or r.get('bodyMs') is not None or r.get('parseMs') is not None:bad.append({'id':r['requestId'],'reason':'unexpected_transport_response_metadata'})
+    if d['outcome']=='transport_abort':
+     if len(events)!=1 or last not in active:bad.append({'id':r['requestId'],'reason':'transport_without_pending_sql_and_unique_abort'})
+     reason='Client20s header deadline expired; server observed transport close while historical SQL was pending, then '+('recorded SQL cancellation57014.' if server_code=='57014' else 'SQL completed successfully; attempted200 was not received.')
+    elif d['outcome']=='response' and d['statusCode']==503 and server_code=='57014' and not events:
+     reason='Client20s header deadline expired; server recorded SQL cancellation57014 and503 response completion, but client received no headers; cross-clock delivery order is unresolved.'
+    else:bad.append({'id':r['requestId'],'reason':'unreviewed_transport_terminal_shape'});reason='Unreviewed transport terminal shape; cannot establish complete attribution.'
+    if server_code not in (None,'57014') or len(concrete)>1:bad.append({'id':r['requestId'],'reason':'unreviewed_transport_original_errors'})
+    transport={'clientMetadataAvailability':'no_response_headers_or_body','queryCountComparison':'unavailable_client_metadata','observedSqlCount':len(queries),'clientRecord':r,'serverSpans':d['spans'],'terminalSql':last,'abortEvents':events,'activeSpanIdsAtAbort':[s['id'] for s in active],'reason':reason,'clockMechanism':'unresolved; no cross-clock duration correction'}
+   failures.append({'requestId':r['requestId'],'requestIndex':r['requestIndex'],'scenario':r['scenario'],'status':r.get('status'),'clientFailure':r.get('error'),'cause':cause,'serverBoundaryCode':server_code,'originalErrors':d['errors'],'failingSpans':[s for s in d['spans'] if s.get('error')],'outcome':d['outcome'],'serverElapsedMs':d['elapsedMs'],**transport});continue
   parts,observed=permission(d);groups[r['scenario']].append({'requestId':r['requestId'],'permissionMs':r['permissionMs'],'observedPermissionMs':observed,'metricDifferenceMs':r['permissionMs']-observed,'parts':parts})
  results={}
  for name,rows in groups.items():
@@ -58,6 +74,6 @@ def window(folder):
  for side,rr in [('server',loops),('client',clientloops)]:
   for inst in sorted(set(r['instance'] for r in rr)):
    lr=[r for r in rr if r['instance']==inst];looprows[side+':'+inst]={'intervals':len(lr),'intervalP95DelayMsDistribution':stats([r['delayP95Ms'] for r in lr if r.get('delayP95Ms') is not None]),'intervalMaxDelayMsDistribution':stats([r['delayMaxMs'] for r in lr if r.get('delayMaxMs') is not None]),'utilizationDistribution':stats([r['utilization'] for r in lr]),'dropped':max(r.get('droppedIntervals',r.get('diagnosticDroppedRecords',0)) for r in lr)}
- return {'window':str(folder),'permission':results,'inclusivePhaseDurations':[{'scenario':k[0],'classification':k[1],'phase':k[2],'durationMs':stats(v)} for k,v in phaseDurations.items()],'sql':sqlrows,'pool':poolrows,'eventLoops':looprows,'failureCauses':dict(Counter(r['cause'] for r in failures)),'failures':failures,'invalid':bad,'sqlMissingReturnedRows':missingrows,'notes':['Permission shares use observed authority.token+authority.plan+report.compile spans, disjoint within each root; gate retains original permissionMs. Difference explicitly reported. inclusivePhaseDurations is each request summed occurrences of a named span, inclusive of children; never sum across phases or sum independent phase p95s.','Event-loop percentile distribution is across intervals intersecting measured client start/end window; boundary intervals can partially include prewarm/drain, not pooled per-request event-loop percentile. pool saturation count is a snapshot indicator; acquire duration includes queue/connect/scheduling.','Failure cause names denote actual terminal boundary/error, not an unsupported deeper CPU diagnosis.']}
+ return {'analysisVersion':3,'window':str(folder),'serverBoundaryCounts':dict(Counter(('client_timeout:' if r['cause']=='CLIENT_TIMEOUT_HEADERS' else 'received_http_503:')+(r['serverBoundaryCode'] or 'none') for r in failures)),'permission':results,'inclusivePhaseDurations':[{'scenario':k[0],'classification':k[1],'phase':k[2],'durationMs':stats(v)} for k,v in phaseDurations.items()],'sql':sqlrows,'pool':poolrows,'eventLoops':looprows,'failureCauses':dict(Counter(r['cause'] for r in failures)),'failures':failures,'invalid':bad,'sqlMissingReturnedRows':missingrows,'notes':['Permission shares use observed authority.token+authority.plan+report.compile spans, disjoint within each root; gate retains original permissionMs. Difference explicitly reported. inclusivePhaseDurations is each request summed occurrences of a named span, inclusive of children; never sum across phases or sum independent phase p95s.','Event-loop percentile distribution is across intervals intersecting measured client start/end window; boundary intervals can partially include prewarm/drain, not pooled per-request event-loop percentile. pool saturation count is a snapshot indicator; acquire duration includes queue/connect/scheduling.','Failure cause names denote actual terminal boundary/error, not an unsupported deeper CPU diagnosis. CLIENT_TIMEOUT_HEADERS is the observed client failure; serverBoundaryCounts retain the separate recorded server boundary. No response fields or result truth are imputed after client timeout. Clock/scheduling mechanism remains unresolved.']}
 if __name__=='__main__':
  out=window(Path(sys.argv[1]));Path(sys.argv[2]).write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(json.dumps({'window':out['window'],'invalid':len(out['invalid']),'failureCauses':out['failureCauses'],'sqlMissingReturnedRows':out['sqlMissingReturnedRows']},ensure_ascii=False))
