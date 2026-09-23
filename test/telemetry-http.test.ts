@@ -1,3 +1,4 @@
+import {randomUUID} from 'node:crypto';
 import pg from 'pg';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
@@ -7,11 +8,21 @@ import {setTimeout as sleep} from 'node:timers/promises';
 import {scenarioTruth,digest} from '../scripts/benchmark-truth.js';
 import {observedFetch} from '../scripts/benchmark-telemetry.js';
 const enabled=process.env.TELEMETRY_HTTP_TEST==='1';
+function capturePaths(output:string,port:number,scenario:string) {
+ const stem=`${output}/${scenario}-${port}-${randomUUID()}`;
+ return {stdout:stem+'.jsonl',stderr:stem+'.stderr'};
+}
+test('smoke capture filenames remain distinct across reused ports and repeated scenarios',()=>{
+ const cases=[[14311,'hot-off'],[14312,'hot-on'],[14311,'cold-off'],[14312,'cold-on'],[14313,'pg-failure'],[14313,'redis-failure'],[14313,'pg-failure']] as const;
+ const captures=cases.map(([port,scenario])=>capturePaths('/tmp/smoke',port,scenario));
+ assert.equal(new Set(captures.flatMap(c=>[c.stdout,c.stderr])).size,cases.length*2);
+ for(const [index,capture] of captures.entries()){assert.ok(capture.stdout.includes(cases[index]![1]));assert.ok(capture.stderr.includes(cases[index]![1]));}
+});
 test('Native HTTP truth, business payload, error diagnostics and request IDs agree with observation off/on',{skip:!enabled},async()=>{
  const output=process.env.TELEMETRY_OUTPUT??'/tmp/native-task1-smoke';await mkdir(output,{recursive:true});const truth=scenarioTruth();const results:any[]=[];
- async function launch(port:number,extra:Record<string,string>){let stdout='',stderr='';const child=spawn(process.execPath,['dist/src/bootstrap.js'],{env:{...process.env,PORT:String(port),CANDIDATE:'native',INSTANCE_ID:'telemetry-smoke',...extra},stdio:['ignore','pipe','pipe']});child.stdout.on('data',chunk=>stdout+=chunk);child.stderr.on('data',chunk=>stderr+=chunk);for(let i=0;i<200&&!stdout.includes('"ready":true');i++){if(child.exitCode!==null)throw Error(stderr);await sleep(25);}assert.match(stdout,/"ready":true/);return {url:'http://127.0.0.1:'+port,lines:()=>stdout.split('\n').flatMap(line=>{try{return[JSON.parse(line)];}catch{return[];}}),close:async()=>{child.kill('SIGTERM');await new Promise<void>(resolve=>child.once('exit',()=>resolve()));await writeFile(output+'/'+port+'.jsonl',stdout);await writeFile(output+'/'+port+'.stderr',stderr);}};}
+ async function launch(port:number,scenario:string,extra:Record<string,string>){const captures=capturePaths(output,port,scenario);let stdout='',stderr='';const child=spawn(process.execPath,['dist/src/bootstrap.js'],{env:{...process.env,PORT:String(port),CANDIDATE:'native',INSTANCE_ID:'telemetry-smoke',...extra},stdio:['ignore','pipe','pipe']});child.stdout.on('data',chunk=>stdout+=chunk);child.stderr.on('data',chunk=>stderr+=chunk);for(let i=0;i<200&&!stdout.includes('"ready":true');i++){if(child.exitCode!==null)throw Error(stderr);await sleep(25);}assert.match(stdout,/"ready":true/);return {url:'http://127.0.0.1:'+port,lines:()=>stdout.split('\n').flatMap(line=>{try{return[JSON.parse(line)];}catch{return[];}}),close:async()=>{child.kill('SIGTERM');await new Promise<void>(resolve=>child.once('exit',()=>resolve()));await writeFile(captures.stdout,stdout,{flag:'wx'});await writeFile(captures.stderr,stderr,{flag:'wx'});}};}
  for(const cache of ['hot','cold']){
-  const off=await launch(14311,{OBSERVE:'0',CACHE_MODE:cache}),on=await launch(14312,{OBSERVE:'1',CACHE_MODE:cache});
+  const off=await launch(14311,cache+'-off',{OBSERVE:'0',CACHE_MODE:cache}),on=await launch(14312,cache+'-on',{OBSERVE:'1',CACHE_MODE:cache});
   try{
    if(cache==='hot')for(const[mode,server]of [['off',off],['on',on]] as const)for(const[name,def]of Object.entries(truth.scenarios)){const r=await observedFetch(server.url+def.path,{headers:{authorization:'Bearer spike-'+def.actor},signal:AbortSignal.timeout(20000)},'prewarm-'+mode+'-'+name);assert.equal(r.res?.status,200);}
    // Alternate instance order to limit warmup/order bias. A small diagnostic smoke, not a gate window.
@@ -25,8 +36,8 @@ test('Native HTTP truth, business payload, error diagnostics and request IDs agr
    await writeFile(output+'/'+cache+'-diagnostics.json',JSON.stringify(records,null,2));
   }finally{await off.close();await on.close();}
  }
- for(const[kind,extra,code]of [['pg',{PGPORT:'1'},'ECONNREFUSED'],['redis',{REDIS_PORT:'1'},'ECONNREFUSED']] as const){const server=await launch(14313,{OBSERVE:'1',CACHE_MODE:'hot',...extra});try{const r=await observedFetch(server.url+'/report',{headers:{authorization:'Bearer spike-M'},signal:AbortSignal.timeout(20000)},kind+'-failure');assert.equal(r.res!.status,503);assert.deepEqual(Object.keys(r.body).sort(),['message','meta']);await sleep(30);const d=server.lines().find(x=>x.requestId===kind+'-failure');assert.ok(d.errors.some((e:any)=>e.code===code),JSON.stringify(d.errors));await writeFile(output+'/'+kind+'-failure.json',JSON.stringify(d,null,2));}finally{await server.close();}}
- const abortServer=await launch(14314,{OBSERVE:'1',CACHE_MODE:'hot'});
+ for(const[kind,extra,code]of [['pg',{PGPORT:'1'},'ECONNREFUSED'],['redis',{REDIS_PORT:'1'},'ECONNREFUSED']] as const){const server=await launch(14313,kind+'-failure',{OBSERVE:'1',CACHE_MODE:'hot',...extra});try{const r=await observedFetch(server.url+'/report',{headers:{authorization:'Bearer spike-M'},signal:AbortSignal.timeout(20000)},kind+'-failure');assert.equal(r.res!.status,503);assert.deepEqual(Object.keys(r.body).sort(),['message','meta']);await sleep(30);const d=server.lines().find(x=>x.requestId===kind+'-failure');assert.ok(d.errors.some((e:any)=>e.code===code),JSON.stringify(d.errors));await writeFile(output+'/'+kind+'-failure.json',JSON.stringify(d,null,2));}finally{await server.close();}}
+ const abortServer=await launch(14314,'http-abort-late-sql',{OBSERVE:'1',CACHE_MODE:'hot'});
  const blocker=new pg.Client({host:'127.0.0.1',port:55432,user:'spike',password:'spike',database:'permission_spike'});
  try{await blocker.connect();await blocker.query('BEGIN');await blocker.query('LOCK report.person_projection IN ACCESS EXCLUSIVE MODE');
   const r=await observedFetch(abortServer.url+'/report',{headers:{authorization:'Bearer spike-M'},signal:AbortSignal.timeout(250)},'http-abort-late-sql');assert.equal(r.telemetry.error.code,'CLIENT_TIMEOUT');
