@@ -1,3 +1,4 @@
+import {instrumentMethods, spanSync} from '../infrastructure/telemetry.js';
 import { pool, query, Denied, type DB, type Identity } from '../infrastructure/db.js';
 import { Authority } from '../authz/revision.js';
 import { compile } from '../authz/compiler.js';
@@ -24,7 +25,7 @@ export class ReportService {
         const action = history ? `report.history.${o.export ? 'export' : 'view'}` : `report.personal-learning.${o.export ? 'export' : 'view'}`;
         const auth = await this.authority.plan(identity, candidate, node, action, db, lock, o.cold);
         const compileStart = performance.now();
-        const c = compile(auth.plan, { id: 'id', personId: 'person_id', companyId: 'company_id', dataCompanyId: 'data_company_id', enabled: 'enabled', deleted: 'deleted' });
+        const c = spanSync('report.compile', () => compile(auth.plan, { id: 'id', personId: 'person_id', companyId: 'company_id', dataCompanyId: 'data_company_id', enabled: 'enabled', deleted: 'deleted' }));
         const terms = [c.where];
         if (o.fixture)
             terms.push(`r.fixture=true`);
@@ -63,3 +64,5 @@ export class ReportService {
         return { rows, count, evidence: { candidate, revision: auth.plan.revision, sourceIds: auth.plan.sources.map(s => s.sourceId), permissionMs, dataMs: performance.now() - start, cache: auth.cache } };
     }
 }
+
+instrumentMethods(ReportService.prototype, ['list'], 'report');

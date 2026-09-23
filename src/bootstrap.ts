@@ -1,3 +1,4 @@
+import {beginRequest, finishRequest, markTransportAbort, settleRequest, withRequest, observing, spanSync, recordError, startEventLoopMonitor, type RequestTrace} from './infrastructure/telemetry.js';
 import {ProjectExports,projectExportRequester} from './training/exports.js';
 import {AccountExports,accountExportRequester} from './account/exports.js';
 import {registerExportLookup} from './authz/public.js';
@@ -28,6 +29,24 @@ Module({})(AppModule);
 const cache = new SessionCache(), authority = new Authority(cache,{organization:db=>new OrganizationFactsPort(db),training:db=>new TrainingFactsPort(db),knowledge:db=>new KnowledgeFactsPort(db)}), report = new ReportService(authority), training = new TrainingService(authority), organization = new OrganizationService(authority), exportsService = new ExportService(report);
 const app = await NestFactory.create(AppModule, new FastifyAdapter({ logger: false }), { logger: false });
 const fastify = app.getHttpAdapter().getInstance();
+const traces = new WeakMap<object, RequestTrace>();
+if (observing()) {
+    startEventLoopMonitor('server');
+    fastify.addHook('onRequest', (req: any, reply: any, done: () => void) => {
+        const trace = beginRequest(req.headers['x-request-id'])!;
+        traces.set(req, trace);
+        reply.header('x-request-id', trace.requestId);
+        reply.raw.once('close', () => {
+            if (!reply.raw.writableFinished) markTransportAbort(trace, reply.statusCode);
+        });
+        withRequest(trace, done);
+    });
+    // These routes have no response schema. Fastify's original default is JSON.stringify.
+    fastify.setReplySerializer((payload: unknown) => spanSync('response.serialize', () => JSON.stringify(payload)));
+    fastify.addHook('onError', (req:any, _reply:any, error:unknown, done:()=>void) => {withRequest(traces.get(req),()=>recordError('http.framework',error));done();});
+    fastify.addHook('onSend', (req:any,reply:any,payload:unknown,done:(e:null,p:unknown)=>void) => {settleRequest(traces.get(req),reply.statusCode);done(null,payload);});
+    fastify.addHook('onResponse', (req: any, reply: any, done: () => void) => {finishRequest(traces.get(req), reply.statusCode);done();});
+}
 const candidate = (process.env.CANDIDATE ?? 'native') as CandidateName;
 if (!['native', 'casbin'].includes(candidate))
     throw new Error('unknown candidate');
@@ -44,9 +63,10 @@ function route(method: string, url: string, handler: (identity: any, req: any) =
                 return reply.send({ ...payload, meta: { candidate, instance: process.env.INSTANCE_ID ?? String(process.pid), pid: process.pid, pubsub: false, requestAt: at, responseAt: new Date().toISOString(), elapsedMs: performance.now() - start, authorityObservedAt:metrics.getStore()!.authorityObservedAt,observedRevision:metrics.getStore()!.observedRevision, queryCount: metrics.getStore()!.queries } });
             }
             catch (e) {
+                recordError('http.handler', e);
                 const error = e instanceof Denied ? e : (['23503','23505','23514','P0001'].includes((e as any)?.code) ? new Denied() : new Unavailable());
                 return reply.code(error.status).send({ message: error.message, meta: { candidate, pubsub:false, instance: process.env.INSTANCE_ID ?? String(process.pid), requestAt: at, responseAt: new Date().toISOString(), elapsedMs: performance.now() - start, authorityObservedAt:metrics.getStore()!.authorityObservedAt,observedRevision:metrics.getStore()!.observedRevision, queryCount: metrics.getStore()!.queries } });
-            }
+            } finally { settleRequest(traces.get(req), reply.statusCode); }
         }) });
 }
 const account=new AccountService(authority);
@@ -109,7 +129,8 @@ for(const [domain,service] of Object.entries({report:exportsService,training:pro
  fastify.post('/worker/'+domain+'/exports/:id/execute',async(req:any,reply:any)=>metrics.run({queries:0},async()=>{
   const requestAt=new Date().toISOString();const meta=()=>({candidate,instance:process.env.INSTANCE_ID??String(process.pid),pid:process.pid,pubsub:false,requestAt,responseAt:new Date().toISOString(),authorityObservedAt:metrics.getStore()!.authorityObservedAt,observedRevision:metrics.getStore()!.observedRevision,queryCount:metrics.getStore()!.queries});
   try{if(Object.keys(req.body??{}).length)throw new Denied();return {...await service.worker(String(req.headers.authorization??'').replace(/^Bearer /,''),candidate,req.params.id),meta:meta()};}
-  catch(e){const error=e instanceof Denied?e:new Unavailable();return reply.code(error.status).send({message:error.message,meta:meta()});}
+  catch(e){recordError('http.worker',e);const error=e instanceof Denied?e:new Unavailable();return reply.code(error.status).send({message:error.message,meta:meta()});}
+  finally{settleRequest(traces.get(req),reply.statusCode);}
  }));
 }
 fastify.get('/', async (_: any, reply: any) => reply.type('text/html').send(await readFile('web/index.html', 'utf8')));

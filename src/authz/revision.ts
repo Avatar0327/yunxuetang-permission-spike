@@ -1,3 +1,4 @@
+import {instrumentMethods, recordError, span, spanSync} from '../infrastructure/telemetry.js';
 import { KnowledgeFactsPort,effectiveCategory } from '../knowledge/public.js';
 import { companyCap, scopeMatches } from './scope.js';
 import { createHash } from 'node:crypto';
@@ -10,6 +11,7 @@ import { TrainingFactsPort } from '../training/public.js';
 import type { AuthorityPorts } from '../contracts/ports.js';
 import { SessionCache } from './cache.js';
 import { pool, query, metrics, requireTransaction, Denied, Unavailable, type DB, type Identity } from '../infrastructure/db.js';
+function unavailable(code: string) { recordError('authority.guard', {name:'Error',code}); return new Unavailable(); }
 interface Snapshot {
     schemaVersion: 1;
     memberships: Membership[];
@@ -55,6 +57,7 @@ export class Authority {
         return r.rows[0];
     }
     catch (e) {
+        recordError('authority.failure', e);
         if (e instanceof Denied)
             throw e;
         throw new Unavailable();
@@ -71,14 +74,17 @@ export class Authority {
             const r = (await query(db, `SELECT revision,schema_version,clock_timestamp() AS authority_observed_at,coalesce((SELECT array_agg(company_id ORDER BY company_id) FROM authz.company_grant WHERE tenant_id=$1 AND person_id=$2),'{}') companies FROM authz.revision WHERE tenant_id=$1`, [identity.tenantId, identity.personId])).rows[0];
             const p = await this.ports.organization(db).person(identity);
             if (!p || !p.enabled || p.deleted) throw new Denied();
-            if (!r || r.schema_version !== 1) throw new Unavailable();
+            if (!r) throw unavailable('AUTHZ_REVISION_MISSING');
+            if (r.schema_version !== 1) throw unavailable('AUTHZ_SCHEMA_VERSION');
             // Both facts reads follow the revision-only lock; the revision fence also protects nonlocking reads.
             const after = (await query(db, 'SELECT revision FROM authz.revision WHERE tenant_id=$1', [identity.tenantId])).rows[0];
-            if (!after || Number(after.revision) !== Number(r.revision)) throw new Unavailable();
+            if (!after) throw unavailable('AUTHZ_REVISION_MISSING');
+            if (Number(after.revision) !== Number(r.revision)) throw unavailable('AUTHZ_REVISION_CHANGED');
             if(metrics.getStore()){metrics.getStore()!.observedRevision=Number(r.revision);metrics.getStore()!.authorityObservedAt=r.authority_observed_at.toISOString();}
             return { tenantId: p.tenantId, personId: p.id, revision: Number(r.revision), enabled: p.enabled, deleted: p.deleted, authenticated: true, internal: p.internal, companyId: p.companyId, companyIds: r.companies, departmentId: p.departmentId ?? undefined };
         }
         catch (e) {
+            recordError('authority.failure', e);
             if (e instanceof Denied || e instanceof Unavailable)
                 throw e;
             throw new Unavailable();
@@ -93,26 +99,29 @@ export class Authority {
         let snapshot: Snapshot;
         try {
             if (cached.value)
-                snapshot = JSON.parse(cached.value);
+                snapshot = spanSync('snapshot.parse', () => JSON.parse(cached.value!));
             else {
-                const memberships = await this.memberships(context, db);
-                const appointments = await this.ports.training(db).appointments(context);
-                snapshot = { schemaVersion: 1, memberships, appointments };
+                snapshot = await span('snapshot.build', async () => {
+                    const memberships = await this.memberships(context, db);
+                    const appointments = await this.ports.training(db).appointments(context);
+                    return { schemaVersion: 1 as const, memberships, appointments };
+                });
             }
             if (snapshot.schemaVersion !== 1 || !Array.isArray(snapshot.memberships) || !Array.isArray(snapshot.appointments))
-                throw new Unavailable();
+                throw unavailable('AUTHZ_SNAPSHOT_INVALID');
             for (const m of snapshot.memberships)
                 for (const p of m.policies)
                     if (!nodes.some(n => n.id === p.nodeId && p.actions.every(a => n.actions.includes(a))))
-                        throw new Unavailable();
+                        throw unavailable('AUTHZ_SNAPSHOT_POLICY_INVALID');
             if ((await this.current(identity, db)).revision !== context.revision)
-                throw new Unavailable();
+                throw unavailable('AUTHZ_REVISION_CHANGED');
             if (!cached.value)
-                await this.cache.set(key, JSON.stringify(snapshot));
-            const grants = normalizePolicy({ context, nodes, ...snapshot, appointmentCapabilities });
+                await this.cache.set(key, spanSync('snapshot.stringify', () => JSON.stringify(snapshot)));
+            const grants = spanSync('snapshot.normalize', () => normalizePolicy({ context, nodes, ...snapshot, appointmentCapabilities }));
             return { context, grants, cache: cached.hit, permissionMs: performance.now() - start, capabilities: backendCapabilities(grants, nodes) };
         }
         catch (e) {
+            recordError('authority.failure', e);
             if (e instanceof Denied || e instanceof Unavailable)
                 throw e;
             throw new Unavailable();
@@ -136,12 +145,14 @@ export class Authority {
             });
             allGrants=[...allGrants,...catalogGrants];
         }
-        const grants = await selectSources(candidate, loaded.context, allGrants, nodeId, action);
+        const grants = await span('policy.selectSources', () => selectSources(candidate, loaded.context, allGrants, nodeId, action));
         if (!grants.length)
             throw new Denied();
-        const plan = await buildQueryPolicy({ context: loaded.context, nodes, grants, nodeId, action, organization: this.ports.organization(db) });
+        const plan = await span('policy.build', () => buildQueryPolicy({ context: loaded.context, nodes, grants, nodeId, action, organization: this.ports.organization(db) }));
         if ((await this.current(identity, db)).revision !== plan.revision)
-            throw new Unavailable();
+            throw unavailable('AUTHZ_REVISION_CHANGED');
         return { ...loaded, plan, permissionMs: performance.now() - start };
     }
 }
+
+instrumentMethods(Authority.prototype, ['token','current','load','plan'], 'authority');

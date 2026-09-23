@@ -1,3 +1,4 @@
+import {span, spanSync} from '../infrastructure/telemetry.js';
 import type { Appointment, AppointmentCapability, Catalog, CatalogGrant, Context, EffectiveGrant, Membership, NodeDefinition, Resource, Subject, SubjectResolvers } from './contracts.js';
 import { companyCap, makeScope } from './scope.js';
 export function validContext(context: Context): boolean { return context.authenticated && context.enabled && !context.deleted && Number.isSafeInteger(context.revision) && context.revision >= 0; }
@@ -54,7 +55,7 @@ export function normalizePolicy(input: NormalizeInput): EffectiveGrant[] {
                     if(!cap||!p.rawFields.every(f=>cap.rawFields.includes(f)))continue;
                     if(node.capDimension==='person-company-v1'){
                         if(cap.dimension!=='person-company-v1')continue;
-                        try { const pairs=cap.objectIds.map(id=>JSON.parse(id));
+                        try { const pairs=spanSync('cap.parseBatch',()=>cap.objectIds.map(id=>JSON.parse(id)));
                             if(!pairs.every(p=>Array.isArray(p)&&p.length===2&&p.every(x=>typeof x==='string'&&x.length>0)))continue;
                             spec.personCompanyPairs=pairs;
                         } catch {continue;}
@@ -163,7 +164,7 @@ export async function buildQueryPolicy(input: QueryInput): Promise<import('./con
         if (g.tenantId !== context.tenantId || g.actorId !== context.personId || g.revision !== context.revision || s.tenantId !== g.tenantId || s.actorId !== g.actorId || s.revision !== g.revision || s.nodeId !== g.nodeId || s.action !== g.action || s.resourceType !== node.resourceType || s.companyMode !== node.companyMode || s.capDimension !== node.capDimension || !isDeepStrictEqual(s.companyIds, companyCap(context)))
             throw new Error('grant binding mismatch');
     }
-    const resolved = selected.length ? await input.organization.resolveScopeMembers(selected.map(g => g.scope), context.revision) : [];
+    const resolved = selected.length ? await span('scope.resolve', () => input.organization.resolveScopeMembers(selected.map(g => g.scope), context.revision)) : [];
     if (resolved.length !== selected.length)
         throw new Error('resolution binding count mismatch');
     for (const [i, r] of resolved.entries())

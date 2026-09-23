@@ -1,3 +1,4 @@
+import {spanSync} from '../infrastructure/telemetry.js';
 import type { QueryPolicy } from './contracts.js';
 export interface Mapping {
     id: string;
@@ -31,7 +32,7 @@ export function compile(plan: QueryPolicy, m: Mapping, alias = 'r') {
             predicate = `(${predicate}) AND ${col('id')}=ANY(${bind(r.objectIds)}::text[])`;
         if(r.spec.personCompanyPairs !== undefined) {
             const pairs=r.spec.personCompanyPairs;
-            predicate=`(${predicate}) AND EXISTS (SELECT 1 FROM jsonb_array_elements(${bind(JSON.stringify(pairs))}::jsonb) pc(pair) WHERE pc.pair->>0=${col('personId')} AND pc.pair->>1=${col('dataCompanyId')})`;
+            predicate=`(${predicate}) AND EXISTS (SELECT 1 FROM jsonb_array_elements(${bind(spanSync('compiler.pairs.stringify',()=>JSON.stringify(pairs)))}::jsonb) pc(pair) WHERE pc.pair->>0=${col('personId')} AND pc.pair->>1=${col('dataCompanyId')})`;
         }
         return { ...s, predicate: `(${predicate})` };
     });
