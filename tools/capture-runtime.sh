@@ -11,7 +11,8 @@ spike_docker exec yxt-pg psql -U spike -d permission_spike -X -A -t -c "SELECT j
 python3 tools/capture-clock-bracket.py "$spike_output/clock-bracket.json" > "$spike_output/clock-bracket-capture.txt"
 spike_docker exec yxt-redis redis-server --version > "$spike_output/redis-version.txt"
 spike_docker exec yxt-api-a node --version > "$spike_output/api-node-version.txt"
-git rev-parse HEAD > "$spike_output/source-commit.txt"
+printf '%s\n' "${SPIKE_EXPECTED_SOURCE:-$(git rev-parse HEAD)}" > "$spike_output/source-commit.txt"
+git rev-parse HEAD > "$spike_output/controller-commit.txt"
 python3 - "$spike_output" <<'PY'
 from pathlib import Path
 import json,sys
