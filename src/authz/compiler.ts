@@ -41,3 +41,26 @@ export function compile(plan: QueryPolicy, m: Mapping, alias = 'r') {
     const sourceIds = () => `array_remove(ARRAY[${sources.map(s => `CASE WHEN ${s.predicate} THEN ${bind(s.sourceId)}::text END`).join(',')}],NULL) AS source_ids`;
     return { where: terms.join(' AND '), values, field, sourceIds, bind };
 }
+
+/** Optional history aggregate optimization, not a separate policy engine.
+ * The report owner supplies one synthetic row per current person/data-company,
+ * with enabled=true/deleted=false representing fact eligibility. Actual facts
+ * must still enforce those flags; current-person state is filtered separately.
+ * Anything depending on a fact ID or another resource field keeps compile's
+ * exact per-fact path. An unrestricted ALL union retains the original SQL.
+ */
+export function compileHistoryPersonCompany(plan: QueryPolicy, m: Mapping) {
+    const supported: Mapping = {id:'id',personId:'person_id',companyId:'company_id',dataCompanyId:'data_company_id',enabled:'enabled',deleted:'deleted'};
+    if (plan.nodeId !== 'history' || plan.resourceType !== 'learning'
+        || !['report.history.view','report.history.export'].includes(plan.action)
+        || plan.companyMode !== 'dataCompanyId' || plan.requirePublished
+        || Object.keys(m).some(key => m[key as keyof Mapping] !== supported[key as keyof Mapping])
+        || Object.keys(supported).some(key => m[key as keyof Mapping] !== supported[key as keyof Mapping])
+        || plan.sources.some(({resolved:r}) => r.objectIds !== undefined || r.spec.objectIds !== undefined
+            || (r.anchor !== undefined && r.anchor !== 'personId')
+            || (r.spec.anchor !== undefined && r.spec.anchor !== 'personId')))
+        return undefined;
+    if (plan.sources.some(({resolved:r}) => r.all && r.spec.personCompanyPairs === undefined))
+        return undefined;
+    return compile(plan, m);
+}

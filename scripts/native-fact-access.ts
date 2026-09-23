@@ -38,7 +38,7 @@ export async function captureNativeFactAccess() {
         for (const [name, definition] of Object.entries(truth.scenarios)) {
             const queries: { sql: string; parameters: unknown[]; plan: PlanNode; executionMs: number; planningMs: number; roundtripMs: number }[] = [];
             const db = { query: async (sql: string, parameters: unknown[] = []) => {
-                if (/^SELECT (?:r\.id|r\.historical_department_id|count\(\*\)::int count FROM report\.)/.test(sql)) {
+                if (/^(?:WITH history_people AS MATERIALIZED|SELECT (?:r\.id|r\.historical_department_id|count\(\*\)::int count FROM report\.))/.test(sql)) {
                     const start = performance.now();
                     const explained = await pool.query('EXPLAIN (ANALYZE,BUFFERS,FORMAT JSON) ' + sql, parameters);
                     const result = explained.rows[0]['QUERY PLAN'][0];
