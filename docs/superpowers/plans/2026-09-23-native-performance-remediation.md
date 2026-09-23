@@ -27,7 +27,7 @@ Read Spec for exact resources/semantics/gates. Normal non-success≤0.1% perwind
 **Files:** tools/native-attribution*.py/sh as needed; evidence/native-remediation/stage1;03/14 report. Original evidence read-only.
 - [ ] Independently count1789HTTP503/244transport cases frompreviousraw, enumerate perwindow/scenario/querycount/ID,inspect logs+errors. Mark evidence-supportedcause vsunrecoverable; never invent exactcause.
 - [ ] ReviewTask1diff forunalteredalgorithm/SQL/timeout/semantics; focusedfixes thenfreezecommit.
-- [ ] ReproduceunmodifiedNativehot/coldbaseline atsamecaps50/600, then instrumentedsamehot/coldreference (observations only). SaveCPU/memory,server+clientloop,rawdiagnostics,configuration,tracecoverage; ensure observeroverheadtransparent.
+- [ ] Reproduce unchanged-algorithm Nativehot/coldbaseline with instrumentation atsamecaps50/600. The priorfrozen fullwindows remain comparison evidence; off/on Native truth and shortobserver-overhead controls are supplemental, not fullwindow causalproof. Do not create new uninstrumented fullwindow failures whosecauseswouldagainbelost. SaveCPU/memory,server+clientloop,rawdiagnostics,configuration,tracecoverage; disclose observercostlimits.
 - [ ] Audit everyresponse/status and correlate everyfailure tostage/errorcode; account late/abortedrequest andclockdomains. Produce per-scenario p95-neighborhood exclusivebreakdown andtailcohort shares with≥80%maincontributors or explicitunexplainedgap; noaddingindependentp95s.
 - [ ] Commitstage1raw/summaryandwrite03/14standalonedelivery. Linkreport to user beforeTask3. If data incomplete,continueboundedmeasurement ordeliverNoGo;neveroptimizewithoutattribution.
 
