@@ -1,4 +1,4 @@
-"""Independent disjoint elapsed-time attribution, not a sum of component p95s."""
+"""Same-server-clock disjoint attribution for client-p95-selected requests. Never subtract incompatible duration clocks to manufacture wire time."""
 from pathlib import Path
 from collections import Counter,defaultdict
 import gzip,json,math,sys
@@ -69,26 +69,22 @@ def analyze(folder):
   if d.get('droppedSpans',0) or d.get('droppedErrors',0):invalid.append(r['requestId'])
   try:parts,overlap=partition(d)
   except (ValueError,KeyError,RecursionError,AssertionError) as e:invalid.append({'id':r.get('requestId'),'error':type(e).__name__});continue
-  residual=r['elapsedMs']-d['elapsedMs']
-  # Durations from distinct monotonic clocks: difference is a residual, not pure wire time.
-  if residual>=0:parts['client_transport_parse_and_unobserved_residual']=residual
-  else:invalid.append({'id':r.get('requestId'),'negative_client_server_duration_residual_ms':residual})
   groups[r['scenario']].append({'sample':r,'trace':d,'parts':parts,'overlapMs':overlap})
  results={}
  for name,items in groups.items():
   items.sort(key=lambda x:x['sample']['elapsedMs']);n=len(items);at=min(n-1,math.ceil(.95*n)-1);near=items[at];lo=max(0,math.ceil(.9*n)-1);hi=max(lo+1,math.ceil(.99*n));cohort=items[lo:hi];sums=Counter()
   for x in cohort:sums.update(x['parts'])
-  cohort_total=sum(x['sample']['elapsedMs'] for x in cohort)
+  cohort_total=sum(x['trace']['elapsedMs'] for x in cohort)
   def shares(parts,total):
    cumulative=0;rows=[]
    for k,v in sorted(parts.items(),key=lambda x:-x[1]):
     cumulative+=v;rows.append({'component':k,'ms':v,'percent':v/total*100 if total else 0,'cumulativePercent':cumulative/total*100 if total else 0})
    return rows
-  rows=shares(near['parts'],near['sample']['elapsedMs']);cover=[]
+  rows=shares(near['parts'],near['trace']['elapsedMs']);cover=[]
   for row in rows:
    cover.append(row)
    if row['cumulativePercent']>=80:break
-  results[name]={'successful_matched_requests':n,'http_p95_ms':near['sample']['elapsedMs'],'permission_p95_ms':quantile([x['sample']['permissionMs'] for x in items],.95),'representative_p95_requestId':near['sample']['requestId'],'p95_request_parts':rows,'contributors_reaching_80percent':cover,'tail_cohort':'p90 through p99 ordered by complete successful request HTTP latency','tail_cohort_size':len(cohort),'tail_cohort_total_ms':cohort_total,'tail_cohort_parts':shares(dict(sums),cohort_total),'permission_limit_ms':50,'list_limit_ms':500,'history_limit_ms':2000}
- return {'window':str(folder),'matched_requests':len(samples)-len(missing),'total_requests':len(samples),'missing_diagnostics':missing,'duplicate_diagnostics':duplicates,'dropped_diagnostics_counter':loss,'invalid_spans_or_duration_relations':invalid,'scenarios':results,'failures':failures,'server_event_loop_intervals':loops,'late_events':late,'limitations':['sql.roundtrip includes driver parameter encoding/server/wire/result parse, not pure DB CPU','pool.acquire includes queued wait and connection setup','eventloop intervals overlap await/synchronous stages and are not added to criticalpath totals','client-minus-server residual is not pure network time; independent monotonicclock comparison reported transparently','historical missing rootcauses cannot be retroactively assigned from this experiment']}
+  results[name]={'successful_matched_requests':n,'http_p95_ms':near['sample']['elapsedMs'],'selected_request_server_elapsed_ms':near['trace']['elapsedMs'],'selected_request_signed_client_minus_server_ms':near['sample']['elapsedMs']-near['trace']['elapsedMs'],'share_denominator':'same-server-clock elapsedMs, NOT cross-clock client HTTP elapsedMs','permission_p95_ms':quantile([x['sample']['permissionMs'] for x in items],.95),'representative_p95_requestId':near['sample']['requestId'],'p95_request_parts':rows,'contributors_reaching_80percent':cover,'tail_cohort':'p90 through p99 ordered by complete successful request HTTP latency','tail_cohort_size':len(cohort),'tail_cohort_total_server_ms':cohort_total,'tail_cohort_total_client_ms':sum(x['sample']['elapsedMs'] for x in cohort),'tail_cohort_parts':shares(dict(sums),cohort_total),'permission_limit_ms':50,'list_limit_ms':500,'history_limit_ms':2000}
+ return {'window':str(folder),'matched_requests':len(samples)-len(missing),'total_requests':len(samples),'missing_diagnostics':missing,'duplicate_diagnostics':duplicates,'dropped_diagnostics_counter':loss,'invalid_spans_or_duration_relations':invalid,'scenarios':results,'failures':failures,'server_event_loop_intervals':loops,'late_events':late,'limitations':['sql.roundtrip includes driver parameter encoding/server/wire/result parse, not pure DB CPU','pool.acquire includes queued wait and connection setup','eventloop intervals overlap await/synchronous stages and are not added to criticalpath totals','Host and Colima monotonic durations differ; raw signed differences are retained only as diagnostics. Percentages use same-server-clock totals for the actual client-p95-ranked request, not a claimed exact decomposition of client HTTP latency','historical missing rootcauses cannot be retroactively assigned from this experiment']}
 if __name__=='__main__':
  result=analyze(Path(sys.argv[1]));Path(sys.argv[2]).write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:result[k] for k in ['window','matched_requests','total_requests','dropped_diagnostics_counter']},ensure_ascii=False))
