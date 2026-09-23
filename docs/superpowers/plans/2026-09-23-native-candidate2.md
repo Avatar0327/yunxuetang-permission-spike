@@ -1,0 +1,29 @@
+# Task 3 supplement: candidate 2 — permission predicates at person/company grain
+
+Stage1 delivered14 before any optimization. Candidate1 measured9f9fe1f complete hot10482/cold9077 windows, remainsNoGo. Hot independentaudit complete0issues: history dataSQL83.3%/75.7% of actualHTTPp95-selectedserverrequest; constrained indexonly single-query356ms factscan/filter plus~170mscurrent-personNestedLoop,457673factprobes. Cold140clientfailures are being audited separately (133received503+7headerstimeouts), never discarded or relabelled. Application implementation can proceed from establishedStage1/hotcausalshape whilecontrollerfinishesread-onlycoldforensics; no claimingcandidate1passes.
+
+## Bounded selection and alternatives
+
+Second and final actual optimization candidate in this research. Target repeated unchanged source/person-company predicates per historical fact. Compile them once per currentperson×authorizeddata-company relation, then join historical facts to this materialized relation. This is a request-local SQL relation, not cached authority, T-1 projection, stored permission product or business concession. No new refresh/freshness semantics. Retain candidate1physicalindex for additivecomparison; no furtherindexes/settings/resources/timeouts. After itsfullhot+coldandregressions stopoptimization regardlessofresult; NoGo leads measuredcostdriverdiagnostics, notcandidate3.
+
+Versionboundcache is deferred because priorattribution showeddataSQL/contendedpool notparse asmaincost. T-1projection remainspermittedbutunimplemented; person+historicaldimensionshavehighcardinality inthisfixture, no unmeasuredpromise ofshrinkage. A current-personCTE alone savesonlysome ofrecorded~170msjoincost andleaves356msofperfactpredicates; selectedrelationtargetsboth withoutdroppingchecks.
+
+## Exact design contract
+
+Modify `src/authz/compiler.ts` (or one small authz-ownedhelper exportedthere) to expose a safe optional historyperson/companyrelation compilation. Central authz remainsownerofallsource/union/company semantics. Reuse production `compile` predicate/parameters rather than invent anotherpolicyengine. Applicability guard must fall back to exactexistingSQL for fact-object-ID dependent scopes or any unsupportedmapping/anchor/companymode/requirePublished; no silentlyweakenedpredicates. Lists/currentreport/details andCasbin unchanged. Native historical aggregate/exportaggregate only mayconsume thenewrelation.
+
+`src/report/service.ts` owns report-table SQL composition. Build a MATERIALIZED CTE of allowed `(tenant_id,person_id,data_company_id)` from report.person_projection and authorizedcompanycandidates, applying currentperson state exactly as original enabled/disabled/deleted/all request. Evaluate compiledhistorypredicates on thatpairgrain. Syntheticpredicate rowenabled=true/deleted=false must represent **fact eligibility**, not replace currentpersonstate: actualfacts still require enabled=true/deleted=false outsideCTE. Preserve tenantguard,data-companycap,sourceORincludingpaircaps, currentpersonjoinpresence,statefilter, historicaldepartment/job/status,points,count,order,paging andexportgroupcount. Fixture/id/search filters remain against actualfacts. Never use currentperson.company_id as historicaldata_company_id.
+
+Do not multiply facts from duplicate source branches or company values. Company enumeration must bedistinct andpairrelationunique; existing personprojectionUNIQUE(tenant,person) canbeusedbutmustnotassumedforcompanyarrayduplicates. Broad unrestrictedALL may deliberately retain oldefficientparallelHashJoin via explicit physicalapplicabilitychoice incentralcompiler; recordwhichscenariosusewhichpath. Othereligibilityfallbacks must be tested. No crossmoduleprivatetablejoins: reportonlyjoinsreport-ownedprojection/facts; authoritycurrent/plan/Redis/versionfences unchanged.
+
+Parameters remain bound; no string data interpolation. Service may use c.bind foradditionaltenant/company parameters, never rely on unvalidatedmagicbindingpositions. Named telemetry stage foradditionalcompilework ifoutsideexistingcompile span; original permissionMs includesallplan/compilework. Keep original14list/13constrainedhistory/hotquerycount etc unless substantiveproofallowschange; noN+1.
+
+## Required implementation evidence
+
+New `test/native-history-relation.test.ts`: real PostgreSQL RED/GREEN before/after, independently frozen4scenariofulltruth, count/allgroups/points/fields, exact historiccompanysnapshot and currentenabled/disabled/deleted/all variants; overlapping sources andduplicatecompanyenumeration do notmultiplyfacts; fact-object-ID constraint fallbacktruth. Fixture/id/search andexportpaging/groupcount parity. Nativeonly; neverrunsharedsemantic/Casbinsuites. FocusedrealSQL plans recordrelationrows/loops/buffers andbaseline/candidate timings underidenticalmaintenance, noforceplannerflags. No additionalmanualVACUUM in referencepreparation.
+
+Existing `scripts/native-fact-access.ts`/focuseddiagnostics mayneed recognize CTE SELECT shape. Preserve candidate1raw evidence and reportitsindexassertions as candidate1physicaldiagnostic ifshapechanges; don't hideafailingoldtest by skippingtruth. Iftestassumesoldphysicalplan, clarifyandtestactualrequiredbehaviorwithoutclaimingcoveringindexstillused. No otherapplicationchangeswithoutcontrollerreview.
+
+Typecheck/build/moduleboundary andtargetedNativehistoryregression. Commit implementation/test/diagnostic changesonly, report exactoutputs/SQLshape/limits. ImplementerownsDB/APIonlyaftercontrollerexplicitenvironmenthandoff. Controller then freshscopedreview, exactsourcefreeze, fullsamecaps50/600hot+cold, allfailuresjoined, fullrevoke/fault/source/company/field/noN+1regressions. Anyperformancefailureorunknownfailurecause =>NoGo. SingleEXPLAINbenefitneverGo.
+
+NoformalB1;reuse0; allinputdisciplineanduserbusinessrulesbinding. No4persondayclaimfromAIwallclockconversion. Thisislastboundedcandidate, notpermissiontokeepoptimizing.
