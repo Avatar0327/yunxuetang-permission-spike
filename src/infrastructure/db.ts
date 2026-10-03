@@ -6,9 +6,27 @@ export const metrics = new AsyncLocalStorage<{
     observedRevision?: number;
     authorityObservedAt?: string;
 }>();
-export const pool = new pg.Pool({ host: process.env.PGHOST ?? '127.0.0.1', port: Number(process.env.PGPORT ?? 55432), database: process.env.PGDATABASE ?? 'permission_spike', user: process.env.PGUSER ?? 'spike', password: process.env.PGPASSWORD ?? 'spike', max: Number(process.env.PGPOOL ?? 20), connectionTimeoutMillis: 800, statement_timeout: 10000 });
-pool.on('error', () => { });
-if (observing()) observePool(pool);
+const connection = { host: process.env.PGHOST ?? '127.0.0.1', port: Number(process.env.PGPORT ?? 55432), database: process.env.PGDATABASE ?? 'permission_spike', user: process.env.PGUSER ?? 'spike', password: process.env.PGPASSWORD ?? 'spike', connectionTimeoutMillis: 800, statement_timeout: 10000 };
+// Round 2 isolation: the per-process connection total stays PGPOOL (default 20).
+// Authority reads and heavy analytical reads no longer queue behind each other;
+// the general pool keeps transactions, writes and other domain reads.
+const total = Number(process.env.PGPOOL ?? 20), authzMax = Number(process.env.PGPOOL_AUTHZ ?? 4), analyticsMax = Number(process.env.PGPOOL_ANALYTICS ?? 12);
+if (!(authzMax >= 1 && analyticsMax >= 1 && total - authzMax - analyticsMax >= 1)) throw new Error('invalid PGPOOL split');
+export const pool = new pg.Pool({ ...connection, max: total - authzMax - analyticsMax });
+export const authzPool = new pg.Pool({ ...connection, max: authzMax, allowExitOnIdle: true });
+export const analyticsPool = new pg.Pool({ ...connection, max: analyticsMax, allowExitOnIdle: true });
+export const poolSizes = { total, general: total - authzMax - analyticsMax, authz: authzMax, analytics: analyticsMax };
+for (const p of [pool, authzPool, analyticsPool]) {
+    p.on('error', () => { });
+    if (observing()) observePool(p);
+}
+/** Runs fn on one checked-out client when given a pool; an existing client or transaction is reused as is. */
+export async function pinned<T>(db: DB, fn: (db: DB) => Promise<T>): Promise<T> {
+    if (!(db instanceof pg.Pool)) return fn(db);
+    const client = await db.connect();
+    try { return await fn(client); }
+    finally { client.release(); }
+}
 export type DB = Pick<pg.PoolClient, 'query'>;
 // Only this transaction boundary may grant a live, pinned transaction client.
 const activeTransactions = new WeakSet<DB>();

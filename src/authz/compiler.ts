@@ -50,6 +50,18 @@ export function compile(plan: QueryPolicy, m: Mapping, alias = 'r') {
  * exact per-fact path. An unrestricted ALL union retains the original SQL.
  */
 export function compileHistoryPersonCompany(plan: QueryPolicy, m: Mapping) {
+    const units = compileHistoryUnits(plan, m);
+    if (units === undefined || plan.sources.some(({resolved:r}) => r.all && r.spec.personCompanyPairs === undefined))
+        return undefined;
+    return units;
+}
+
+/** Round 2: the same eligibility as the person/company relation, without excluding an
+ * unrestricted ALL source. When it returns a compilation, every source predicate depends
+ * only on (person_id, data_company_id), so evaluating it on one synthetic row per current
+ * person and candidate data company is exact for every fact of that unit.
+ */
+export function compileHistoryUnits(plan: QueryPolicy, m: Mapping) {
     const supported: Mapping = {id:'id',personId:'person_id',companyId:'company_id',dataCompanyId:'data_company_id',enabled:'enabled',deleted:'deleted'};
     if (plan.nodeId !== 'history' || plan.resourceType !== 'learning'
         || !['report.history.view','report.history.export'].includes(plan.action)
@@ -59,8 +71,6 @@ export function compileHistoryPersonCompany(plan: QueryPolicy, m: Mapping) {
         || plan.sources.some(({resolved:r}) => r.objectIds !== undefined || r.spec.objectIds !== undefined
             || (r.anchor !== undefined && r.anchor !== 'personId')
             || (r.spec.anchor !== undefined && r.spec.anchor !== 'personId')))
-        return undefined;
-    if (plan.sources.some(({resolved:r}) => r.all && r.spec.personCompanyPairs === undefined))
         return undefined;
     return compile(plan, m);
 }

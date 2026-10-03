@@ -1,5 +1,6 @@
 import test from 'node:test';
 import {pool} from '../src/infrastructure/db.js';
+import {refreshHistoryAggregate} from '../src/report/history-aggregate.js';
 import {start,observe,prepareAdmin,policy} from './task3-helper.js';
 for(const candidate of ['native','casbin'])test(`${candidate}: history cap covers future facts of authorized people`,async()=>{
  await prepareAdmin();const api=await start(candidate),id='t4-history-'+candidate;
@@ -11,6 +12,10 @@ for(const candidate of ['native','casbin'])test(`${candidate}: history cap cover
   const membershipId=role.body.membershipIds[0];const saved=(await pool.query("SELECT data FROM authz.membership WHERE tenant_id='T1' AND id=$1",[membershipId])).rows[0].data;
   await observe(candidate,'history cap dimension and literal no-fact person/company',{dimension:'person-company-v1',ids:['["L","I"]']},{dimension:saved.delegation.caps[0].dimension,ids:saved.delegation.caps[0].objectIds});
   await observe(candidate,'history new fact detail',200,(await api.request('GET','/report?history=true&id='+id+'-same',undefined,'L')).status);
+  // Round 2 (DIFF-05): the Native aggregate is T-1. A fact inserted today is absent until the next refresh,
+  // after which the unchanged person/company cap must cover it exactly as before.
+  if(candidate==='native'){const before=(await api.request('GET','/history?fixture=true',undefined,'L')).body;await observe(candidate,'T-1 history aggregate excludes new fact before refresh',{rows:[],historyMode:'T-1',dataAsOf:true},{rows:before.rows,historyMode:before.historyMode,dataAsOf:typeof before.dataAsOf==='string'});}
+  await refreshHistoryAggregate('T1');
   await observe(candidate,'history aggregate new fact',[{historical_department_id:'new-history',count:1,points:'1'}],(await api.request('GET','/history?fixture=true',undefined,'L')).body.rows);
   const job=await api.request('POST','/exports',{history:true,fixture:true},'L');await api.request('POST','/exports/'+job.body.id+'/execute',{},'L');
   await observe(candidate,'history export shares person/company cap',[id+'-same'],(await api.request('GET','/exports/'+job.body.id+'/claim',undefined,'L')).body.rows?.map((r:any)=>r.id));
@@ -25,6 +30,6 @@ for(const candidate of ['native','casbin'])test(`${candidate}: history cap cover
   await observe(candidate,'original-source missing history remains suspended','suspended',(await api.request('POST','/memberships/'+membershipId+'/recheck',{managementRoleMembershipId:'admin'})).body.state);
   await pool.query("UPDATE authz.membership SET data=$1 WHERE tenant_id='T1' AND id='admin'",[adminBefore]);await observe(candidate,'restored source explicit recheck active','active',(await api.request('POST','/memberships/'+membershipId+'/recheck',{managementRoleMembershipId:'admin'})).body.state);
 
- }finally{await api.request('POST','/people/L',{enabled:true});await api.close();await pool.query("UPDATE authz.membership SET data=$1 WHERE tenant_id='T1' AND id='admin'",[adminBefore]);await pool.query("DELETE FROM report.learning_fact WHERE tenant_id='T1' AND id LIKE $1",[id+'%']);await pool.query("DELETE FROM authz.membership WHERE tenant_id='T1' AND role_id=$1",[id]);await pool.query("DELETE FROM authz.role WHERE tenant_id='T1' AND id=$1",[id]);}
+ }finally{await api.request('POST','/people/L',{enabled:true});await api.close();await pool.query("UPDATE authz.membership SET data=$1 WHERE tenant_id='T1' AND id='admin'",[adminBefore]);await pool.query("DELETE FROM report.learning_fact WHERE tenant_id='T1' AND id LIKE $1",[id+'%']);await refreshHistoryAggregate('T1');await pool.query("DELETE FROM authz.membership WHERE tenant_id='T1' AND role_id=$1",[id]);await pool.query("DELETE FROM authz.role WHERE tenant_id='T1' AND id=$1",[id]);}
 });
 test.after(()=>pool.end());

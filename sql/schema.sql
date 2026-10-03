@@ -165,3 +165,18 @@ BEGIN
  RETURN NEW;
 END $$;
 CREATE TRIGGER snapshot BEFORE INSERT OR UPDATE ON training.roster FOR EACH ROW EXECUTE FUNCTION training.enrollment_snapshot();
+
+-- Round 2: T-1 historical aggregate projection (DIFF-05). Facts are frozen per batch;
+-- authorization, current person state, company caps and source pairs stay live per request.
+-- Units are (person, data company, fixture). Level 0 cells are one data company; level 1
+-- cells are the person's department at refresh time. A cell is summed from its pre-aggregate
+-- only when every unit in it is currently authorized; other units read person aggregates.
+CREATE SEQUENCE report.history_agg_batch_seq;
+CREATE TABLE report.history_agg_batch(tenant_id text NOT NULL,batch_id bigint NOT NULL,as_of timestamptz NOT NULL,PRIMARY KEY(tenant_id,batch_id));
+CREATE TABLE report.history_agg_current(tenant_id text PRIMARY KEY,batch_id bigint NOT NULL,FOREIGN KEY(tenant_id,batch_id) REFERENCES report.history_agg_batch);
+CREATE TABLE report.history_agg_unit(tenant_id text NOT NULL,batch_id bigint NOT NULL,person_id text NOT NULL,data_company_id text NOT NULL,fixture boolean NOT NULL,cell text NOT NULL,PRIMARY KEY(tenant_id,batch_id,person_id,data_company_id,fixture));
+CREATE TABLE report.history_agg_size(tenant_id text NOT NULL,batch_id bigint NOT NULL,level smallint NOT NULL CHECK(level IN(0,1)),cell text NOT NULL,data_company_id text NOT NULL,fixture boolean NOT NULL,units int NOT NULL CHECK(units>0),PRIMARY KEY(tenant_id,batch_id,level,cell,data_company_id,fixture));
+CREATE TABLE report.history_agg_cell(tenant_id text NOT NULL,batch_id bigint NOT NULL,level smallint NOT NULL CHECK(level IN(0,1)),cell text NOT NULL,data_company_id text NOT NULL,fixture boolean NOT NULL,historical_department_id text,historical_job_id text,historical_status text NOT NULL,count int NOT NULL,points bigint NOT NULL);
+CREATE INDEX history_agg_cell_key ON report.history_agg_cell(tenant_id,batch_id,level,cell,data_company_id,fixture);
+CREATE TABLE report.history_agg_person(tenant_id text NOT NULL,batch_id bigint NOT NULL,person_id text NOT NULL,data_company_id text NOT NULL,fixture boolean NOT NULL,historical_department_id text,historical_job_id text,historical_status text NOT NULL,count int NOT NULL,points bigint NOT NULL);
+CREATE INDEX history_agg_person_key ON report.history_agg_person(tenant_id,batch_id,person_id,data_company_id,fixture);
