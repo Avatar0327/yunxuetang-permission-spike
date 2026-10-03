@@ -1,0 +1,2290 @@
+{
+  "source_commit": "91683df702182724dbe9025afa5726606ba3d340",
+  "path_base": "round2-remediation-91683df/",
+  "hash_algorithm": "SHA-256",
+  "self_reference_exclusion": "MANIFEST.json 自身不列入 files；自身最终字节数和 SHA-256 写入包外 ARCHIVE.json",
+  "symlink_hash_basis": "符号链接目标字符串的原始字节，不跟随链接",
+  "files": [
+    {
+      "path": "ENVIRONMENT.md",
+      "type": "file",
+      "bytes": 53384,
+      "sha256": "cff872d5f061727ab899354f4e2d43ac2da5e92c6dff4f0f8cf3d5ea21717265",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/audit-exit.txt",
+      "type": "file",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/controller-commit.txt",
+      "type": "file",
+      "bytes": 41,
+      "sha256": "578f0f9caba4a03cb7e5c48ed939a924d0536ec67fbeaedbfc5f2d6fae05bff5",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/gate-exit.txt",
+      "type": "file",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/independent-audit.json",
+      "type": "file",
+      "bytes": 5955,
+      "sha256": "9e1e8cd6644e16fd02d6c3b60e541c7101f5204cbfe005e2375d2c4153af5162",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/measurement/event-loop.jsonl",
+      "type": "file",
+      "bytes": 254372,
+      "sha256": "5322b27a85be66ddf825fe068f80746cc57a9fa6a27dc49944738ba1264c7bb2",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/measurement/samples.jsonl.gz",
+      "type": "file",
+      "bytes": 5517404,
+      "sha256": "0bd0d64bea2e6130a5197c7f1c0d22cbc7b2c2427d4d0b24e1dc1842d29c2dcb",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/measurement/scenario-truth.json",
+      "type": "file",
+      "bytes": 47848,
+      "sha256": "e6f9f0c2dd495f277a38eb6a658e71d0aabc5a46e42ff4d887974051b7e93996",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/measurement/summary.json",
+      "type": "file",
+      "bytes": 6419,
+      "sha256": "b9a5ac656a28fab769d20ed48f716286eb2f98bfe0a191532db13b83a3471a53",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/ready-A.json",
+      "type": "file",
+      "bytes": 515,
+      "sha256": "b2f0d19024946043dbed16032b24eb3943a11219ef797fc31201d31474c0fbb1",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/ready-B.json",
+      "type": "file",
+      "bytes": 515,
+      "sha256": "83fcbf5455a8ea183d5340f899c6be8c5d092695064dc6cadce0c2d6a2a2f78f",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/runner-exit.txt",
+      "type": "file",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/runner.txt",
+      "type": "file",
+      "bytes": 4150,
+      "sha256": "a7c27ce78d969f627f84947ba380f91f7ee0b4041195fb5ce54e0229a6407c7d",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/runtime/actual-data-counts.json",
+      "type": "file",
+      "bytes": 176,
+      "sha256": "e6e37a1efcc1d1a4ef78ee155dfea6b33107ec576e5b233ace59aefe99a1c9d8",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/runtime/api-node-version.txt",
+      "type": "file",
+      "bytes": 9,
+      "sha256": "f2ec568164f99546161909b0189b57bb5be3e80f8e2ccd8a51a4aed8c4055a04",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/runtime/clock-bracket-capture.txt",
+      "type": "file",
+      "bytes": 133,
+      "sha256": "364bc8c94adca355e475f0c75d98e9ae210eaa090acac01546f0c4146242a905",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/runtime/clock-bracket.json",
+      "type": "file",
+      "bytes": 1729,
+      "sha256": "9a3017602bf143c7abc0782603f67893ea9859875acc851a53dd59bc5dcd1abb",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/runtime/containers.json",
+      "type": "file",
+      "bytes": 34963,
+      "sha256": "11c2439401b4f38da935636821e90cb1381470da3d0879f598931b88195c07be",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/runtime/controller-commit.txt",
+      "type": "file",
+      "bytes": 41,
+      "sha256": "578f0f9caba4a03cb7e5c48ed939a924d0536ec67fbeaedbfc5f2d6fae05bff5",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/runtime/postgresql-settings.json",
+      "type": "file",
+      "bytes": 377,
+      "sha256": "8bf31f9e4e92b4d144028fcd5c37ca42e942f932b1164a03e7d23b98b8050600",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/runtime/redis-version.txt",
+      "type": "file",
+      "bytes": 90,
+      "sha256": "e6fc562e9f01b91366cfda4e5d87ffdbbe023590a5a225192ea51172d047ba68",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/runtime/source-commit.txt",
+      "type": "file",
+      "bytes": 41,
+      "sha256": "578f0f9caba4a03cb7e5c48ed939a924d0536ec67fbeaedbfc5f2d6fae05bff5",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/runtime-check.json",
+      "type": "file",
+      "bytes": 290,
+      "sha256": "816c676f2e3f43128997021d16ab20dd84bafde4534318c46f93d528558263e8",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/seed.txt",
+      "type": "file",
+      "bytes": 239,
+      "sha256": "5fffbfa8a2298551ea8aa62215e0d54e26ec6d0415a9a62d4483b569f766fb5f",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/source-commit.txt",
+      "type": "file",
+      "bytes": 41,
+      "sha256": "578f0f9caba4a03cb7e5c48ed939a924d0536ec67fbeaedbfc5f2d6fae05bff5",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/start-apis.txt",
+      "type": "file",
+      "bytes": 130,
+      "sha256": "52f0bbd31ae3f603de946b71ae9a58b836f3bc6d5784e2f1bb3b63ca8b227d5d",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/window-gate.json",
+      "type": "file",
+      "bytes": 3882,
+      "sha256": "852af0c6b597aa57f3a648c6719431c4fe5a62ad8570b9e297c77c97c7f39b18",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/window-mode.txt",
+      "type": "file",
+      "bytes": 10,
+      "sha256": "1e81270f1a47dce22a2e4985250c74b2e3374443734f1492b03ea2cd2af4ec48",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/yxt-api-a-final-inspect.json",
+      "type": "file",
+      "bytes": 8042,
+      "sha256": "21aba68ab70a66002beeca5492b30d8b07904af44f8863f59f9f967eeabd94bc",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/yxt-api-a.log",
+      "type": "file",
+      "bytes": 141608300,
+      "sha256": "e2b6a71c3a34b9ea2a47f4e54be21cc3a0948a959d88afa7475ea6baa89fd298",
+      "repository_artifact": {
+        "path": "cold/yxt-api-a.log.gz",
+        "type": "file",
+        "bytes": 21848468,
+        "sha256": "679bd9f9ad94507c1a62621710cd386f6394f8c4135f0f74d013d925b95db6ae",
+        "decompressed_bytes": 141608300,
+        "decompressed_sha256": "e2b6a71c3a34b9ea2a47f4e54be21cc3a0948a959d88afa7475ea6baa89fd298"
+      },
+      "repository_status": "gzip 后入库",
+      "repository_reason": "原文件保持原样，仅 gzip 副本入库"
+    },
+    {
+      "path": "cold/yxt-api-b-final-inspect.json",
+      "type": "file",
+      "bytes": 8043,
+      "sha256": "b15c66a0e0bb4257e774a3edfd1ca95c00b6812672910d88979a83fce090dad6",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold/yxt-api-b.log",
+      "type": "file",
+      "bytes": 142479469,
+      "sha256": "4cd638cc5e1f625763004849dcb43a2a4bc93bb026958846818b5c58ad3943db",
+      "repository_artifact": {
+        "path": "cold/yxt-api-b.log.gz",
+        "type": "file",
+        "bytes": 22289629,
+        "sha256": "aac92284bffcea11c06452930647c98bc78cf14d05b32cf102b3cf1a7990b4d3",
+        "decompressed_bytes": 142479469,
+        "decompressed_sha256": "4cd638cc5e1f625763004849dcb43a2a4bc93bb026958846818b5c58ad3943db"
+      },
+      "repository_status": "gzip 后入库",
+      "repository_reason": "原文件保持原样，仅 gzip 副本入库"
+    },
+    {
+      "path": "cold-end-utc.txt",
+      "type": "file",
+      "bytes": 21,
+      "sha256": "5f6d2249fa85b2203552ac2add82d39548badd7058b5fc72b146d5006c717191",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold-run.out",
+      "type": "file",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold-script-exit.txt",
+      "type": "file",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "repository_status": "入库"
+    },
+    {
+      "path": "cold-start-utc.txt",
+      "type": "file",
+      "bytes": 21,
+      "sha256": "d5468d36bf0f588c854578184308a936ffa4a24f74422c9d087c63e14fa7d8f0",
+      "repository_status": "入库"
+    },
+    {
+      "path": "final-docker-ps.txt",
+      "type": "file",
+      "bytes": 364,
+      "sha256": "aab586e55271bd7a22ca28540ed5ef54c30f19365fc729cb4c0c8915cf76c741",
+      "repository_status": "入库"
+    },
+    {
+      "path": "final-git-status.txt",
+      "type": "file",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "repository_status": "入库"
+    },
+    {
+      "path": "final-head.txt",
+      "type": "file",
+      "bytes": 41,
+      "sha256": "578f0f9caba4a03cb7e5c48ed939a924d0536ec67fbeaedbfc5f2d6fae05bff5",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/audit-exit.txt",
+      "type": "file",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/build.txt",
+      "type": "file",
+      "bytes": 2812,
+      "sha256": "bee1fe4fab3fe7341f3cdbd8ca306f6b359edbd2ff4761db807619d1e74d1ac1",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/controller-commit.txt",
+      "type": "file",
+      "bytes": 41,
+      "sha256": "578f0f9caba4a03cb7e5c48ed939a924d0536ec67fbeaedbfc5f2d6fae05bff5",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/gate-exit.txt",
+      "type": "file",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/independent-audit.json",
+      "type": "file",
+      "bytes": 5766,
+      "sha256": "d96fe13fe6ad42e0ba4ced96048baef12c25e3c812542a12a47cb4c6d434b63b",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/measurement/event-loop.jsonl",
+      "type": "file",
+      "bytes": 254720,
+      "sha256": "d8911253f8c762d411750fe7d4c68e2eff7e9db8318f9568f7977f429050b430",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/measurement/prewarm.json",
+      "type": "file",
+      "bytes": 9851,
+      "sha256": "629d7a8d3f4585d68755924c22f1d2159fcebde21368f919667802697b370f53",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/measurement/samples.jsonl.gz",
+      "type": "file",
+      "bytes": 5812802,
+      "sha256": "eca597530340eb13c5b718fff7d66d62c92b7a36447e9705369d0f7cd514f41b",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/measurement/scenario-truth.json",
+      "type": "file",
+      "bytes": 47848,
+      "sha256": "e6f9f0c2dd495f277a38eb6a658e71d0aabc5a46e42ff4d887974051b7e93996",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/measurement/summary.json",
+      "type": "file",
+      "bytes": 6379,
+      "sha256": "1384a36b1bb4e9b1aaf6c0f361e55343def71f95eaae2e0bc8aab5399d9e3643",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/ready-A.json",
+      "type": "file",
+      "bytes": 514,
+      "sha256": "506dee6120210f018727aec737a6e7c262f010b344e6d56739a2fe786711cc3f",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/ready-B.json",
+      "type": "file",
+      "bytes": 515,
+      "sha256": "6ee265c0bc2fcfd4eb78fd5da2f01baae6684069c8e0df5e18ee72a4b7a96bc6",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/runner-exit.txt",
+      "type": "file",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/runner.txt",
+      "type": "file",
+      "bytes": 4110,
+      "sha256": "756d91523075d8fe529a682fce67c93a8fded25d71e3b31742b1ff878e035325",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/runtime/actual-data-counts.json",
+      "type": "file",
+      "bytes": 176,
+      "sha256": "fa3cb158e6699b54684e8bcfd04200276b387a07cde9b9710a84bda6a7171c0a",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/runtime/api-node-version.txt",
+      "type": "file",
+      "bytes": 9,
+      "sha256": "f2ec568164f99546161909b0189b57bb5be3e80f8e2ccd8a51a4aed8c4055a04",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/runtime/clock-bracket-capture.txt",
+      "type": "file",
+      "bytes": 132,
+      "sha256": "5b4cf973e88a243f4b35996a1a0d47a3ce98df995976cd703087ad8cce9293d4",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/runtime/clock-bracket.json",
+      "type": "file",
+      "bytes": 1749,
+      "sha256": "480b006dd44c155c5be78a58ce3657142fc80fd31b16b6dc466779ac8046210e",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/runtime/containers.json",
+      "type": "file",
+      "bytes": 34962,
+      "sha256": "1555859524a43578874c90a848fffd8c44abcbcb7365508bc5eb6c093ed4095e",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/runtime/controller-commit.txt",
+      "type": "file",
+      "bytes": 41,
+      "sha256": "578f0f9caba4a03cb7e5c48ed939a924d0536ec67fbeaedbfc5f2d6fae05bff5",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/runtime/postgresql-settings.json",
+      "type": "file",
+      "bytes": 377,
+      "sha256": "8bf31f9e4e92b4d144028fcd5c37ca42e942f932b1164a03e7d23b98b8050600",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/runtime/redis-version.txt",
+      "type": "file",
+      "bytes": 90,
+      "sha256": "e6fc562e9f01b91366cfda4e5d87ffdbbe023590a5a225192ea51172d047ba68",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/runtime/source-commit.txt",
+      "type": "file",
+      "bytes": 41,
+      "sha256": "578f0f9caba4a03cb7e5c48ed939a924d0536ec67fbeaedbfc5f2d6fae05bff5",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/runtime-check.json",
+      "type": "file",
+      "bytes": 290,
+      "sha256": "7878824abdb70c96e70a35bf21976915573ab7b72b354b649c04c0c04f197cee",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/seed.txt",
+      "type": "file",
+      "bytes": 239,
+      "sha256": "42e0994b3c68e04c6bfbc1444e0388bb2610bc70e0e2fd1a5c933cc989c2595a",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/source-commit.txt",
+      "type": "file",
+      "bytes": 41,
+      "sha256": "578f0f9caba4a03cb7e5c48ed939a924d0536ec67fbeaedbfc5f2d6fae05bff5",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/start-apis.txt",
+      "type": "file",
+      "bytes": 130,
+      "sha256": "b35b399744610f0a8f98e21bfac48eaccc900e2a5f548cb42c78a57632a96731",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/window-gate.json",
+      "type": "file",
+      "bytes": 3578,
+      "sha256": "6e3411ab77faafa5086f1bd0526ac1f9520a91ed71c6b786d6f92b0c6d11f833",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/window-mode.txt",
+      "type": "file",
+      "bytes": 10,
+      "sha256": "1e81270f1a47dce22a2e4985250c74b2e3374443734f1492b03ea2cd2af4ec48",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/yxt-api-a-final-inspect.json",
+      "type": "file",
+      "bytes": 8042,
+      "sha256": "befc73730ec977cf8caca2102cd323799d16dc131f6715f9c9517c2dfa372e95",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/yxt-api-a.log",
+      "type": "file",
+      "bytes": 127171266,
+      "sha256": "56795413632f21afd19fc3f5b64348d082df8191871f89d02899ee77ba3480d8",
+      "repository_artifact": {
+        "path": "hot/yxt-api-a.log.gz",
+        "type": "file",
+        "bytes": 19199501,
+        "sha256": "416c3e83454f9ff7b4760452192a065ade2d2b58a73e6ef9038f2e7c2745f9b0",
+        "decompressed_bytes": 127171266,
+        "decompressed_sha256": "56795413632f21afd19fc3f5b64348d082df8191871f89d02899ee77ba3480d8"
+      },
+      "repository_status": "gzip 后入库",
+      "repository_reason": "原文件保持原样，仅 gzip 副本入库"
+    },
+    {
+      "path": "hot/yxt-api-b-final-inspect.json",
+      "type": "file",
+      "bytes": 8042,
+      "sha256": "de0464577808936c73c4157f3f0d2c71b19a2023d0987c44312a6a2541537515",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot/yxt-api-b.log",
+      "type": "file",
+      "bytes": 127042059,
+      "sha256": "7720ec23d66fc55aa2314ba08e781b27deae2c797382ed161446ff2fac61081b",
+      "repository_artifact": {
+        "path": "hot/yxt-api-b.log.gz",
+        "type": "file",
+        "bytes": 19109974,
+        "sha256": "dd96604110dd6917952843afe7dbd18407ab948984574eca7548dc407b757145",
+        "decompressed_bytes": 127042059,
+        "decompressed_sha256": "7720ec23d66fc55aa2314ba08e781b27deae2c797382ed161446ff2fac61081b"
+      },
+      "repository_status": "gzip 后入库",
+      "repository_reason": "原文件保持原样，仅 gzip 副本入库"
+    },
+    {
+      "path": "hot-end-utc.txt",
+      "type": "file",
+      "bytes": 21,
+      "sha256": "d5468d36bf0f588c854578184308a936ffa4a24f74422c9d087c63e14fa7d8f0",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot-run.out",
+      "type": "file",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot-script-exit.txt",
+      "type": "file",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "repository_status": "入库"
+    },
+    {
+      "path": "hot-start-utc.txt",
+      "type": "file",
+      "bytes": 21,
+      "sha256": "51e82db67f49f03be253ba1edb3ffb6715a00a3665b63e7ea1d2235ec9c3d58a",
+      "repository_status": "入库"
+    },
+    {
+      "path": "pg-ready.txt",
+      "type": "file",
+      "bytes": 49,
+      "sha256": "6e168fc3b5a0662104b5e5da92e87b870e8b7c65fec827d267115b5123d18614",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/audit.json",
+      "type": "file",
+      "bytes": 1409,
+      "sha256": "7c26f83836d0c94ab9f858d4bf39842b3f006480deae32e705c278967c7337b8",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/seed.txt",
+      "type": "file",
+      "bytes": 239,
+      "sha256": "eee6faac5ca3b8fc30b5bc4e1df4e071fbb9b23f5ce1b6c0448ef37b09bbcc4f",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/source-commit.txt",
+      "type": "file",
+      "bytes": 41,
+      "sha256": "578f0f9caba4a03cb7e5c48ed939a924d0536ec67fbeaedbfc5f2d6fae05bff5",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/test-exit.txt",
+      "type": "file",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/tests.tap",
+      "type": "file",
+      "bytes": 4221,
+      "sha256": "7c15c99b8c19df9e0a0452d3eff732d75f117184246464196fdee1faf5e71dfe",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/workspace/.dockerignore",
+      "type": "file",
+      "bytes": 97,
+      "sha256": "ce09b6d53de152671ce4c6e365eef5e33334fcf7b49384f557d45107522d1c54",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/.gitignore",
+      "type": "file",
+      "bytes": 103,
+      "sha256": "8b190d69760b5c692cc91191fa963ac02888beac294cfa4e2405bbc679bd6596",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/.superpowers/sdd/2026-09-23-permission-spike/final-fix-report.md",
+      "type": "file",
+      "bytes": 14519,
+      "sha256": "0919475e5acee789d253e76fbdbb8cbc74064fd5dbd3a1adefdd0ad98a9efe26",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/.superpowers/sdd/2026-09-23-permission-spike/task-3-report.md",
+      "type": "file",
+      "bytes": 31462,
+      "sha256": "9d73763ed0ff3ba39ab0c282ff4dbefce10f0c9b31eecdc72c754e1532321159",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/.superpowers/sdd/2026-09-23-permission-spike/task-4-report.md",
+      "type": "file",
+      "bytes": 21605,
+      "sha256": "b11a3c6d1d87bbb779e83b69c51981bebccfaf467360d2a0c430691807d3972b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/.superpowers/sdd/2026-09-23-permission-spike/task-5-fix-round1-report.md",
+      "type": "file",
+      "bytes": 8950,
+      "sha256": "593fdde6f51a449e2dec22d4a2412eb7f6025ffab05978d9b1a94520636a4815",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/.superpowers/sdd/2026-09-23-permission-spike/task-5-report.md",
+      "type": "file",
+      "bytes": 20409,
+      "sha256": "4a85251b9ad2f8d3829ffaab3920caf65c916fcb7cf4a0597cf9d91b8eb4497a",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/Dockerfile",
+      "type": "file",
+      "bytes": 247,
+      "sha256": "8b545dc82825355267aea6c49184d340186d7486274115ce3892a425f56e521f",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/README.md",
+      "type": "file",
+      "bytes": 17700,
+      "sha256": "9cd163cebe8399e18378f5b49fdac88e70ca9c81672859d49c6fa0aea22050b9",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/acceptance-manifest.json",
+      "type": "file",
+      "bytes": 24388,
+      "sha256": "2909d2e272a19e0e788709251f1823467ead436f9e6065b8b11b0145135ef106",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/controller-acceptance-audit-notes.md",
+      "type": "file",
+      "bytes": 6346,
+      "sha256": "8218be06a3636e9dc54d430f2be93d87bba9a6e06e8042fcbc7915f7cc1a8776",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/coverage-map-contract.md",
+      "type": "file",
+      "bytes": 1908,
+      "sha256": "fc8ccda4e6765b333c088dc507f01c4284617acf894cbfd2932fe2055fc14622",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/decision-evidence.md",
+      "type": "file",
+      "bytes": 3369,
+      "sha256": "45bbebfca86fee22ca518163bf87548cc70e73b5fd0fc744c1fc2dc54b93d742",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/environment-log.md",
+      "type": "file",
+      "bytes": 1791,
+      "sha256": "8e9a357bcf095559371ad954383397c21dc4d00204c082b0e1498ca0c5c5ea50",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/final-report-contract.md",
+      "type": "file",
+      "bytes": 4096,
+      "sha256": "68909cdcb32ebdf4454c513f9af60f96207b9e3030876f1b83481b932bc37949",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/final-review-brief.md",
+      "type": "file",
+      "bytes": 2905,
+      "sha256": "337da42a5ad4d9f7a70a3f4b025a7601e4349efc89f1da17c25df5063c3f7a2a",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/kernel-contract.md",
+      "type": "file",
+      "bytes": 15634,
+      "sha256": "f58ddaaab6504ab0d4ee1b0a8e82de6c7bc50b4c8271045a6cc719082286e387",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/native-stage1-attribution.md",
+      "type": "file",
+      "bytes": 18548,
+      "sha256": "2c7c23220cfe968ec75e2c446efdde21f938577adb74bc9d93f5e6061ed0890d",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/performance-protocol.md",
+      "type": "file",
+      "bytes": 4677,
+      "sha256": "419859e2f2b11f7e9f462332caa9444ca6e2f47529947fd278e28ad3d73dcae6",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/post-spike-estimate-notes.md",
+      "type": "file",
+      "bytes": 2699,
+      "sha256": "79361b7633dd1549a2f31c4a06efa03a307605c5603da26fdeea772ab5c4cd13",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/reestimate-method.md",
+      "type": "file",
+      "bytes": 1697,
+      "sha256": "a846f4f001c08797537704727e74c1d91d3070c5a237af48bd9ab3a200f371ee",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/reuse-candidates.md",
+      "type": "file",
+      "bytes": 3736,
+      "sha256": "69bf5e3faca34df8b62bbf6875c4000c38df0253af21ba4fe09ef6559286050a",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/superpowers/plans/2026-09-23-native-candidate1.md",
+      "type": "file",
+      "bytes": 4992,
+      "sha256": "07ea660708bfb8e0eeb134fb4b2c3f31ba79c00b91471440d3a03c85a046f1b9",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/superpowers/plans/2026-09-23-native-candidate2.md",
+      "type": "file",
+      "bytes": 5934,
+      "sha256": "988e0b00835661bd43eb5a47936cf7c2e572adad6b297b1713675fe0b279636f",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/superpowers/plans/2026-09-23-native-performance-remediation.md",
+      "type": "file",
+      "bytes": 6823,
+      "sha256": "2a3ee4ef6e4eba3a2dbe0e0e9cf036d54592d3fa9e16e567e2669699f82ac29e",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/superpowers/plans/2026-09-23-permission-spike.md",
+      "type": "file",
+      "bytes": 28136,
+      "sha256": "392e66f5f06e88b6ae6a8b6b401cf8ea479f6f0a88ef68bd69d26437a4ac096b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/superpowers/specs/2026-09-23-native-performance-remediation.md",
+      "type": "file",
+      "bytes": 4827,
+      "sha256": "4b05015ad79ac9f32018bc6f1514ceb56aa41813345e57a4b0b544562f8fa17a",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/task2-follow-up.md",
+      "type": "file",
+      "bytes": 8955,
+      "sha256": "90e25869a6e683cc99cb0087ef3fbf97c0a8c2cfaf2482062d822aba866d3af5",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/task3-coverage.json",
+      "type": "file",
+      "bytes": 67698,
+      "sha256": "9e8d4f543b4ed6a9f7aef78456957222c937292eb63fc57af3b3dcfb3e9dcc5e",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/task3-ports.md",
+      "type": "file",
+      "bytes": 7911,
+      "sha256": "dae11bdd9913c83b1eab820181dbcf4b06b10e517264ee7eed8c7383e62e5eb2",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/task4-coverage.json",
+      "type": "file",
+      "bytes": 123567,
+      "sha256": "33fc2566199ef8d34891ae438fe2f08d40df4153bc6b3d02496395f69dd6ece1",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/task4-ports.md",
+      "type": "file",
+      "bytes": 6765,
+      "sha256": "b891b67abf22217b088ab41e78105b10e6a4d77f33c46790dfe54159bddd8caa",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/task4-seed-contract.md",
+      "type": "file",
+      "bytes": 9595,
+      "sha256": "b46d795b202af7541532063eac84f10c2b28d68531ba821c5bc459d1bd9c458b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/task5-benchmark-fixture.md",
+      "type": "file",
+      "bytes": 2506,
+      "sha256": "e59eb27c68bf64868254fa3b0c455c21ad198a11c86ee7bc90f8028afae4caf0",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/task5-ports.md",
+      "type": "file",
+      "bytes": 7128,
+      "sha256": "589a176cb6363d864f082eee1ec7bfe0edd4feb355167487f02fb5a543e9ea45",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/docs/证据复核与复现.md",
+      "type": "file",
+      "bytes": 4491,
+      "sha256": "9d3da146621c7f236a5d1b75ea8d41d7ac5f458820101fc70427a33c9d893bcb",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/evidence/browser-review.json",
+      "type": "file",
+      "bytes": 9422,
+      "sha256": "07ce653cd5c1c2ea1c500e2555fa3f24304486227c296248f5d4ddb0832197bb",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/evidence/controller-semantic-review.json",
+      "type": "file",
+      "bytes": 25794,
+      "sha256": "c6b99625f057d66441175c13e716cd98ca105df526c18b0714c05b7eac228ba1",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/evidence/coverage-map.json",
+      "type": "file",
+      "bytes": 465682,
+      "sha256": "af59463c244b9c62c678dc23ec6ee99345ebf9ee17b1b3760e233bcb2d5f4b14",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/evidence/coverage-matrix.md",
+      "type": "file",
+      "bytes": 180604,
+      "sha256": "5d90680a4a1cec3e9df54f7adb4aa8fb81c4ed6432e11ec1813723f9b5e55ad4",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/evidence/fault-summary.json",
+      "type": "file",
+      "bytes": 9064,
+      "sha256": "125751a3f8e2e65b59d51067a53f53edebb7998ea39c312a7a4e9fd2116bf58a",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/evidence/fault-timeline.md",
+      "type": "file",
+      "bytes": 3862,
+      "sha256": "9dc6ac9e2e2c304ce9f7193dd0ae3ea48cbad1adaafe411325064892e195360b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/evidence/final-verdict.json",
+      "type": "file",
+      "bytes": 649,
+      "sha256": "ea317ceafcefb7835102e0e8a3a8ada6d8d328c34ca418e77cce0381f1d28d43",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/evidence/performance-statistics.md",
+      "type": "file",
+      "bytes": 7006,
+      "sha256": "0ad48b4df0141c89c1757cf053d5800bf6d5ac179df44cf649e099a1b308a724",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/evidence/performance-summary.json",
+      "type": "file",
+      "bytes": 65874,
+      "sha256": "a7bdba46b62bd4dd7cdb1de26d10193b44b90a0176d216c3fd45a04ceeebebcf",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/evidence/raw/commit-timeline.jsonl",
+      "type": "file",
+      "bytes": 2061,
+      "sha256": "95befe65203360d814505454e49f42f8c0ed6f9c826ae7fbd589fc1e843f555d",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/workspace/evidence/raw/final-fix-http.jsonl",
+      "type": "file",
+      "bytes": 33085,
+      "sha256": "4b07dfbdd3c2421ded1d1187bfa75c798f8e71b61bab41f9c8ef946feea2f06a",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/workspace/evidence/raw/http-observations.jsonl",
+      "type": "file",
+      "bytes": 541706,
+      "sha256": "465c878b41df59c44c4b90fd1c23017197caf5b077f9d56622a781fc201f4937",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/workspace/evidence/raw/observations.jsonl",
+      "type": "file",
+      "bytes": 261460,
+      "sha256": "03e95a613e9d9bf99c2984b71996333f5f45132bdba45806ed6b4119f812832f",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/workspace/evidence/raw/task5-complex-native.json",
+      "type": "file",
+      "bytes": 342603,
+      "sha256": "4776a81f3932ecfd9f90ca356bc4dfba554edcda03d0d887535346483e24ff8c",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/workspace/evidence/raw/task5-race-timeline.jsonl",
+      "type": "file",
+      "bytes": 548,
+      "sha256": "f66b2a0faa66bc712f340e79bdfefec25c1e2199ccfd99207fdec493842a7dc9",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/workspace/evidence/raw/task5-scans-native.json",
+      "type": "file",
+      "bytes": 7546873,
+      "sha256": "3d3ad548403673ff298dc79967780d77b5fecf4baf97e7d67c6569dda4854c9e",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression/workspace/node_modules",
+      "type": "symlink",
+      "bytes": 107,
+      "sha256": "5ea19cd2d6a604726a8ef0b6004a37167c42dd378f3c9e46eac623d902acbe03",
+      "target": "/Users/peng/Documents/ChatGPT/【新版】云学堂LXP复刻项目/yunxuetang-permission-spike/node_modules",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/package-lock.json",
+      "type": "file",
+      "bytes": 88726,
+      "sha256": "fb63de84ac6ca26b309a5d17a18baa19e085383fad08d209edacfaac0e3edac8",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/package.json",
+      "type": "file",
+      "bytes": 1899,
+      "sha256": "09df13721196025f051dab82586c35a30381bc2ea946b4e92282d920c0b83515",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/benchmark-fixture.ts",
+      "type": "file",
+      "bytes": 2082,
+      "sha256": "8dbf3bb80991df1f06839a68d6905d6c16890a25ed5275fbd3fd3e87b4f29b6e",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/benchmark-observation.ts",
+      "type": "file",
+      "bytes": 1255,
+      "sha256": "26aae36147049521fa50306411d0ce75a62a0dfe377e912e3d84a76fb2d4d55f",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/benchmark-telemetry.ts",
+      "type": "file",
+      "bytes": 1182,
+      "sha256": "176997d29e3cfe7b443cbf3d88808e51931ba0f02bc20db5ef436cdd679ee1e2",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/benchmark-truth.ts",
+      "type": "file",
+      "bytes": 4374,
+      "sha256": "06f6e11c3f236edae33f51672ecec5fd0e2bc6e0abaceac63669ce639933f7f9",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/benchmark.ts",
+      "type": "file",
+      "bytes": 7061,
+      "sha256": "4f7eb166e4bdb86c6d6bd554806f197e857fbcf3dfe55b188c1de3b713312ef1",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/build-task5-coverage.py",
+      "type": "file",
+      "bytes": 12044,
+      "sha256": "a9639ef8cae619ebd62f846a0602ad23c285dba49a919216ac3f9e79beedce0d",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/evidence.ts",
+      "type": "file",
+      "bytes": 1417,
+      "sha256": "52e6ec29eb1466bee30253d43aaf6beb151b67aae26519887f4372ec01dc3c2f",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/explain.ts",
+      "type": "file",
+      "bytes": 1621,
+      "sha256": "811180306ca0e64212f40f6071b3226908c88aa15291a4568aa9fedf26fdfdc6",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/native-cost-drivers.ts",
+      "type": "file",
+      "bytes": 28486,
+      "sha256": "937f155a951463e9bec99c3bc5f2bc44918ec18a7a76147588b0d321ffcda691",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/native-fact-access.ts",
+      "type": "file",
+      "bytes": 4681,
+      "sha256": "3ff23b5248c77e3dafb3362ff7171e86d8be2d96060c42565baf6d91d2e4f0a3",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/refresh-history-aggregate.ts",
+      "type": "file",
+      "bytes": 705,
+      "sha256": "eb7a637636830dcec04b8bb1f5c427ac419886f77ce0c02ebaea205e49e0913e",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/run-faults.ts",
+      "type": "file",
+      "bytes": 2396,
+      "sha256": "9d637f32d8eaeafa368b2f5d9b15b0f2f59ebdfe5eaf884701d682fa3ffacc55",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/run-functional.ts",
+      "type": "file",
+      "bytes": 7927,
+      "sha256": "2d534ddbde837c8b8834a7e89254ae5a6062422fb08a4117a2c2d4fd692296fd",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/seed.ts",
+      "type": "file",
+      "bytes": 4523,
+      "sha256": "2e8e0ae434eaf77115cceed325962aec8db628162dae6a7e94b2d362a82f3e39",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/task5-phase-smoke.ts",
+      "type": "file",
+      "bytes": 1822,
+      "sha256": "9d462bfe64190cd7dcaa0cbdf47c60b1fe9898e619d32e1a4630747493bcbb27",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/scripts/task5-smoke.ts",
+      "type": "file",
+      "bytes": 1209,
+      "sha256": "6f6e8e5f23a75dd548679b618dfe6e795c6480d3e08419545f5533300ecf08d4",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/sql/schema.sql",
+      "type": "file",
+      "bytes": 22773,
+      "sha256": "488478af455cec43018c2a753f98ae434dd929001011184e7406a20117ae69b5",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/sql/seed.sql",
+      "type": "file",
+      "bytes": 4620,
+      "sha256": "9e991154ec13df55870b1381bdbd3ecf2cda3dfc2c2f27edaa4109dd09ce6dfa",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/account/exports.ts",
+      "type": "file",
+      "bytes": 588,
+      "sha256": "2e7cdf187f42fe825f02492bbcd877a812632cc3ffee36390c852aa907a1434b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/account/public.ts",
+      "type": "file",
+      "bytes": 1522,
+      "sha256": "61e04c9f2b78ff9ca17453fd1e8c38063c6cc5599b433c9e96e01a062f320b40",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/account/service.ts",
+      "type": "file",
+      "bytes": 4556,
+      "sha256": "f7f2371d34f0e9127baafe5713c687e3f04d2a76e29154de0787adb842770f75",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/bulk-candidate.ts",
+      "type": "file",
+      "bytes": 1428,
+      "sha256": "c9f6dbb1088429268bf0c477047f3422d4d78c1457ac70d7a3c104eeb736f6be",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/cache.ts",
+      "type": "file",
+      "bytes": 2649,
+      "sha256": "f8ecebcb5e402deda4ba737a9380a4348e6a68563f4f5d1c4796c7567698760d",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/candidates.ts",
+      "type": "file",
+      "bytes": 3590,
+      "sha256": "1b000b11d0bdcf65ce458f31aafc58ae9c0c72174fa944b337d5cc50a5dcb011",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/company-service.ts",
+      "type": "file",
+      "bytes": 2336,
+      "sha256": "a2d531b2e0f422d3ff7245f1f636e7299fc3077ea7e30c8c51d0ce2e97409b5d",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/compiler.ts",
+      "type": "file",
+      "bytes": 4712,
+      "sha256": "f757b61a77ca095a746f7e3b626051a8b854b7fc242c3b0eabeba9c1d8913ba5",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/contracts.ts",
+      "type": "file",
+      "bytes": 6114,
+      "sha256": "fc0396079ef45f81e1c063bf2a735a4ecfc9500e0b12e2b4e99d3773833be8d2",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/delegation-caps.ts",
+      "type": "file",
+      "bytes": 1000,
+      "sha256": "1c40425ef1631270258d7a45c64c6e65bea5ed48cdb599ad8a9c5dbb781550a5",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/delegation.ts",
+      "type": "file",
+      "bytes": 5439,
+      "sha256": "e79fa12117f330baddc2a6cb95da61a00140bb07ede7fbd9ea52a571349c5e18",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/export-worker.ts",
+      "type": "file",
+      "bytes": 1373,
+      "sha256": "c8d18e44e86b4b7413744cddcf53f6916726c99dc229590d7a01d3d8346d7f6c",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/media-ticket.ts",
+      "type": "file",
+      "bytes": 1336,
+      "sha256": "2b67c8b01a121d29b2b3d736d4c59c4870f370ae592a7569c10f391d7ea5add1",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/objects.ts",
+      "type": "file",
+      "bytes": 2118,
+      "sha256": "ce7840304e3e35faa11d9e426cbf9af64a11f786ab0ae189f39d9799aa8ee4c3",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/policy.ts",
+      "type": "file",
+      "bytes": 10741,
+      "sha256": "2613ac8102f58f69c1ad303f74496b6d1fe1234adaf6bf0c4f94084e81509ac9",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/public.ts",
+      "type": "file",
+      "bytes": 625,
+      "sha256": "08b2b2fa08d8fce23c5dd4a7d2549999d0d1f99e78c78c4292d2f37480b5c302",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/registry.ts",
+      "type": "file",
+      "bytes": 3541,
+      "sha256": "d31bb8b8ce2976563995902b3476c1016439b1b86e847b96cea38bd6410b29e4",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/revision.ts",
+      "type": "file",
+      "bytes": 14374,
+      "sha256": "725c1d4b299836de0bc2ac65a622cf9b8657261a35e166a4b5a31859c5d5e415",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/role-service.ts",
+      "type": "file",
+      "bytes": 10677,
+      "sha256": "869c2b213b019e89038b677b82f7519421faef6a6ffa2856ab6bbedd41a9f917",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/authz/scope.ts",
+      "type": "file",
+      "bytes": 4939,
+      "sha256": "39cb213cc18bcc56847a39c936b1a8c464405f53f5caf4a9e0c678baa91138d0",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/bootstrap.ts",
+      "type": "file",
+      "bytes": 13822,
+      "sha256": "e9675dd5b0ef280bf327915f2521d3abfafce408d8f2d5640596baf82cc714f6",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/contracts/ports.ts",
+      "type": "file",
+      "bytes": 1131,
+      "sha256": "46b3e99dc6648776c7f5b5f884a59ae2d9c15bc94acbcc39860d1c9350e4fb2b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/infrastructure/db.ts",
+      "type": "file",
+      "bytes": 3190,
+      "sha256": "939b30743aa69210a074ae50bf8149f96555ace45fc86120209351bbe9f87697",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/infrastructure/protected-exports.ts",
+      "type": "file",
+      "bytes": 4209,
+      "sha256": "6f100c2ae78aa2399f84d6607ea44ab3b259471ae6aa333ee96bbcafb75ee5a6",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/infrastructure/sets.ts",
+      "type": "file",
+      "bytes": 413,
+      "sha256": "5be7e803e9490e94e0724af924d3c8fa331097e9bc0caed45e0cbfbcdf70eea2",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/infrastructure/telemetry.ts",
+      "type": "file",
+      "bytes": 10806,
+      "sha256": "969e70839e28deeb4d51c7498f7361ef50d8c680d4f7b92cfeb73598c3339558",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/knowledge/public.ts",
+      "type": "file",
+      "bytes": 3314,
+      "sha256": "dac687350386fdf559a00f099d1c72d8256bef1d8dd76b831bb68c09817d0ebc",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/knowledge/service.ts",
+      "type": "file",
+      "bytes": 15482,
+      "sha256": "beeda14851d6bf0c06395846460922181df4277508b556e081b5cb7e6b2b81c0",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/organization/public.ts",
+      "type": "file",
+      "bytes": 2860,
+      "sha256": "3823a4ff06a6e7c13a8e1915bc4577e3a59ff926d341d9d4fdc2804893861116",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/organization/service.ts",
+      "type": "file",
+      "bytes": 5947,
+      "sha256": "a7ee3b5e7d1b1023851e7779c01586c693484896de0563df1ab699ce7e2c9b7c",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/report/exports.ts",
+      "type": "file",
+      "bytes": 996,
+      "sha256": "7c002855f75be89cd10b2c0a5c6f475a392b4dcc12a21c82562200c325e6e0f7",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/report/history-aggregate.ts",
+      "type": "file",
+      "bytes": 4981,
+      "sha256": "3a7019e2864d43196bc4d4982fa2c8457109084d65b159de11a2b79a94592b3b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/report/public.ts",
+      "type": "file",
+      "bytes": 1851,
+      "sha256": "e137f0355d1835739fa723b825f7b397441bdf59c909f488227a1b80c92145a6",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/report/service.ts",
+      "type": "file",
+      "bytes": 13036,
+      "sha256": "077602bfb9c286ce95fdc11a0c4ffb0d9e80efa704dbf79f8ddb8a0ff380d947",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/training/enrollment-service.ts",
+      "type": "file",
+      "bytes": 4423,
+      "sha256": "4fcf43adfb9130a620728b3a8b9e7638e9b85858a779592549e9ef32b293b28c",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/training/exports.ts",
+      "type": "file",
+      "bytes": 1443,
+      "sha256": "ad227cad7fa213e558a85a71dd3bcaf6ef7fbd3db50f93caf03d597f39b43497",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/training/public.ts",
+      "type": "file",
+      "bytes": 1600,
+      "sha256": "2cd6ff1a99e8339c17eb0570176788c1d8e05d5a7430eeb0aadd9454c02894db",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/src/training/service.ts",
+      "type": "file",
+      "bytes": 6532,
+      "sha256": "158a473050969ca062734d3c3cba4adb11a1b370923ca7f8212b2de91805a183",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/benchmark-telemetry.test.ts",
+      "type": "file",
+      "bytes": 1367,
+      "sha256": "08c932f0bc78d01c6e4b64ba50c5f01bfc512ad4f56b4897fb9b6f94f89f1ed5",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/cache.test.ts",
+      "type": "file",
+      "bytes": 447,
+      "sha256": "e74a464c716f586229ea6d575562b33b74ed9ee0ec3cca98dbbac0f454829df5",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/final-fix-regressions.test.ts",
+      "type": "file",
+      "bytes": 15845,
+      "sha256": "1fc8206dcfa214b88a3aecf04e312216d95a272eb0d8e1896777cb3dceb31e3a",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/fixtures.ts",
+      "type": "file",
+      "bytes": 3684,
+      "sha256": "09a2575d02fe41fac91a92e736f17139c5ffbba68cd3a7f17be26c3c51abdf81",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/http.test.ts",
+      "type": "file",
+      "bytes": 2187,
+      "sha256": "7f1f6434c51eb5869964effb3138a90005f224567e1995a1ab4b5dad5b033dbd",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/integration.test.ts",
+      "type": "file",
+      "bytes": 5256,
+      "sha256": "3bd15964f7c119f5de2da876ec4f56b1d3e24b431b51970b76eda06b8c8082b6",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/kernel-benchmark.ts",
+      "type": "file",
+      "bytes": 1786,
+      "sha256": "d05f1dfe5978fc5c018602fc03f7d2c4f6209fad7b0cf1ac5876ab55c52d5511",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/module-boundaries.test.ts",
+      "type": "file",
+      "bytes": 1915,
+      "sha256": "72172ec6d586fea3f73a6842e07a62db5ce119eb4c9480614638e5eadcbdc024",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/native-cost-drivers.test.ts",
+      "type": "file",
+      "bytes": 16655,
+      "sha256": "ff1826a61f961e7d53004472f45bf42dd5431661cd488dd5067026182c022325",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/native-fact-access.test.ts",
+      "type": "file",
+      "bytes": 2280,
+      "sha256": "001f44e0a44ea6344733f80ba1c46ed116ea3026419bcd3d65b8b11df7ead795",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/native-history-relation.test.ts",
+      "type": "file",
+      "bytes": 14568,
+      "sha256": "24b8494bc9b586a81b7935f35892bb2589f51814d1b7d8e86cafb0d8dd1b412d",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/native-transport-audit.test.py",
+      "type": "file",
+      "bytes": 4058,
+      "sha256": "2ced34b3b883de5b3155fcaeffd3a1f3316ee3be175fb94e7c322abac8a68a1d",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/races.test.ts",
+      "type": "file",
+      "bytes": 4704,
+      "sha256": "23ef2ae227da652e89682cc6e03da12fe095f2d427a69bec07f1fda2c87d2c35",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/review-regressions.test.ts",
+      "type": "file",
+      "bytes": 10004,
+      "sha256": "57aef08382ba892a9b27079cc96b8bba2d32e84e37041cc7308697ac62010302",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/round2-history-t1.test.ts",
+      "type": "file",
+      "bytes": 4705,
+      "sha256": "48dda1429d210b58f6e2ccceda40b076da26dd656bdf3a2019125085fba673d1",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/semantic.test.ts",
+      "type": "file",
+      "bytes": 23710,
+      "sha256": "2a9dab8125f273190141c3f07d58ea8cb39ec6e4b2b98ae3cf6a3ead1d43d549",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-anchors.test.ts",
+      "type": "file",
+      "bytes": 2929,
+      "sha256": "2a1b2c8deafe791c74d148f161117bc15954a0e42c55109727b54ecd62078fa6",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-category-provenance.test.ts",
+      "type": "file",
+      "bytes": 1479,
+      "sha256": "5e21c2d6d94a9888a9fe7c4008f6f46f55143d89bb91984dd02b9b2fb8ce3c4c",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-company-cap.test.ts",
+      "type": "file",
+      "bytes": 1617,
+      "sha256": "3a2cc3879ca48f31f35cd694acd441f450a7dd20432436394a7b52ef0da59226",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-custom-regression.test.ts",
+      "type": "file",
+      "bytes": 1597,
+      "sha256": "a231d32f118e9857bb890e4350f2b700228aac3cf4b983acced0698a207e7b5d",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-delegation-matrix.test.ts",
+      "type": "file",
+      "bytes": 7515,
+      "sha256": "cc50ade8868d0a0df60ba49e4632118f13b68267a604678a92c8afc66041d4dc",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-delivery.test.ts",
+      "type": "file",
+      "bytes": 2404,
+      "sha256": "6d13d406f3ed5830176053391d41b8db4579ecab91ff9108bf5ad785725f8ed9",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-entry.test.ts",
+      "type": "file",
+      "bytes": 943,
+      "sha256": "ff211bc5ecd14a0d523a4b3b048a03fa2bf7078d070854c3f554f45d4420b6bb",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-helper.ts",
+      "type": "file",
+      "bytes": 2887,
+      "sha256": "6d3270ca5b647edb4cdb66bc3f1bec8c9870bda60a071fc0b0eeeacb05e6b5de",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-inheritance-caps.test.ts",
+      "type": "file",
+      "bytes": 11255,
+      "sha256": "348f5acae0129f12b80caa8f34300562b357993e2a70cad99e6ec8005f4f1a98",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-knowledge.test.ts",
+      "type": "file",
+      "bytes": 5148,
+      "sha256": "c3cfb38185c056fd8b5624060a745a5676068cf421ced7dc9d551217cb05bea0",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-lifecycle.test.ts",
+      "type": "file",
+      "bytes": 3122,
+      "sha256": "0551a226bede25c4b27c610e5f284821be9e7eb40743dbe545bef7dca3569cbd",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-object-set.test.ts",
+      "type": "file",
+      "bytes": 1935,
+      "sha256": "f5ddc182960025f413da00ced3a2aeb91eac277733b601a13d63b1684573de45",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-policy-recheck.test.ts",
+      "type": "file",
+      "bytes": 2330,
+      "sha256": "1007edd9446c30dcdefc9077aea503cebb85fd31b86b678bac8df3c6b3c2716b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-populated-delegation.test.ts",
+      "type": "file",
+      "bytes": 3058,
+      "sha256": "f233614a83aed5913af8139d449723e2ebaae951fd9a4d219c9ef80231488f8e",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-protection.test.ts",
+      "type": "file",
+      "bytes": 3240,
+      "sha256": "68074352788b5b212577b1686604ecbef32cf117c388efe2f07e44ec9b4415e2",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-review-regressions.test.ts",
+      "type": "file",
+      "bytes": 10518,
+      "sha256": "2ac65063b00330ef4d09d1340786987a195deb5fb54c58a91eb732bf7b85bbba",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task3-role-company.test.ts",
+      "type": "file",
+      "bytes": 1869,
+      "sha256": "7a99b7cd274e5b742dca0f09ed3ec9de0a856241c1faf2eb30bf3376c86f3304",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-account-caps.test.ts",
+      "type": "file",
+      "bytes": 1782,
+      "sha256": "2f8edfea1f847c80bb9d03f2393534fa8ee42618317e60f16bcec9d041e3695f",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-account.test.ts",
+      "type": "file",
+      "bytes": 2491,
+      "sha256": "462c5e65de59626a621b0cadaefdbae78ff370cc1afaa29e2383d5b3c12234d8",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-company.test.ts",
+      "type": "file",
+      "bytes": 5488,
+      "sha256": "aca36cf9b2595aa3e6eabeb6129806d88eebd340025ed5c4e0ad91421b1546d3",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-current-history.test.ts",
+      "type": "file",
+      "bytes": 4930,
+      "sha256": "9e5baa6c083c2ddaaf4aff80e72925b8da8135c36c936ec578b7e4d4286cb816",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-delivery.test.ts",
+      "type": "file",
+      "bytes": 4885,
+      "sha256": "12c3ab57432b8ab0215f47fb3360fafe9a750830fc538b6134e29965281b5cd8",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-department-cap.test.ts",
+      "type": "file",
+      "bytes": 2129,
+      "sha256": "5e3317df32fc87fdb6a36f8256693432728f98ed8aa1a7cfb4b83b3551d88a10",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-department-null.test.ts",
+      "type": "file",
+      "bytes": 591,
+      "sha256": "71458b8f2a20a26cf98f83af74b39949affe51dcf2dad2117bf5b4b2e748ef48",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-empty-scope.test.ts",
+      "type": "file",
+      "bytes": 2146,
+      "sha256": "4162ee0931087641704080cbde9263a8d39363524a5b8bb2a57bb977ebb0d01a",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-helper.ts",
+      "type": "file",
+      "bytes": 770,
+      "sha256": "2b0b7d78be64b2786ca8da76c712300d53780b84b88b6e4855474347fb2931bf",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-history-caps.test.ts",
+      "type": "file",
+      "bytes": 5653,
+      "sha256": "37ecdd675ce8cb269a9aa35d09c03b4b88dc7facfd2081ba2a41369cb790951a",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-organization.test.ts",
+      "type": "file",
+      "bytes": 4061,
+      "sha256": "2a22b47b28c087861cdba437ed9cc3a2ddf755abb037a4cdfd7d948ec4d14f88",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-person-cap.test.ts",
+      "type": "file",
+      "bytes": 1443,
+      "sha256": "bb97e2dce23f55d93a4804e73b468cdc58f41f7a6ad0eb8af5f71e44b06eac09",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-review-regressions.test.ts",
+      "type": "file",
+      "bytes": 7505,
+      "sha256": "ab531cca2fe423f34391eeb832f1546bf8684c2400182e9407458de9e19e5d90",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-source-boundary.test.ts",
+      "type": "file",
+      "bytes": 1170,
+      "sha256": "0c9ff0b14f7946f1264527dd4e4005642c1d74dc170e6a97ebb5e1582796bee1",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task4-team.test.ts",
+      "type": "file",
+      "bytes": 4334,
+      "sha256": "bfa3797886261af062840bb655bedd42c9575468286c056baab84e3304d920a6",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-benchmark.test.ts",
+      "type": "file",
+      "bytes": 797,
+      "sha256": "c4c2a890fb77a27f5b9f4c1f36800ad9e5e7074253b056efda54eccada3c302d",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-enrollment-conflict.test.ts",
+      "type": "file",
+      "bytes": 7419,
+      "sha256": "99ea34bab2a42b0a6747adf2a6ac98cd5b8ad3bca969a22a10f0bf81dfe9829a",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-exports.test.ts",
+      "type": "file",
+      "bytes": 4524,
+      "sha256": "8686fa29d4ff1815ec7979f0e84ee926c987d9b986b8b0d7c7d855d57d7af58b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-faults.test.ts",
+      "type": "file",
+      "bytes": 7356,
+      "sha256": "82654487d68a6b4f3349169bad09bfb79b2df982e49c601d8b5b13c28753288b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-measurement.test.ts",
+      "type": "file",
+      "bytes": 1570,
+      "sha256": "719acd843100e160baf42efa9c7d54842c0348e1086c97cfb741fb44696ad6d1",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-navigation.test.ts",
+      "type": "file",
+      "bytes": 5228,
+      "sha256": "f50ea0335ba64b70cebc2f3adb975ac70a8789ccd4e534cc47fffa5f7e778298",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-node-independence.test.ts",
+      "type": "file",
+      "bytes": 2271,
+      "sha256": "b9fe155490d4509943cb169e873535c7c3b76ecbe02522440e1a5e347dddeed1",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-nplus1.test.ts",
+      "type": "file",
+      "bytes": 3040,
+      "sha256": "4f637e67284f1c508ca2307312ac62823b1d6b96ab0d8117b74d273a823e2b2c",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-races.test.ts",
+      "type": "file",
+      "bytes": 4075,
+      "sha256": "9d22f8600e7dee5d11caea2496c85e6867a6d07c07ef9d8eab8137d29dd55673",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-runtime.test.ts",
+      "type": "file",
+      "bytes": 6739,
+      "sha256": "07258bf9918da9e78c34cb3a775fed55cad988df2ecf7d2c55980ce66a807d97",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-ticket.test.ts",
+      "type": "file",
+      "bytes": 2320,
+      "sha256": "ace050d6e593b4ef2874669ff371b29c78daad1ae050c9e75ab8bb6900138396",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-transfer.test.ts",
+      "type": "file",
+      "bytes": 4533,
+      "sha256": "8211f73944b0544ed3beef1b04db46583f62890700e3fc09d48813848e794d63",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/task5-worker.test.ts",
+      "type": "file",
+      "bytes": 4722,
+      "sha256": "3c4053b4ea34b3f4a4165f46f61141aa6b46fa366b3f94d66b8e424043120727",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/telemetry-http.test.ts",
+      "type": "file",
+      "bytes": 7559,
+      "sha256": "e0b07d1780ceed1edb44f548c3abfdc1b682a581dfa7d451f888d83c126f8dd9",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/test/telemetry.test.ts",
+      "type": "file",
+      "bytes": 6850,
+      "sha256": "6c6d06a90028cdfe2a89dc0b019ccd0e9fddfb1ee1e4c25035f7129c7ac93072",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/audit-benchmark.py",
+      "type": "file",
+      "bytes": 8810,
+      "sha256": "a87fd065672dbdc2b0743745e9f17839cc18366102cb9b8d8f646fee4e843112",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/audit-coverage.py",
+      "type": "file",
+      "bytes": 3892,
+      "sha256": "6eb6b48a3c458b10a8b12d75b0952cc28eb0770ad51cb54b5d8c9845e30da5ac",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/audit-final-timeline.py",
+      "type": "file",
+      "bytes": 2028,
+      "sha256": "caa3d4d077e264f6d10dfa373e8f57f17731fa3baa90e5fe0ee11fbf2fd347b6",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/audit-native-attribution.py",
+      "type": "file",
+      "bytes": 37559,
+      "sha256": "1ee4a844c7ab6b87d1598d5b23d8eacbac0505c244e30170dca626a85170a1e9",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/capture-clock-bracket.py",
+      "type": "file",
+      "bytes": 1906,
+      "sha256": "e15e0606f988d41cfd0fb841f772842537f3a27a3f001223f6f76bb5ddf4cc95",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/capture-runtime.sh",
+      "type": "file",
+      "bytes": 3206,
+      "sha256": "e145a5e837263c9837bd21bd056c0a2aa694fa5f2a8834ddf61f9e0a00fd618f",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/enable-commit-timestamps.sh",
+      "type": "file",
+      "bytes": 1567,
+      "sha256": "04cae39ae202c62e706ccc5645c8d8c4a6dfe263470a30b992f12c13953f9daa",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/index-observations.py",
+      "type": "file",
+      "bytes": 1459,
+      "sha256": "cc9ba6e998a3588fd3d4d07a027fa0e45af18f571f21f4ab85297523285edb6b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/native-attribution-detail.py",
+      "type": "file",
+      "bytes": 9737,
+      "sha256": "58f9b8f29385ad3e8e48a5d9edfd526b0eaf7eafb6281fa966c6a499e208cd51",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/native-attribution.py",
+      "type": "file",
+      "bytes": 6878,
+      "sha256": "d513c8722371ec70c80e31874936e2d950c01537a60b5f6c0abc0b23ddc62dbc",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/native-window-gate.py",
+      "type": "file",
+      "bytes": 2232,
+      "sha256": "43fe80302dbf58fe7d3bf44ee6fd9642d99f42b74757571463cbf073e2d6b72b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/package-evidence.py",
+      "type": "file",
+      "bytes": 4061,
+      "sha256": "76135be0642f794b87f306ceb203047d2377f922daf84eccdb276ad39a250f1b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/reference-window-gate.py",
+      "type": "file",
+      "bytes": 1909,
+      "sha256": "2244cc97a24ceaba3ac34680b2451e469db17dd16c595fe135a221e31d3f514d",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/render-coverage.py",
+      "type": "file",
+      "bytes": 3329,
+      "sha256": "bd3a3010e2b5d6483eda6bb28a93f11e1fd13c3e85ea9c09336b5a6da3048646",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/render-fault-summary.py",
+      "type": "file",
+      "bytes": 4221,
+      "sha256": "d1e447b580f5cd9007237875a2764a93166aa9c35a5d0cef440a2f2dc80b25fd",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/run-native-regressions.sh",
+      "type": "file",
+      "bytes": 3486,
+      "sha256": "a915c0f54ff29f4c49c9e78626799327824f14e795c4e2b5df050eba66af10a5",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/run-native-window.sh",
+      "type": "file",
+      "bytes": 4704,
+      "sha256": "31726ef010bc1f6356fbadbdbd972ef837feeb51b1b76764d10e5fd979d90f12",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/run-reference-windows.sh",
+      "type": "file",
+      "bytes": 4271,
+      "sha256": "bd13111a2dc15e056cda5b4d44af8756ae828f2963a0b0287614b4595198bdbc",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/start-apis.sh",
+      "type": "file",
+      "bytes": 2378,
+      "sha256": "008b0dbb736f6238373ff8bf9aabc9fa5e352b9dcc0039e361ca4b8f508021c1",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/start-infrastructure.sh",
+      "type": "file",
+      "bytes": 1536,
+      "sha256": "be23bf1f09f57b5a3c6f55db7e6afd4eef2c8d8b3f52cbd633b35cfb5835ae00",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/summarize-native-regressions.py",
+      "type": "file",
+      "bytes": 5769,
+      "sha256": "aadd52046918be2fadfb75d93cf519c7b7368e8c7f530fc0da0ed53cc60a9242",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/summarize-performance.py",
+      "type": "file",
+      "bytes": 7476,
+      "sha256": "5879ddc8f36525ead53a892f4df89e9c792103afd2aceb9f01e5c571c50c2aed",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/verify-delivery.py",
+      "type": "file",
+      "bytes": 6534,
+      "sha256": "dc0996549f7beb7d8412a4d065df1ed22b0adc0f07ccf0d6244f65f75b19216d",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tools/verify-documents.py",
+      "type": "file",
+      "bytes": 7771,
+      "sha256": "6d3c6ce19ca59becb5434bacea3db53231d7ab7b990c489a6418569d0f817b78",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/tsconfig.json",
+      "type": "file",
+      "bytes": 332,
+      "sha256": "c89cd8f6a198a59bc845377348992321768f56d612afa1f1ff9fba87fa86728b",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression/workspace/web/index.html",
+      "type": "file",
+      "bytes": 5621,
+      "sha256": "2ddad44807861e99eda6c2057c943ae7c53ac492fdfdd3af175edf76e00e877f",
+      "repository_status": "未入库",
+      "repository_reason": "原回归脚本生成的隔离源码快照或依赖链接；证据分支不含应用代码，完整包保留"
+    },
+    {
+      "path": "regression-end-utc.txt",
+      "type": "file",
+      "bytes": 21,
+      "sha256": "0d5ae8399f205a1e12ad5b9614eb0b23ca8f18aa01ca767488b31a5f6dc8af80",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression-run.out",
+      "type": "file",
+      "bytes": 259,
+      "sha256": "2dc8f406fc67135bcc6b384c42d792d575ec06ab0c1467c764368ddf95b64d98",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression-script-exit.txt",
+      "type": "file",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression-start-utc.txt",
+      "type": "file",
+      "bytes": 21,
+      "sha256": "5f6d2249fa85b2203552ac2add82d39548badd7058b5fc72b146d5006c717191",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression-summary/fault-timeline.md",
+      "type": "file",
+      "bytes": 1909,
+      "sha256": "38b48295e49defaccde73e09d00bfd80095d9ce19c1ff6a79437182fdea04391",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression-summary/regression-matrix.md",
+      "type": "file",
+      "bytes": 245521,
+      "sha256": "3de9d42acca11e03e360e1e0569e0f63d2856d54215e6c2f4ce981b1cd250b55",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression-summary/regression-summary.json",
+      "type": "file",
+      "bytes": 6996,
+      "sha256": "042e7977819934bea677d10a918e3f6b703526be2a428f50e1b279e7c9d1efc4",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression-summary-exit.txt",
+      "type": "file",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "repository_status": "入库"
+    },
+    {
+      "path": "regression-summary-run.out",
+      "type": "file",
+      "bytes": 292,
+      "sha256": "ba8a7450e35e488b1a7d208eb6998d9f30627064fbd60f5721fdebe8a364a8c8",
+      "repository_status": "入库"
+    },
+    {
+      "path": "run-remediation.sh",
+      "type": "file",
+      "bytes": 1997,
+      "sha256": "7ae06e4f37e762b1310a9a3592bd164b1b1fe82ec00b84756b8c171bf1fafcaf",
+      "repository_status": "入库"
+    },
+    {
+      "path": "track-commit-timestamp-check.txt",
+      "type": "file",
+      "bytes": 3,
+      "sha256": "b6ac5bc39377e44ee783dff946f6703a994f5eb31a438e69dc0735b40060d2e8",
+      "repository_status": "入库"
+    }
+  ]
+}

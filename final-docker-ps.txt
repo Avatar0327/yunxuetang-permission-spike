@@ -1,0 +1,3 @@
+CONTAINER ID   IMAGE          COMMAND                   CREATED       STATUS         PORTS                       NAMES
+a0f04add5d30   c6eabf748fc7   "docker-entrypoint.s…"   10 days ago   Up 9 seconds   127.0.0.1:56379->6379/tcp   yxt-redis
+eadce11b7659   639ab7ceb90e   "docker-entrypoint.s…"   10 days ago   Up 8 seconds   127.0.0.1:55432->5432/tcp   yxt-pg

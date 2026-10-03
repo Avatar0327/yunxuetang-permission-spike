@@ -1,0 +1,39 @@
+{
+  "samples": [
+    {
+      "host_before_utc": "2026-10-03T13:42:19.018837+00:00",
+      "host_after_utc": "2026-10-03T13:42:19.064375+00:00",
+      "db_clock_utc": "2026-10-03T13:42:19.064559+00:00",
+      "roundtrip_monotonic_ms": 45.39333301363513,
+      "db_minus_host_lower_ms": 0.184,
+      "db_minus_host_upper_ms": 45.722
+    },
+    {
+      "host_before_utc": "2026-10-03T13:42:19.064439+00:00",
+      "host_after_utc": "2026-10-03T13:42:19.107024+00:00",
+      "db_clock_utc": "2026-10-03T13:42:19.108912+00:00",
+      "roundtrip_monotonic_ms": 42.579834000207484,
+      "db_minus_host_lower_ms": 1.888,
+      "db_minus_host_upper_ms": 44.473
+    },
+    {
+      "host_before_utc": "2026-10-03T13:42:19.107085+00:00",
+      "host_after_utc": "2026-10-03T13:42:19.148022+00:00",
+      "db_clock_utc": "2026-10-03T13:42:19.151704+00:00",
+      "roundtrip_monotonic_ms": 40.93233298044652,
+      "db_minus_host_lower_ms": 3.682,
+      "db_minus_host_upper_ms": 44.619
+    }
+  ],
+  "minimum_roundtrip_sample": {
+    "host_before_utc": "2026-10-03T13:42:19.107085+00:00",
+    "host_after_utc": "2026-10-03T13:42:19.148022+00:00",
+    "db_clock_utc": "2026-10-03T13:42:19.151704+00:00",
+    "roundtrip_monotonic_ms": 40.93233298044652,
+    "db_minus_host_lower_ms": 3.682,
+    "db_minus_host_upper_ms": 44.619
+  },
+  "meaning": "Host-before/after bracket around a DB clock_timestamp read. This estimates clock offset uncertainty; it does not synchronize clocks or justify comparing raw cross-clock timestamps as exact order.",
+  "revocation_order": "Use matching DB commit/revision and authoritative read on the DB clock plus host request-after-ack causal ordering. Preserve both clocks.",
+  "system_clocks_modified": false
+}

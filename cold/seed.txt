@@ -1,0 +1,2 @@
+history T-1 batches: [{"tenantId":"T1","batchId":"1","asOf":"2026-10-03T13:42:10.870Z"},{"tenantId":"T2","batchId":"2","asOf":"2026-10-03T13:42:16.392Z"}]
+seed committed: T1=50000, T2=500, departments=2000, facts=1000000 + 2 fixture facts

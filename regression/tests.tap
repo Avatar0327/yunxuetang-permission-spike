@@ -1,0 +1,70 @@
+▶ native: I1 appointment natural keys never collide
+  ✔ intended second relation active=false (13.679458ms)
+  ✔ intended second relation active=true (15.539042ms)
+  ✔ intended second relation active=true (14.271834ms)
+  ✔ intended second relation active=false (13.048875ms)
+  ✔ unrelated appointment, backend and revoke boundaries (56.375125ms)
+✔ native: I1 appointment natural keys never collide (707.05425ms)
+▶ native: I2 mixed-case membership is independent of collation
+  ✔ -project add (32.37275ms)
+  ✔ -project remove (26.457708ms)
+  ✔ -team add (33.311375ms)
+  ✔ -team remove (27.747083ms)
+  ✔ -project mixed invalid atomic add (25.613375ms)
+  ✔ -project mixed invalid atomic remove (33.731834ms)
+  ✔ -team mixed invalid atomic add (29.647959ms)
+  ✔ -team mixed invalid atomic remove (33.779167ms)
+  ✔ department subtree and target parent mixed case (11.455916ms)
+  ✔ department unauthorized child atomic (10.025791ms)
+✔ native: I2 mixed-case membership is independent of collation (657.328541ms)
+▶ native: I3 category target equivalence and fail closed
+  ✔ configure equal safe denial (62.358083ms)
+  ✔ append-preview equal safe denial (21.756042ms)
+  ✔ append equal safe denial (18.9305ms)
+  ✔ import equal safe denial (19.496209ms)
+  ✔ recheck equal safe denial (17.868125ms)
+  ✔ authorized create missing parent is safe denial (10.33825ms)
+  ✔ authorized positive and import rollback (37.381958ms)
+  ✔ real Redis fault remains unavailable (1099.505916ms)
+✔ native: I3 category target equivalence and fail closed (1647.609541ms)
+✔ native: T-1 history aggregate equals the live aggregate under live authorization (20689.178583ms)
+✔ native: internal own company is implicit, customer companies require grant (87.932708ms)
+✔ native: two instances protect each download and Redis timeout closes (1979.01375ms)
+✔ native: persisted domain create commands (546.459834ms)
+✔ native: populated department migration never expands saved delegation implicitly (711.064458ms)
+▶ native: editing content permissions still requires target member company
+  ✔ recheck cross-company membership is denied (11.77775ms)
+  ✔ editing cross-company membership is denied (9.524959ms)
+✔ native: editing content permissions still requires target member company (475.945667ms)
+▶ native: mixed-company project and explicit grants
+  ✔ ordinary customer shared course (48.158166ms)
+  ✔ search/count company relation (5.783458ms)
+  ✔ personal progress and attachments (89.0185ms)
+  ✔ grant and revoke retain other companies (71.164792ms)
+✔ native: mixed-company project and explicit grants (662.594875ms)
+✔ native: current person state and immutable snapshots (679.595625ms)
+✔ native: team lock order, two instances, Redis failure (3031.412041ms)
+✔ native: history cap covers future facts of authorized people (10870.589334ms)
+✔ native: company grant selected-source object cap (394.680208ms)
+▶ native: old-company enrollment conflicts deny without partial enrollment
+  ✔ single conflict rejects entire batch (13.444083ms)
+  ✔ mixed conflict rejects entire batch (7.895958ms)
+  ✔ A B and internal protected reads retain enrollment boundaries after rejection (227.788625ms)
+  ✔ same-company existing enrollment remains idempotent alongside fresh enrollment (24.797667ms)
+✔ native: old-company enrollment conflicts deny without partial enrollment (750.031958ms)
+✔ native: all protected output classes fail closed and commit timeline (24692.935833ms)
+✔ native: complete appointment HTTP transitions and lawful independent role (1001.127416ms)
+✔ native: one membership has simultaneous independent node scopes (858.699584ms)
+✔ native: measured page queries and non-ALL large-cap workload (1454.591792ms)
+✔ native: ordered batch delegation and protected download race (1103.14975ms)
+✔ native: six-scope HTTP algebra, source fields and raw leak scans (1277.466583ms)
+✔ native: signed segment ticket never replaces current authority (822.044ms)
+✔ native: enrollment snapshot after person transfer (613.624458ms)
+ℹ tests 56
+ℹ suites 0
+ℹ pass 56
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 78645.033

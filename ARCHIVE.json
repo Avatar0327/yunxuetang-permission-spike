@@ -1,0 +1,14 @@
+{
+  "archive_file": "round2-remediation-91683df.tar.gz",
+  "archive_local_path": "/Users/peng/Documents/ChatGPT/【新版】云学堂LXP复刻项目/yunxuetang-permission-spike/evidence/raw/round2-remediation-91683df.tar.gz",
+  "bytes": 95087477,
+  "sha256": "d38e1dd0b1b545fde9aab03e8d214f546816dc85b4a34ad312fbe43868c92874",
+  "manifest_file": "MANIFEST.json",
+  "manifest_bytes": 98567,
+  "manifest_sha256": "9ffb5c4bfc7f61ab3cc88dda9bc78282a58ff68f97db2a0fa0f384c76ed373e3",
+  "archive_verified_entries": 294,
+  "source_commit": "91683df702182724dbe9025afa5726606ba3d340",
+  "evidence_branch": "evidence/round2-remediation-91683df",
+  "archive_scope": "完整目录，包括未压缩原始日志和隔离源码快照；符号链接保留、不解引用；包仅保存在本机",
+  "branch_scope": "原始证据（大日志用 gzip 副本入库）、run-remediation.sh、ENVIRONMENT.md、MANIFEST.json、ARCHIVE.json；隔离源码快照标注未入库"
+}

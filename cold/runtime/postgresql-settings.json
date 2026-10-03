@@ -1,0 +1,1 @@
+{"version" : "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit", "database_collation" : "en_US.utf8", "database_ctype" : "en_US.utf8", "shared_buffers" : "2GB", "work_mem" : "16MB", "max_connections" : "160", "track_io_timing" : "on", "track_commit_timestamp" : "on", "statement_timeout" : "0"}

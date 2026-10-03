@@ -1,0 +1,126 @@
+[
+  {
+    "candidate": "native",
+    "cache": "hot",
+    "pass": false,
+    "reasons": [
+      "history-broad: permissionP95>50msOrMissing",
+      "history-constrained: permissionP95>50msOrMissing",
+      "list-broad: permissionP95>50msOrMissing",
+      "list-broad: endpointP95>500msOrMissing",
+      "list-constrained: permissionP95>50msOrMissing",
+      "list-constrained: endpointP95>500msOrMissing"
+    ],
+    "scenarios": [
+      {
+        "scenario": "history-broad",
+        "counts": {
+          "success": 11108,
+          "denial": 0,
+          "failure": 1,
+          "authorization_error": 0,
+          "measurement_error": 0
+        },
+        "total": 11109,
+        "non_success": 1,
+        "non_success_rate": 9.001710324961742e-05,
+        "limit": 0.001,
+        "rate_pass": true,
+        "latency": {
+          "permission_p95_ms": 909.5412520000245,
+          "permission_limit_ms": 50,
+          "permission_met": false,
+          "success_p95_ms": 1000.8167080000276,
+          "success_limit_ms": 2000,
+          "success_met": true
+        }
+      },
+      {
+        "scenario": "history-constrained",
+        "counts": {
+          "success": 11105,
+          "denial": 0,
+          "failure": 4,
+          "authorization_error": 0,
+          "measurement_error": 0
+        },
+        "total": 11109,
+        "non_success": 4,
+        "non_success_rate": 0.0003600684129984697,
+        "limit": 0.001,
+        "rate_pass": true,
+        "latency": {
+          "permission_p95_ms": 981.256568999961,
+          "permission_limit_ms": 50,
+          "permission_met": false,
+          "success_p95_ms": 1302.1157080000266,
+          "success_limit_ms": 2000,
+          "success_met": true
+        }
+      },
+      {
+        "scenario": "list-broad",
+        "counts": {
+          "success": 11110,
+          "denial": 0,
+          "failure": 0,
+          "authorization_error": 0,
+          "measurement_error": 0
+        },
+        "total": 11110,
+        "non_success": 0,
+        "non_success_rate": 0.0,
+        "limit": 0.001,
+        "rate_pass": true,
+        "latency": {
+          "permission_p95_ms": 910.0107550000539,
+          "permission_limit_ms": 50,
+          "permission_met": false,
+          "success_p95_ms": 971.6094579999917,
+          "success_limit_ms": 500,
+          "success_met": false
+        }
+      },
+      {
+        "scenario": "list-constrained",
+        "counts": {
+          "success": 11107,
+          "denial": 0,
+          "failure": 2,
+          "authorization_error": 0,
+          "measurement_error": 0
+        },
+        "total": 11109,
+        "non_success": 2,
+        "non_success_rate": 0.00018003420649923484,
+        "limit": 0.001,
+        "rate_pass": true,
+        "latency": {
+          "permission_p95_ms": 961.9294450000161,
+          "permission_limit_ms": 50,
+          "permission_met": false,
+          "success_p95_ms": 1105.6205410000402,
+          "success_limit_ms": 500,
+          "success_met": false
+        }
+      },
+      {
+        "scenario": "_all",
+        "counts": {
+          "success": 44430,
+          "denial": 0,
+          "failure": 7,
+          "authorization_error": 0,
+          "measurement_error": 0
+        },
+        "total": 44437,
+        "non_success": 7,
+        "non_success_rate": 0.00015752638566959965,
+        "limit": 0.001,
+        "rate_pass": true,
+        "latency": null
+      }
+    ],
+    "scope": "Measured reference gate only. Full error-cause join, revocation/fault/semantic/noN+1 and observer validity required separately; never overallGo."
+  }
+]
