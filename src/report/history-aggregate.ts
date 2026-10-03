@@ -23,6 +23,9 @@ export async function refreshHistoryAggregate(tenantId: string) {
             SELECT $1,$2,person_id,data_company_id,fixture,historical_department_id,historical_job_id,historical_status,count(*)::int,sum(points)::bigint
             FROM report.learning_fact WHERE tenant_id=$1 AND enabled=true AND deleted=false
             GROUP BY person_id,data_company_id,fixture,historical_department_id,historical_job_id,historical_status`, t);
+        // Statistics must describe the new batch before it is joined; otherwise the planner
+        // sees an empty batch and picks a nested loop over a million rows.
+        await db.query('ANALYZE report.history_agg_unit, report.history_agg_person');
         await db.query(`INSERT INTO report.history_agg_cell(tenant_id,batch_id,level,cell,data_company_id,fixture,historical_department_id,historical_job_id,historical_status,count,points)
             SELECT $1,$2,1,u.cell,a.data_company_id,a.fixture,a.historical_department_id,a.historical_job_id,a.historical_status,sum(a.count)::int,sum(a.points)::bigint
             FROM report.history_agg_person a JOIN report.history_agg_unit u ON u.tenant_id=a.tenant_id AND u.batch_id=a.batch_id AND u.person_id=a.person_id AND u.data_company_id=a.data_company_id AND u.fixture=a.fixture
@@ -41,6 +44,7 @@ export async function refreshHistoryAggregate(tenantId: string) {
         for (const table of ['history_agg_unit', 'history_agg_size', 'history_agg_cell', 'history_agg_person'])
             await db.query(`DELETE FROM report.${table} WHERE tenant_id=$1 AND batch_id<>$2`, t);
         await db.query('DELETE FROM report.history_agg_batch WHERE tenant_id=$1 AND batch_id<>$2', t);
+        await db.query('ANALYZE report.history_agg_unit, report.history_agg_size, report.history_agg_cell, report.history_agg_person');
         await db.query('COMMIT');
         return { tenantId, batchId: String(batch.id), asOf: (batch.as_of as Date).toISOString() };
     }
