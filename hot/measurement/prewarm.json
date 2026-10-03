@@ -1,0 +1,306 @@
+[
+  {
+    "name": "list-broad",
+    "url": "http://127.0.0.1:4311",
+    "requestId": "42a5b73c-51d3-49ba-8748-5b35c72f3cb6",
+    "headersMs": 55.104250000000036,
+    "bodyMs": 1.2077079999999683,
+    "parseMs": 0.03787499999998545,
+    "serverRequestId": "42a5b73c-51d3-49ba-8748-5b35c72f3cb6",
+    "status": 200,
+    "actualCandidate": "native",
+    "actualCount": 49998,
+    "rowCount": 50,
+    "resultDigest": "bef4e136f796a7645a8fca60595b16150f5aa84abededefce1e92821367339bf",
+    "classification": "success",
+    "evidence": {
+      "candidate": "native",
+      "revision": 1791019579369,
+      "sourceIds": [
+        "role:m-broad:personal-learning:report.personal-learning.view",
+        "role:m-dept:personal-learning:report.personal-learning.view"
+      ],
+      "permissionMs": 18.967229000000316,
+      "dataMs": 11.78880799999979,
+      "cache": "cold"
+    },
+    "meta": {
+      "candidate": "native",
+      "instance": "A",
+      "pid": 19,
+      "pubsub": false,
+      "requestAt": "2026-10-03T09:26:22.875Z",
+      "responseAt": "2026-10-03T09:26:22.907Z",
+      "elapsedMs": 31.454678000000058,
+      "authorityObservedAt": "2026-10-03T09:26:22.894Z",
+      "observedRevision": 1791019579369,
+      "queryCount": 16
+    }
+  },
+  {
+    "name": "list-constrained",
+    "url": "http://127.0.0.1:4311",
+    "requestId": "05b955a0-d641-4271-b274-0193619c350a",
+    "headersMs": 118.17875000000004,
+    "bodyMs": 0.10645899999997255,
+    "parseMs": 0.027375000000006366,
+    "serverRequestId": "05b955a0-d641-4271-b274-0193619c350a",
+    "status": 200,
+    "actualCandidate": "native",
+    "actualCount": 22875,
+    "rowCount": 50,
+    "resultDigest": "cfc6060e63811df647b68785e484cd0b83ad0efc38e17686ea546ed698af691b",
+    "classification": "success",
+    "evidence": {
+      "candidate": "native",
+      "revision": 1791019579369,
+      "sourceIds": [
+        "role:bm-managed:personal-learning:report.personal-learning.view",
+        "role:bm-extra:personal-learning:report.personal-learning.view",
+        "role:bm-raw:personal-learning:report.personal-learning.view"
+      ],
+      "permissionMs": 49.920531000000665,
+      "dataMs": 65.36183099999971,
+      "cache": "cold"
+    },
+    "meta": {
+      "candidate": "native",
+      "instance": "A",
+      "pid": 19,
+      "pubsub": false,
+      "requestAt": "2026-10-03T09:26:22.914Z",
+      "responseAt": "2026-10-03T09:26:23.030Z",
+      "elapsedMs": 115.33726400000023,
+      "authorityObservedAt": "2026-10-03T09:26:22.964Z",
+      "observedRevision": 1791019579369,
+      "queryCount": 16
+    }
+  },
+  {
+    "name": "history-broad",
+    "url": "http://127.0.0.1:4311",
+    "requestId": "02f45150-51cd-4c21-abf0-fc1da38fe406",
+    "headersMs": 138.98337500000002,
+    "bodyMs": 0.10295800000005784,
+    "parseMs": 0.028500000000008185,
+    "serverRequestId": "02f45150-51cd-4c21-abf0-fc1da38fe406",
+    "status": 200,
+    "actualCandidate": "native",
+    "actualCount": 1000002,
+    "rowCount": 42,
+    "resultDigest": "a9a0f1f8fbf7aa8ab8e14d47986d0611e075afaa661df67c60274f42c1fb7d6e",
+    "classification": "success",
+    "evidence": {
+      "candidate": "native",
+      "revision": 1791019579369,
+      "sourceIds": [
+        "role:m-broad:history:report.history.view"
+      ],
+      "permissionMs": 3.630898000000343,
+      "dataMs": 133.26760000000013,
+      "cache": "L1"
+    },
+    "meta": {
+      "candidate": "native",
+      "instance": "A",
+      "pid": 19,
+      "pubsub": false,
+      "requestAt": "2026-10-03T09:26:23.032Z",
+      "responseAt": "2026-10-03T09:26:23.169Z",
+      "elapsedMs": 136.98291599999993,
+      "authorityObservedAt": "2026-10-03T09:26:23.035Z",
+      "observedRevision": 1791019579369,
+      "queryCount": 11
+    }
+  },
+  {
+    "name": "history-constrained",
+    "url": "http://127.0.0.1:4311",
+    "requestId": "436bb6c6-dcbd-4780-99fc-5b3205409563",
+    "headersMs": 738.8137919999999,
+    "bodyMs": 0.2534579999999096,
+    "parseMs": 0.06158299999992778,
+    "serverRequestId": "436bb6c6-dcbd-4780-99fc-5b3205409563",
+    "status": 200,
+    "actualCandidate": "native",
+    "actualCount": 457673,
+    "rowCount": 40,
+    "resultDigest": "d0d4fb08bd8e3451365315d7ee46bc6d4652d16e89645f73d1a84c25ef7a679c",
+    "classification": "success",
+    "evidence": {
+      "candidate": "native",
+      "revision": 1791019579369,
+      "sourceIds": [
+        "role:bm-managed:history:report.history.view",
+        "role:bm-extra:history:report.history.view"
+      ],
+      "permissionMs": 35.34799899999962,
+      "dataMs": 701.774296,
+      "cache": "L1"
+    },
+    "meta": {
+      "candidate": "native",
+      "instance": "A",
+      "pid": 19,
+      "pubsub": false,
+      "requestAt": "2026-10-03T09:26:23.172Z",
+      "responseAt": "2026-10-03T09:26:23.909Z",
+      "elapsedMs": 737.1728189999999,
+      "authorityObservedAt": "2026-10-03T09:26:23.204Z",
+      "observedRevision": 1791019579369,
+      "queryCount": 13
+    }
+  },
+  {
+    "name": "list-broad",
+    "url": "http://127.0.0.1:4312",
+    "requestId": "4fe8f93e-5b98-4066-a9a1-b8c76cc512e9",
+    "headersMs": 21.332458000000088,
+    "bodyMs": 0.36849999999981264,
+    "parseMs": 0.08287499999983083,
+    "serverRequestId": "4fe8f93e-5b98-4066-a9a1-b8c76cc512e9",
+    "status": 200,
+    "actualCandidate": "native",
+    "actualCount": 49998,
+    "rowCount": 50,
+    "resultDigest": "bef4e136f796a7645a8fca60595b16150f5aa84abededefce1e92821367339bf",
+    "classification": "success",
+    "evidence": {
+      "candidate": "native",
+      "revision": 1791019579369,
+      "sourceIds": [
+        "role:m-broad:personal-learning:report.personal-learning.view",
+        "role:m-dept:personal-learning:report.personal-learning.view"
+      ],
+      "permissionMs": 8.594086000000516,
+      "dataMs": 8.858594000000267,
+      "cache": "L2"
+    },
+    "meta": {
+      "candidate": "native",
+      "instance": "B",
+      "pid": 19,
+      "pubsub": false,
+      "requestAt": "2026-10-03T09:26:23.913Z",
+      "responseAt": "2026-10-03T09:26:23.931Z",
+      "elapsedMs": 17.81577900000002,
+      "authorityObservedAt": "2026-10-03T09:26:23.921Z",
+      "observedRevision": 1791019579369,
+      "queryCount": 14
+    }
+  },
+  {
+    "name": "list-constrained",
+    "url": "http://127.0.0.1:4312",
+    "requestId": "bcca0753-f54c-4a4f-88c0-90c8f04f01c1",
+    "headersMs": 105.9007079999999,
+    "bodyMs": 0.20970899999997528,
+    "parseMs": 0.05524999999988722,
+    "serverRequestId": "bcca0753-f54c-4a4f-88c0-90c8f04f01c1",
+    "status": 200,
+    "actualCandidate": "native",
+    "actualCount": 22875,
+    "rowCount": 50,
+    "resultDigest": "cfc6060e63811df647b68785e484cd0b83ad0efc38e17686ea546ed698af691b",
+    "classification": "success",
+    "evidence": {
+      "candidate": "native",
+      "revision": 1791019579369,
+      "sourceIds": [
+        "role:bm-managed:personal-learning:report.personal-learning.view",
+        "role:bm-extra:personal-learning:report.personal-learning.view",
+        "role:bm-raw:personal-learning:report.personal-learning.view"
+      ],
+      "permissionMs": 40.397395999999844,
+      "dataMs": 63.4894019999997,
+      "cache": "L2"
+    },
+    "meta": {
+      "candidate": "native",
+      "instance": "B",
+      "pid": 19,
+      "pubsub": false,
+      "requestAt": "2026-10-03T09:26:23.935Z",
+      "responseAt": "2026-10-03T09:26:24.039Z",
+      "elapsedMs": 103.93734300000006,
+      "authorityObservedAt": "2026-10-03T09:26:23.975Z",
+      "observedRevision": 1791019579369,
+      "queryCount": 14
+    }
+  },
+  {
+    "name": "history-broad",
+    "url": "http://127.0.0.1:4312",
+    "requestId": "1c74a57b-1c32-4e16-9a6c-0b1b75c4e6c1",
+    "headersMs": 142.1562080000001,
+    "bodyMs": 0.22308299999986048,
+    "parseMs": 0.06833400000004985,
+    "serverRequestId": "1c74a57b-1c32-4e16-9a6c-0b1b75c4e6c1",
+    "status": 200,
+    "actualCandidate": "native",
+    "actualCount": 1000002,
+    "rowCount": 42,
+    "resultDigest": "a9a0f1f8fbf7aa8ab8e14d47986d0611e075afaa661df67c60274f42c1fb7d6e",
+    "classification": "success",
+    "evidence": {
+      "candidate": "native",
+      "revision": 1791019579369,
+      "sourceIds": [
+        "role:m-broad:history:report.history.view"
+      ],
+      "permissionMs": 2.853016999999909,
+      "dataMs": 140.56717800000024,
+      "cache": "L1"
+    },
+    "meta": {
+      "candidate": "native",
+      "instance": "B",
+      "pid": 19,
+      "pubsub": false,
+      "requestAt": "2026-10-03T09:26:24.042Z",
+      "responseAt": "2026-10-03T09:26:24.185Z",
+      "elapsedMs": 143.51853299999993,
+      "authorityObservedAt": "2026-10-03T09:26:24.044Z",
+      "observedRevision": 1791019579369,
+      "queryCount": 11
+    }
+  },
+  {
+    "name": "history-constrained",
+    "url": "http://127.0.0.1:4312",
+    "requestId": "89b3892e-0a5f-4838-8dfd-953c28b411a1",
+    "headersMs": 629.6177499999999,
+    "bodyMs": 0.4021250000000691,
+    "parseMs": 0.07962499999985084,
+    "serverRequestId": "89b3892e-0a5f-4838-8dfd-953c28b411a1",
+    "status": 200,
+    "actualCandidate": "native",
+    "actualCount": 457673,
+    "rowCount": 40,
+    "resultDigest": "d0d4fb08bd8e3451365315d7ee46bc6d4652d16e89645f73d1a84c25ef7a679c",
+    "classification": "success",
+    "evidence": {
+      "candidate": "native",
+      "revision": 1791019579369,
+      "sourceIds": [
+        "role:bm-managed:history:report.history.view",
+        "role:bm-extra:history:report.history.view"
+      ],
+      "permissionMs": 33.54694000000018,
+      "dataMs": 609.0952320000001,
+      "cache": "L1"
+    },
+    "meta": {
+      "candidate": "native",
+      "instance": "B",
+      "pid": 19,
+      "pubsub": false,
+      "requestAt": "2026-10-03T09:26:24.188Z",
+      "responseAt": "2026-10-03T09:26:24.831Z",
+      "elapsedMs": 642.6872020000001,
+      "authorityObservedAt": "2026-10-03T09:26:24.218Z",
+      "observedRevision": 1791019579369,
+      "queryCount": 13
+    }
+  }
+]

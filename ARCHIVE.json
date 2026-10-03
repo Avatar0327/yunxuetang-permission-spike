@@ -1,0 +1,14 @@
+{
+  "archive_file": "round2-baseline-817256b.tar.gz",
+  "archive_local_path": "/Users/peng/Documents/ChatGPT/【新版】云学堂LXP复刻项目/yunxuetang-permission-spike/evidence/raw/round2-baseline-817256b.tar.gz",
+  "bytes": 23979833,
+  "sha256": "0040907330f2c95ac35d661dd871cabcc2d9b7cb14f48ec3081be0ceee5236d5",
+  "manifest_file": "MANIFEST.json",
+  "manifest_bytes": 97152,
+  "manifest_sha256": "3fa76a2859dd366104df4c5f86e9570c0d4d0d3a111f297ea876b44d2e137163",
+  "archive_verified_entries": 298,
+  "source_commit": "817256bf1e1fc722aaa5f0c21878e84fe8df1306",
+  "evidence_branch": "evidence/round2-baseline-817256b",
+  "archive_scope": "完整目录，包括隔离源码快照；符号链接保留、不解引用；包仅保存在本机",
+  "branch_scope": "原始证据、run-baseline.sh、ENVIRONMENT.md、MANIFEST.json、ARCHIVE.json；隔离源码快照标注未入库"
+}

@@ -1,0 +1,1 @@
+{"sourceCommit": "817256bf1e1fc722aaa5f0c21878e84fe8df1306", "testExit": 0, "observations": 456, "allLiteralEqual": true, "issues": [], "complete": true, "scope": "Selected Native two-host-process regression, not full 24-group rerun or capped performance gate; exact observations retained."}

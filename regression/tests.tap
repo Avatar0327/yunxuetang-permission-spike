@@ -1,0 +1,69 @@
+▶ native: I1 appointment natural keys never collide
+  ✔ intended second relation active=false (16.505792ms)
+  ✔ intended second relation active=true (17.662417ms)
+  ✔ intended second relation active=true (15.877083ms)
+  ✔ intended second relation active=false (15.450167ms)
+  ✔ unrelated appointment, backend and revoke boundaries (81.004875ms)
+✔ native: I1 appointment natural keys never collide (992.089541ms)
+▶ native: I2 mixed-case membership is independent of collation
+  ✔ -project add (29.071709ms)
+  ✔ -project remove (28.468625ms)
+  ✔ -team add (44.791625ms)
+  ✔ -team remove (33.291917ms)
+  ✔ -project mixed invalid atomic add (34.856125ms)
+  ✔ -project mixed invalid atomic remove (52.701875ms)
+  ✔ -team mixed invalid atomic add (43.4905ms)
+  ✔ -team mixed invalid atomic remove (48.807583ms)
+  ✔ department subtree and target parent mixed case (17.201125ms)
+  ✔ department unauthorized child atomic (14.025875ms)
+✔ native: I2 mixed-case membership is independent of collation (947.338084ms)
+▶ native: I3 category target equivalence and fail closed
+  ✔ configure equal safe denial (53.313ms)
+  ✔ append-preview equal safe denial (28.480167ms)
+  ✔ append equal safe denial (29.956625ms)
+  ✔ import equal safe denial (49.566083ms)
+  ✔ recheck equal safe denial (31.625417ms)
+  ✔ authorized create missing parent is safe denial (14.293625ms)
+  ✔ authorized positive and import rollback (33.782625ms)
+  ✔ real Redis fault remains unavailable (1089.5745ms)
+✔ native: I3 category target equivalence and fail closed (1873.021125ms)
+✔ native: internal own company is implicit, customer companies require grant (71.028792ms)
+✔ native: two instances protect each download and Redis timeout closes (2247.872042ms)
+✔ native: persisted domain create commands (776.926625ms)
+✔ native: populated department migration never expands saved delegation implicitly (993.427292ms)
+▶ native: editing content permissions still requires target member company
+  ✔ recheck cross-company membership is denied (14.366916ms)
+  ✔ editing cross-company membership is denied (12.93775ms)
+✔ native: editing content permissions still requires target member company (740.76ms)
+▶ native: mixed-company project and explicit grants
+  ✔ ordinary customer shared course (76.838667ms)
+  ✔ search/count company relation (12.827ms)
+  ✔ personal progress and attachments (148.914083ms)
+  ✔ grant and revoke retain other companies (83.725833ms)
+✔ native: mixed-company project and explicit grants (966.125834ms)
+✔ native: current person state and immutable snapshots (982.40725ms)
+✔ native: team lock order, two instances, Redis failure (3386.640584ms)
+✔ native: history cap covers future facts of authorized people (2140.427375ms)
+✔ native: company grant selected-source object cap (576.392292ms)
+▶ native: old-company enrollment conflicts deny without partial enrollment
+  ✔ single conflict rejects entire batch (29.53925ms)
+  ✔ mixed conflict rejects entire batch (20.9265ms)
+  ✔ A B and internal protected reads retain enrollment boundaries after rejection (425.91525ms)
+  ✔ same-company existing enrollment remains idempotent alongside fresh enrollment (46.946833ms)
+✔ native: old-company enrollment conflicts deny without partial enrollment (1389.910917ms)
+✔ native: all protected output classes fail closed and commit timeline (25735.659791ms)
+✔ native: complete appointment HTTP transitions and lawful independent role (1349.586792ms)
+✔ native: one membership has simultaneous independent node scopes (1151.233084ms)
+✔ native: measured page queries and non-ALL large-cap workload (2045.4045ms)
+✔ native: ordered batch delegation and protected download race (1376.747125ms)
+✔ native: six-scope HTTP algebra, source fields and raw leak scans (1656.551167ms)
+✔ native: signed segment ticket never replaces current authority (1125.0505ms)
+✔ native: enrollment snapshot after person transfer (810.834208ms)
+ℹ tests 55
+ℹ suites 0
+ℹ pass 55
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57446.489333

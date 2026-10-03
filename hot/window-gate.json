@@ -1,0 +1,133 @@
+[
+  {
+    "candidate": "native",
+    "cache": "hot",
+    "pass": false,
+    "reasons": [
+      "history-broad: nonSuccessRate>0.1%OrNoSamples",
+      "history-broad: permissionP95>50msOrMissing",
+      "history-broad: endpointP95>2000msOrMissing",
+      "history-constrained: nonSuccessRate>0.1%OrNoSamples",
+      "history-constrained: permissionP95>50msOrMissing",
+      "history-constrained: endpointP95>2000msOrMissing",
+      "list-broad: nonSuccessRate>0.1%OrNoSamples",
+      "list-broad: permissionP95>50msOrMissing",
+      "list-broad: endpointP95>500msOrMissing",
+      "list-constrained: nonSuccessRate>0.1%OrNoSamples",
+      "list-constrained: permissionP95>50msOrMissing",
+      "list-constrained: endpointP95>500msOrMissing",
+      "_all: nonSuccessRate>0.1%OrNoSamples"
+    ],
+    "scenarios": [
+      {
+        "scenario": "history-broad",
+        "counts": {
+          "success": 1715,
+          "denial": 0,
+          "failure": 14,
+          "authorization_error": 0,
+          "measurement_error": 0
+        },
+        "total": 1729,
+        "non_success": 14,
+        "non_success_rate": 0.008097165991902834,
+        "limit": 0.001,
+        "rate_pass": false,
+        "latency": {
+          "permission_p95_ms": 1581.5624310000567,
+          "permission_limit_ms": 50,
+          "permission_met": false,
+          "success_p95_ms": 8483.913125000021,
+          "success_limit_ms": 2000,
+          "success_met": false
+        }
+      },
+      {
+        "scenario": "history-constrained",
+        "counts": {
+          "success": 1018,
+          "denial": 0,
+          "failure": 711,
+          "authorization_error": 0,
+          "measurement_error": 0
+        },
+        "total": 1729,
+        "non_success": 711,
+        "non_success_rate": 0.41122035858877964,
+        "limit": 0.001,
+        "rate_pass": false,
+        "latency": {
+          "permission_p95_ms": 1974.8555049998686,
+          "permission_limit_ms": 50,
+          "permission_met": false,
+          "success_p95_ms": 11334.596666999976,
+          "success_limit_ms": 2000,
+          "success_met": false
+        }
+      },
+      {
+        "scenario": "list-broad",
+        "counts": {
+          "success": 1697,
+          "denial": 0,
+          "failure": 33,
+          "authorization_error": 0,
+          "measurement_error": 0
+        },
+        "total": 1730,
+        "non_success": 33,
+        "non_success_rate": 0.01907514450867052,
+        "limit": 0.001,
+        "rate_pass": false,
+        "latency": {
+          "permission_p95_ms": 1880.0836829999462,
+          "permission_limit_ms": 50,
+          "permission_met": false,
+          "success_p95_ms": 2204.225542,
+          "success_limit_ms": 500,
+          "success_met": false
+        }
+      },
+      {
+        "scenario": "list-constrained",
+        "counts": {
+          "success": 1693,
+          "denial": 0,
+          "failure": 36,
+          "authorization_error": 0,
+          "measurement_error": 0
+        },
+        "total": 1729,
+        "non_success": 36,
+        "non_success_rate": 0.020821283979178717,
+        "limit": 0.001,
+        "rate_pass": false,
+        "latency": {
+          "permission_p95_ms": 1904.3043409999227,
+          "permission_limit_ms": 50,
+          "permission_met": false,
+          "success_p95_ms": 2787.612625000009,
+          "success_limit_ms": 500,
+          "success_met": false
+        }
+      },
+      {
+        "scenario": "_all",
+        "counts": {
+          "success": 6123,
+          "denial": 0,
+          "failure": 794,
+          "authorization_error": 0,
+          "measurement_error": 0
+        },
+        "total": 6917,
+        "non_success": 794,
+        "non_success_rate": 0.11478964869162932,
+        "limit": 0.001,
+        "rate_pass": false,
+        "latency": null
+      }
+    ],
+    "scope": "Measured reference gate only. Full error-cause join, revocation/fault/semantic/noN+1 and observer validity required separately; never overallGo."
+  }
+]

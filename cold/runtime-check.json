@@ -1,0 +1,1 @@
+{"resource_gate": true, "data_scale_gate": true, "source_commit": "817256bf1e1fc722aaa5f0c21878e84fe8df1306", "counts": {"main_people": 50000, "second_people": 500, "departments": 2000, "roles": 20, "load_facts": 1000000, "actual_facts": 1000002, "at": "2026-10-03T09:37:18.243492+00:00"}}

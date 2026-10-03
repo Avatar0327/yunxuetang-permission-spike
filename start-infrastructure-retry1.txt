@@ -1,0 +1,4 @@
+yxt-pg
+yxt-redis
+/var/run/postgresql:5432 - accepting connections
+PONG

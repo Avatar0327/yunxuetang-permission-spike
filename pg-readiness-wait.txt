@@ -1,0 +1,5 @@
+start_utc=2026-10-03T09:17:54.291130+00:00
+2026-10-03T09:17:54.359106+00:00 exit=0 /var/run/postgresql:5432 - accepting connections 
+end_utc=2026-10-03T09:17:54.359207+00:00
+elapsed_seconds=0.06808962501236238
+ready=true

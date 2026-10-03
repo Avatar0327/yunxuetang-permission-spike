@@ -1,0 +1,21 @@
+2026-10-03T09:19:04Z
+ProductName:		macOS
+ProductVersion:		26.5.1
+BuildVersion:		25F80
+Apple M5 Pro
+18
+51539607552
+Darwin zhipengdeMacBook-Pro.local 25.5.0 Darwin Kernel Version 25.5.0: Mon Apr 27 20:41:12 PDT 2026; root:xnu-12377.121.6~2/RELEASE_ARM64_T6050 arm64
+colima 0.10.3
+docker 29.8.2
+node@24 24.21.0
+python@3.14 3.14.8
+v24.21.0
+Python 3.14.8
+PROFILE           STATUS     ARCH       CPUS    MEMORY    DISK     RUNTIME    ADDRESS
+yxt-permission    Running    aarch64    10      24GiB     35GiB    docker     
+Now drawing from 'AC Power'
+ -InternalBattery-0 (id=23003235)	80%; AC attached; not charging present: true
+yxt-redis	c6eabf748fc7	Up 7 minutes
+yxt-pg	639ab7ceb90e	Up 7 minutes
+817256bf1e1fc722aaa5f0c21878e84fe8df1306

@@ -1,0 +1,39 @@
+{
+  "sourceCommit": "817256bf1e1fc722aaa5f0c21878e84fe8df1306",
+  "testExit": 0,
+  "observations": 456,
+  "httpObservations": 497,
+  "bad": [],
+  "nativeOnly": true,
+  "scope": "Two real host API processes for functional/fault proof, not resource-capped performance gate.",
+  "rawFiles": [
+    {
+      "path": "workspace/evidence/raw/commit-timeline.jsonl",
+      "sha256": "ace92de3de58e9ec74ea21a6e9bc631957fc5d7b6aa0ef4092ab2056b8e3b931"
+    },
+    {
+      "path": "workspace/evidence/raw/final-fix-http.jsonl",
+      "sha256": "47597f7479c2e82631e5ccf9c61b6617c3b7a28f10a1f0eb94ae07dfd5f3c089"
+    },
+    {
+      "path": "workspace/evidence/raw/http-observations.jsonl",
+      "sha256": "5a3a7c3d4c8f13532c2c88b0dc7c54e2d5ca6ad23b1701e596458fdd47afe813"
+    },
+    {
+      "path": "workspace/evidence/raw/observations.jsonl",
+      "sha256": "8ef0c15550e127b3a79fd76b6de94751f20053a159fa7babb3b164294bd7d045"
+    },
+    {
+      "path": "workspace/evidence/raw/task5-complex-native.json",
+      "sha256": "ae30e510c58db9e726823cd3373a23692acf11ccca91d3993c4d9a05206222c7"
+    },
+    {
+      "path": "workspace/evidence/raw/task5-race-timeline.jsonl",
+      "sha256": "7561d24a741808fb860607383dccb4530586450d878be040434c9ab7bab3765a"
+    },
+    {
+      "path": "workspace/evidence/raw/task5-scans-native.json",
+      "sha256": "a68ec26fc6284c09d9a83da98bbaa91949625590c283cbe64ff709cdde2573b1"
+    }
+  ]
+}
