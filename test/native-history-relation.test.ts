@@ -74,7 +74,7 @@ test('native: history snapshots, current states, source OR/pair caps, fact eligi
         const captured:string[]=[];
         const observed={query:async(sql:string,values:unknown[]=[])=>{captured.push(sql);return db.query(sql,values);}} as DB;
         const service=new ReportService(new VariantAuthority(cache,pairPlan));
-        const get=(o:ListOptions={})=>service.list({tenantId:'T1',personId:'X'},'native',{history:true,aggregate:true,fixture:true,groupBy:'department,job,status',...o},observed);
+        const get=(o:ListOptions={})=>service.list({tenantId:'T1',personId:'X'},'native',{history:true,aggregate:true,liveHistory:true,fixture:true,groupBy:'department,job,status',...o},observed);
         const enabled=await get();
         assert.deepEqual(enabled.rows,expectedEnabled);assert.equal(enabled.count,206);
         for(const [state,rows,count] of [['disabled',[disabledRow],1],['deleted',[deletedRow],1],['all',[...expectedEnabled,deletedRow,disabledRow],208]] as const){
@@ -111,11 +111,11 @@ test('native: legacy fact object filter falls back with exact truth; self anchor
         const sqls:string[]=[];
         const db={query:async(sql:string,values:unknown[]=[])=>{sqls.push(sql);return pool.query(sql,values);}} as DB;
         const service=new ReportService(new VariantAuthority(cache,p=>{p.companyIds=['A','B','A'];p.sources[0]!.resolved.objectIds=['h-X-B'];return p;}));
-        const result=await service.list({tenantId:'T1',personId:'X'},'native',{history:true,aggregate:true,fixture:true},db);
+        const result=await service.list({tenantId:'T1',personId:'X'},'native',{history:true,aggregate:true,liveHistory:true,fixture:true},db);
         assert.deepEqual(result.rows,[{historical_department_id:'old-B',count:1,points:'20'}]);assert.equal(result.count,1);
         assert.ok(!sqls.some(sql=>sql.startsWith('WITH ')),'fact IDs require exact per-fact predicate');
         const self=new ReportService(new Authority(cache));sqls.length=0;
-        const own=await self.list({tenantId:'T1',personId:'X'},'native',{history:true,aggregate:true,fixture:true},db);
+        const own=await self.list({tenantId:'T1',personId:'X'},'native',{history:true,aggregate:true,liveHistory:true,fixture:true},db);
         assert.deepEqual(own.rows,[{historical_department_id:'old-A',count:1,points:'10'}]);
         assert.ok(sqls.some(sql=>sql.startsWith('WITH ')),'safe personId anchor is eligible');
         for(const change of [
@@ -125,11 +125,11 @@ test('native: legacy fact object filter falls back with exact truth; self anchor
             (p:QueryPolicy)=>{p.sources[0]!.resolved.objectIds=[];}
         ]){
             const empty=new ReportService(new VariantAuthority(cache,p=>{change(p);return p;}));
-            const denied=await empty.list({tenantId:'T1',personId:'X'},'native',{history:true,aggregate:true,fixture:true},db);
+            const denied=await empty.list({tenantId:'T1',personId:'X'},'native',{history:true,aggregate:true,liveHistory:true,fixture:true},db);
             assert.equal(denied.count,0);assert.deepEqual(denied.rows,[]);
         }
         const cappedAll=new ReportService(new VariantAuthority(cache,p=>{p.companyIds=['A','B'];p.sources[0]!.resolved.all=true;p.sources[0]!.resolved.spec.personCompanyPairs=[['X','A']];return p;}));
-        const capped=await cappedAll.list({tenantId:'T1',personId:'X'},'native',{history:true,aggregate:true,fixture:true},db);
+        const capped=await cappedAll.list({tenantId:'T1',personId:'X'},'native',{history:true,aggregate:true,liveHistory:true,fixture:true},db);
         assert.deepEqual(capped.rows,[{historical_department_id:'old-A',count:1,points:'10'}]);
     }finally{await cache.close();}
 });
@@ -162,17 +162,19 @@ test('native: compiler applicability rejects unsupported mappings and policy dep
     }finally{await cache.close();}
 });
 
-test('native: constrained historical aggregation retains 13 hot queries including token',async()=>{
+// Round 2: the two mid-request fences are one statement each instead of three, so 13 becomes 9;
+// the T-1 path issues the same single data statement. The count stays independent of fact count.
+test('native: constrained historical aggregation retains 9 hot queries including token',async()=>{
     const cache=new SessionCache(),authority=new Authority(cache),service=new ReportService(authority);
     try{
-        await service.list({tenantId:'T1',personId:'person-00003'},'native',{history:true,aggregate:true});
-        for(const fixture of [false,true]){
+        await service.list({tenantId:'T1',personId:'person-00003'},'native',{history:true,aggregate:true,liveHistory:true});
+        for(const liveHistory of [true,false])for(const fixture of [false,true]){
             const meter={queries:0};
             await metrics.run(meter,async()=>{
                 const identity=await authority.token('spike-person-00003');
-                await service.list(identity,'native',{history:true,aggregate:true,fixture});
+                await service.list(identity,'native',{history:true,aggregate:true,liveHistory,fixture});
             });
-            assert.equal(meter.queries,13,`fixture=${fixture}: SQL count independent of returned fact count`);
+            assert.equal(meter.queries,9,`live=${liveHistory} fixture=${fixture}: SQL count independent of returned fact count`);
         }
     }finally{await cache.close();}
 });

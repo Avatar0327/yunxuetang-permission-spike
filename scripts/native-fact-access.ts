@@ -48,7 +48,7 @@ export async function captureNativeFactAccess() {
                 return pool.query(sql, parameters);
             } } as DB;
             const result = await service.list({ tenantId: 'T1', personId: definition.actor }, 'native', {
-                limit: 50, history: definition.history, aggregate: definition.history,
+                limit: 50, history: definition.history, aggregate: definition.history, liveHistory: definition.history,
                 groupBy: definition.history ? 'department,job,status' : undefined
             }, db);
             scenarios.push({ name, endpoint: definition.path, revision: result.evidence.revision, queries,

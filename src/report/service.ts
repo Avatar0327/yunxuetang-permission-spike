@@ -16,6 +16,8 @@ export interface ListOptions {
     aggregate?: boolean;
     groupBy?: 'department,job,status';
     export?: boolean;
+    /** Verification only: run the original live per-fact aggregate. HTTP routes never set it. */
+    liveHistory?: boolean;
 }
 export interface ListResult {
     rows: any[];
@@ -34,7 +36,7 @@ export class ReportService {
         const auth = await this.authority.plan(identity, candidate, node, action, db, lock, o.cold);
         // Round 2 isolation: analytical data reads use their own pool unless the caller pinned a client or transaction.
         const dataDb: DB = db === pool ? analyticsPool : db;
-        if (candidate === 'native' && history && o.aggregate && !o.export && !o.id) {
+        if (candidate === 'native' && history && o.aggregate && !o.export && !o.id && !o.liveHistory) {
             const t1 = await this.historyT1(auth, o, dataDb);
             if (t1) return t1;
         }
@@ -156,15 +158,14 @@ export class ReportService {
                 JOIN c1 ON c1.cell=u.cell AND c1.data_company_id=u.data_company_id AND c1.fixture=u.fixture AND NOT c1.full
                 JOIN report.history_agg_person a ON a.tenant_id=${tenant} AND a.batch_id=(SELECT batch_id FROM b) AND a.person_id=u.person_id AND a.data_company_id=u.data_company_id AND a.fixture=u.fixture
             )
-            SELECT ${grouping},sum(r.count)::int count,sum(r.points)::bigint points,(SELECT as_of FROM b) AS t1_as_of
-            FROM parts r GROUP BY ${grouping} ORDER BY ${grouping}`;
+            SELECT b.as_of AS t1_as_of,x.* FROM b LEFT JOIN (
+                SELECT ${grouping},sum(r.count)::int count,sum(r.points)::bigint points FROM parts r GROUP BY ${grouping}
+            ) x ON true ORDER BY ${grouping.replaceAll('r.', 'x.')}`;
         const result = await query(db, sql, c.values);
-        let asOf: Date | undefined = result.rows[0]?.t1_as_of;
-        if (!result.rows.length)
-            asOf = (await query(db, 'SELECT h.as_of FROM report.history_agg_current c JOIN report.history_agg_batch h ON h.tenant_id=c.tenant_id AND h.batch_id=c.batch_id WHERE c.tenant_id=$1', [auth.plan.tenantId])).rows[0]?.as_of;
         // No refreshed batch means no T-1 data to serve; fail closed rather than mislabel live data.
+        const asOf: Date | undefined = result.rows[0]?.t1_as_of;
         if (!asOf) throw new Unavailable();
-        const rows = result.rows.map(({ t1_as_of, ...row }) => row);
+        const rows = result.rows.filter(row => row.count !== null).map(({ t1_as_of, ...row }) => row);
         return { rows, groupCount: undefined, count: rows.reduce((n, x) => n + x.count, 0), historyMode: 'T-1' as const, dataAsOf: asOf.toISOString(),
             evidence: { candidate: 'native', revision: auth.plan.revision, sourceIds: auth.plan.sources.map(s => s.sourceId), permissionMs, dataMs: performance.now() - start, cache: auth.cache } };
     }

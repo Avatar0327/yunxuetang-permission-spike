@@ -22,6 +22,7 @@ node --import tsx --test --test-concurrency=1 --test-name-pattern='^native:' \
  test/task3-entry.test.ts test/task3-company-cap.test.ts test/task3-role-company.test.ts test/task3-populated-delegation.test.ts test/task3-delivery.test.ts \
  test/task4-current-history.test.ts test/task4-history-caps.test.ts test/task4-source-boundary.test.ts test/task4-company.test.ts test/task4-delivery.test.ts \
  test/task5-navigation.test.ts test/task5-enrollment-conflict.test.ts test/task5-transfer.test.ts test/task5-runtime.test.ts test/task5-races.test.ts test/task5-faults.test.ts test/task5-nplus1.test.ts test/task5-ticket.test.ts test/task5-node-independence.test.ts test/final-fix-regressions.test.ts \
+ test/round2-history-t1.test.ts \
  > "$spike_dest/tests.tap" 2>&1
 spike_code=$?
 set -e
