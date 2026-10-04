@@ -52,7 +52,8 @@ done
 [ "$spike_ready" -eq 1 ] || { echo readiness_failed > "$spike_dir/incomplete.txt";exit 2; }
 SPIKE_EXPECTED_SOURCE="$spike_source" bash tools/capture-runtime.sh "$spike_dir/runtime" > "$spike_dir/runtime-check.json" 2>&1 || exit 2
 spike_bench=scripts/benchmark.ts
-CANDIDATE=native CACHE_MODE="$spike_temp" OBSERVE="$spike_observe" SCENARIO=mixed PHASE=success CONCURRENCY=50 DURATION_SECONDS=600 OUTPUT="$spike_dir/measurement" node --import tsx "$spike_bench" > "$spike_dir/runner.txt" 2>&1
+spike_load="${LOAD_MODEL:-reference}";if [ "$spike_load" = d51 ];then spike_clients=200;else spike_clients=50;fi;printf '%s\n' "$spike_load" > "$spike_dir/load-model.txt"
+LOAD_MODEL="$spike_load" CANDIDATE=native CACHE_MODE="$spike_temp" OBSERVE="$spike_observe" SCENARIO=mixed PHASE=success CONCURRENCY="$spike_clients" DURATION_SECONDS=600 OUTPUT="$spike_dir/measurement" node --import tsx "$spike_bench" > "$spike_dir/runner.txt" 2>&1
 spike_code=$?;printf '%s\n' "$spike_code" > "$spike_dir/runner-exit.txt"
 # Keep final diagnostic records for requests whose clients timed out.
 sleep 25

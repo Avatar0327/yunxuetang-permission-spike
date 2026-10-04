@@ -29,6 +29,14 @@ def result_digest(count, rows):
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
+D51_MIX={'history-broad':1,'history-constrained':1,'list-broad':9,'list-constrained':9}
+
+
+def expected_clients(summary):
+    # Reference load (D-47): 50 clients. D-51 business-estimated load: 200 closed-loop users.
+    return 200 if (summary.get('loadModel') or {}).get('id')=='D-51' else 50
+
+
 def audit(folder):
     summary=json.loads((folder/'summary.json').read_text())
     groups=defaultdict(lambda:defaultdict(list))
@@ -45,7 +53,7 @@ def audit(folder):
                 issues.append(f'{name}: expected row count contradicts truth rows')
             if result_digest(expected.get('expectedCount'),expected.get('expectedRows'))!=expected.get('resultDigest'):
                 issues.append(f'{name}: expected digest contradicts independently serialized truth')
-    elif summary.get('configuredSeconds')==600 and summary.get('concurrency')==50 and summary.get('phase')=='success':
+    elif summary.get('configuredSeconds')==600 and summary.get('concurrency')==expected_clients(summary) and summary.get('phase')=='success':
         issues.append('reference success window lacks independent scenario truth')
     with gzip.open(folder/'samples.jsonl.gz','rt') as f:
         for line_no,line in enumerate(f,1):
@@ -87,7 +95,7 @@ def audit(folder):
                     issues.append(f'line {line_no}: cold snapshot cache hit')
                 if summary['cache']=='hot' and sample.get('cache') not in {'L1','L2'}:
                     issues.append(f'line {line_no}: hot snapshot was not a measured L1/L2 hit')
-                if (summary.get('configuredSeconds')==600 and summary.get('concurrency')==50 or 'actualCandidate' in sample) and sample.get('actualCandidate')!=summary['candidate']:
+                if (summary.get('configuredSeconds')==600 and summary.get('concurrency')==expected_clients(summary) or 'actualCandidate' in sample) and sample.get('actualCandidate')!=summary['candidate']:
                     issues.append(f'line {line_no}: actual server candidate mismatch')
             for key,bucket in metrics.items():
                 value=sample.get(key)
@@ -119,7 +127,8 @@ def audit(folder):
             'success_p95_ms':success,'success_limit_ms':limit,
             'success_met':success is not None and success<=limit,
         }
-    reference=summary.get('configuredSeconds')==600 and summary.get('concurrency')==50
+    clients_expected=expected_clients(summary)
+    reference=summary.get('configuredSeconds')==600 and summary.get('concurrency')==clients_expected
     try:
         start=datetime.fromisoformat(summary['startAt'].replace('Z','+00:00'))
         end=datetime.fromisoformat(summary['endAt'].replace('Z','+00:00'))
@@ -130,14 +139,24 @@ def audit(folder):
     if reference:
         if wall_ms is None or wall_ms<600000 or summary.get('durationMs',0)<600000:
             issues.append('configured reference window did not last 600 seconds')
-        if set(clients)!=set(range(50)):
-            issues.append('reference window does not contain all 50 configured client IDs')
+        if set(clients)!=set(range(clients_expected)):
+            issues.append(f'reference window does not contain all {clients_expected} configured client IDs')
+    load=summary.get('loadModel') or {'id':'reference'}
+    if load.get('id')=='D-51':
+        # Independently recompute the realized mix: the fixed 20-slot schedule must hold within one cycle.
+        total=sum(scenario_counts.values()); cycles=total/20
+        for name,weight in D51_MIX.items():
+            if abs(scenario_counts.get(name,0)-weight*cycles)>weight+1:
+                issues.append(f'D-51 mix deviates for {name}: {scenario_counts.get(name,0)} of {total}')
+        if load.get('thinkMeanMs')!=5000 or load.get('thinkDistribution')!='exponential' or not load.get('closedLoop'):
+            issues.append('D-51 load model parameters differ from the ruling')
     return {'directory':str(folder),'candidate':summary['candidate'],'cache':summary['cache'],
         'configured_seconds':summary.get('configuredSeconds'),'concurrency':summary.get('concurrency'),
         'reference_window':reference,
         'phase':summary.get('phase'),'sample_count':sum(categories.values()),'categories':dict(categories),
         'instances':dict(instances),'cache_states':dict(caches),'scenario_counts':dict(scenario_counts),
-        'actual_wall_ms':wall_ms,'observed_client_count':len(clients),
+        'actual_wall_ms':wall_ms,'observed_client_count':len(clients),'expected_client_count':clients_expected,
+        'load_model':load,'request_rate_per_s':(sum(categories.values())/(wall_ms/1000)) if wall_ms else None,
         'request_start_span_ms':(max(request_times)-min(request_times)).total_seconds()*1000 if request_times else None,
         'query_counts_by_scenario':{k:dict(v) for k,v in query_counts.items()},
         'statistics':computed,'threshold_observations':thresholds,'audit_errors':issues,
