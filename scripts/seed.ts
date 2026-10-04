@@ -2,6 +2,7 @@ import {benchmarkMemberships} from './benchmark-fixture.js';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { pool, transaction } from '../src/infrastructure/db.js';
+import { refreshHistoryAggregate } from '../src/report/history-aggregate.js';
 import { nodes } from '../src/authz/registry.js';
 import type { Membership, NodePolicy, Scope } from '../src/authz/contracts.js';
 const policy = (nodeId: string, scope: Scope, rawFields: string[] = [], actions?: string[]): NodePolicy => ({ nodeId, navigation: true, scope, rawFields, actions: actions ?? nodes.find(n => n.id === nodeId)!.actions, delegableActions: [] });
@@ -33,7 +34,12 @@ try {
         for (const table of ['organization.person', 'organization.department', 'authz.company_grant', 'authz.membership', 'training.appointment', 'training.project', 'training.roster', 'knowledge.category', 'authz.role', 'knowledge.course', 'knowledge.classroom_member', 'training.face_to_face'])
             await db.query(`CREATE TRIGGER revision AFTER INSERT OR UPDATE OR DELETE ON ${table} FOR EACH ROW EXECUTE FUNCTION authz.bump()`);
     });
+    // Round 2: the seeded facts form the first T-1 batch, as a nightly refresh would.
+    const batches = [];
+    for (const tenant of ['T1', 'T2'])
+        batches.push(await refreshHistoryAggregate(tenant));
     await pool.query('ANALYZE');
+    console.log('history T-1 batches: ' + JSON.stringify(batches));
     console.log('seed committed: T1=50000, T2=500, departments=2000, facts=1000000 + 2 fixture facts');
 }
 finally {

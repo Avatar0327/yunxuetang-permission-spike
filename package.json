@@ -13,6 +13,7 @@
     "build": "tsc",
     "start": "node dist/src/bootstrap.js",
     "seed": "tsx scripts/seed.ts",
+    "refresh:history": "tsx scripts/refresh-history-aggregate.ts",
     "test:integration": "tsx --test test/integration.test.ts",
     "test:http": "tsx --test test/http.test.ts",
     "functional": "tsx scripts/run-functional.ts",

@@ -10,8 +10,11 @@ import { OrganizationFactsPort } from '../organization/public.js';
 import { TrainingFactsPort } from '../training/public.js';
 import type { AuthorityPorts } from '../contracts/ports.js';
 import { SessionCache } from './cache.js';
-import { pool, query, metrics, requireTransaction, Denied, Unavailable, type DB, type Identity } from '../infrastructure/db.js';
+import { pool, authzPool, pinned, query, metrics, requireTransaction, Denied, Unavailable, type DB, type Identity } from '../infrastructure/db.js';
 function unavailable(code: string) { recordError('authority.guard', {name:'Error',code}); return new Unavailable(); }
+// Non-transactional authority reads use their own pool. Callers that pass a client or
+// transaction keep exactly that client, so lock order and snapshots are unchanged.
+const authorityDb = (db: DB): DB => db === pool ? authzPool : db;
 interface Snapshot {
     schemaVersion: 1;
     memberships: Membership[];
@@ -51,7 +54,7 @@ export class Authority {
         return { revoked: true, revision: (await this.current(identity, db)).revision };
     }
     async token(token: string): Promise<Identity> { try {
-        const r = await query(pool, 'select tenant_id as "tenantId",person_id as "personId" from authz.session where token_hash=$1', [createHash('sha256').update(token).digest('hex')]);
+        const r = await query(authzPool, 'select tenant_id as "tenantId",person_id as "personId" from authz.session where token_hash=$1', [createHash('sha256').update(token).digest('hex')]);
         if (!r.rows[0])
             throw new Denied();
         return r.rows[0];
@@ -63,6 +66,14 @@ export class Authority {
         throw new Unavailable();
     } }
     async current(identity: Identity, db: DB = pool, lock = false): Promise<Context> {
+        try { return await pinned(authorityDb(db), db => this.currentOn(identity, db, lock)); }
+        catch (e) {
+            if (e instanceof Denied || e instanceof Unavailable) throw e;
+            recordError('authority.failure', e);
+            throw new Unavailable();
+        }
+    }
+    private async currentOn(identity: Identity, db: DB, lock: boolean): Promise<Context> {
         try {
             if (lock) {
                 requireTransaction(db);
@@ -90,8 +101,44 @@ export class Authority {
             throw new Unavailable();
         }
     }
+    /**
+     * Round 2 fence. Every write to the facts current() reads (person, company grants,
+     * memberships, appointments and the other revision tables) bumps authz.revision in the
+     * same transaction, so an unchanged revision and schema version means current() would
+     * return the same context. That case is answered by one statement. Any other result
+     * takes the original full current() path, so a changed revision still yields the
+     * original 403/503 outcome. The observation metadata is recorded as current() does.
+     */
+    private async fence(identity: Identity, db: DB, revision: number) {
+        let r: any;
+        try {
+            r = (await query(db, 'SELECT revision,schema_version,clock_timestamp() AS authority_observed_at FROM authz.revision WHERE tenant_id=$1', [identity.tenantId])).rows[0];
+        }
+        catch (e) {
+            recordError('authority.failure', e);
+            throw new Unavailable();
+        }
+        if (r && r.schema_version === 1 && Number(r.revision) === revision) {
+            if (metrics.getStore()) { metrics.getStore()!.observedRevision = Number(r.revision); metrics.getStore()!.authorityObservedAt = r.authority_observed_at.toISOString(); }
+            return;
+        }
+        if ((await this.current(identity, db)).revision !== revision)
+            throw unavailable('AUTHZ_REVISION_CHANGED');
+    }
     async load(identity: Identity, db: DB = pool, lock = false, cold = false) {
         const start = performance.now();
+        // Round 2: one checked-out connection carries every authoritative read of this
+        // load (three fenced current() reads and the snapshot build). Each statement and
+        // fence is unchanged; only the per-statement pool acquisition is removed.
+        try { return await pinned(authorityDb(db), db => this.loadOn(identity, db, lock, cold, start)); }
+        catch (e) {
+            // loadOn already maps its own failures; only a failed checkout reaches here unmapped.
+            if (e instanceof Denied || e instanceof Unavailable) throw e;
+            recordError('authority.failure', e);
+            throw new Unavailable();
+        }
+    }
+    private async loadOn(identity: Identity, db: DB, lock: boolean, cold: boolean, start: number) {
         const context = await this.current(identity, db, lock);
         await this.cache.available();
         const key = `snapshot:${context.tenantId}:${context.personId}:${context.revision}`;
@@ -113,8 +160,7 @@ export class Authority {
                 for (const p of m.policies)
                     if (!nodes.some(n => n.id === p.nodeId && p.actions.every(a => n.actions.includes(a))))
                         throw unavailable('AUTHZ_SNAPSHOT_POLICY_INVALID');
-            if ((await this.current(identity, db)).revision !== context.revision)
-                throw unavailable('AUTHZ_REVISION_CHANGED');
+            await this.fence(identity, db, context.revision);
             if (!cached.value)
                 await this.cache.set(key, spanSync('snapshot.stringify', () => JSON.stringify(snapshot)));
             const grants = spanSync('snapshot.normalize', () => normalizePolicy({ context, nodes, ...snapshot, appointmentCapabilities }));
@@ -129,6 +175,9 @@ export class Authority {
     }
     async plan(identity: Identity, candidate: CandidateName, nodeId: string, action: string, db: DB = pool, lock = false, cold = false) {
         const start = performance.now();
+        return pinned(authorityDb(db), db => this.planOn(identity, candidate, nodeId, action, db, lock, cold, start));
+    }
+    private async planOn(identity: Identity, candidate: CandidateName, nodeId: string, action: string, db: DB, lock: boolean, cold: boolean, start: number) {
         const loaded = await this.load(identity, db, lock, cold);
         if (!nodes.some(n => n.id === nodeId && n.actions.includes(action)))
             throw new Denied();
@@ -149,8 +198,7 @@ export class Authority {
         if (!grants.length)
             throw new Denied();
         const plan = await span('policy.build', () => buildQueryPolicy({ context: loaded.context, nodes, grants, nodeId, action, organization: this.ports.organization(db) }));
-        if ((await this.current(identity, db)).revision !== plan.revision)
-            throw unavailable('AUTHZ_REVISION_CHANGED');
+        await this.fence(identity, db, plan.revision);
         return { ...loaded, plan, permissionMs: performance.now() - start };
     }
 }
